@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1155251035}
-  Enemy: {fileID: 0}
-  EnemiesNumber: 10
+  Enemy: {fileID: 1000011810310008, guid: fdbb87448f8d4d84191efd3f17a9d517, type: 2}
+  EnemiesNumber: 200
 --- !u!1 &631091595
 GameObject:
   m_ObjectHideFlags: 0

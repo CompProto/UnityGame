@@ -15,41 +15,61 @@ public class MapGenerator : MonoBehaviour {
 	public int randomFillPercent;
 
 	int[,] map;
+
+    // These values are fetched from ObjectSpawner.cs
     private GameObject Player, Enemy;
-
     private int EnemiesNumber;
+    private float MinDistance; // Minimum distance between enemies
 
-	void Start() {
+    void Start() {
         GameObject ground = GameObject.FindGameObjectWithTag("Ground");
         ground.transform.localScale = new Vector3(width/10, 1, height/10);
         Debug.Log(ground.transform.localScale);
 		GenerateMap();
+
+        ObjectSpawner objSpawn = GetComponent<ObjectSpawner>();
+        Player = objSpawn.Player;
+        Enemy = objSpawn.Enemy;
+        EnemiesNumber = objSpawn.EnemiesNumber;
+        MinDistance = objSpawn.MinimumDistance;
         PlacePlayer();
         PlaceEnemies();
 	}
 
-    public void SetPlayer(GameObject p)
-    {
-        Player = p;
-    }
-
-    public void SetEnemy(GameObject e)
-    {
-        Enemy = e;
-    }
-
-    public void SetEnemiesNumber(int i)
-    {
-        EnemiesNumber = i;
-    }
-
     private void PlaceEnemies()
     {
-        for(int i=0; i<EnemiesNumber; i++)
-        {
+        // Attempts to put [EnemyNumber] of enemies in the game, provided a minimum distance between each enemy.
+        if (Enemy == null || Player == null)
+            return;
 
-        }
-        // Do something
+        List<Vector3> enemyPositions = new List<Vector3>();
+        enemyPositions.Add(Player.transform.position);
+            for (int x = 1; x < width; x++)
+            {
+                for (int y = 1; y < height; y++)
+                {
+                    if (map[x, y] == 0 && map[x,y+1] == 0 && map[x,y-1] == 0 && map[x-1,y]==0 && map[x+1,y]==0)
+                    {
+                        bool mark = false;
+                        Vector3 pos = new Vector3(x - width / 2 + 1, -1, y - height / 2 + 1);
+                        foreach(Vector3 v in enemyPositions)
+                        {
+                            if(Mathf.Abs((v-pos).magnitude) < MinDistance)
+                            {
+                                mark = true;
+                                break;
+                            }
+                        }
+                        if (mark == false)
+                        {
+                            Instantiate(Enemy, pos, transform.rotation);
+                            enemyPositions.Add(pos);
+                        }
+                        if (enemyPositions.Count >= EnemiesNumber + 1)
+                            return;
+                    }
+                }
+            }
     }
 
     void Update() {
@@ -62,6 +82,8 @@ public class MapGenerator : MonoBehaviour {
 
     public void PlacePlayer()
     {
+        if (Player == null)
+            return;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
