@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1155251035}
-  Enemy: {fileID: 1000011810310008, guid: fdbb87448f8d4d84191efd3f17a9d517, type: 2}
+  Enemy: {fileID: 1000012853405364, guid: 6b0689d0ec4da814ca0ac92caff98fa2, type: 2}
   EnemiesNumber: 200
   MinimumDistance: 10
   UseRandomMobDistance: 1
@@ -799,6 +799,10 @@ Prefab:
     - target: {fileID: 5426510, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_Drag
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: GlowingOrb
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
