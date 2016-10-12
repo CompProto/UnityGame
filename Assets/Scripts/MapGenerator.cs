@@ -35,8 +35,7 @@ public class MapGenerator : MonoBehaviour {
         MinDistance = objSpawn.MinimumDistance;
         PlacePlayer();
         PlaceEnemies();
-        
-	}
+    }
 
     private float GetRandomMinDistance()
     {

@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour
+{
 
     public AudioClip DayMusic, ShadowMusic;
 
     private AudioSource source;
 
-	// Use this for initialization
-	void Start () {
-	    source = GetComponent<AudioSource>();
+    // Use this for initialization
+    void Start()
+    {
+        source = GetComponent<AudioSource>();
         PlayDayMusic();
     }
 
@@ -32,4 +34,6 @@ public class AudioManager : MonoBehaviour {
         source.clip = sound;
         source.Play();
     }
+
+
 }

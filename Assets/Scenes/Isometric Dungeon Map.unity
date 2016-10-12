@@ -796,6 +796,10 @@ Prefab:
       propertyPath: DayMusic
       value: 
       objectReference: {fileID: 8300000, guid: 8135b5b130dd72d4886a7c369d32a15d, type: 3}
+    - target: {fileID: 5426510, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
   m_IsPrefabParent: 0
