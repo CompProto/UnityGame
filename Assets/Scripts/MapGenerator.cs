@@ -20,6 +20,7 @@ public class MapGenerator : MonoBehaviour {
     private GameObject Player, Enemy;
     private int EnemiesNumber;
     private float MinDistance; // Minimum distance between enemies
+    private ObjectSpawner objSpawn;
 
     void Start() {
         GameObject ground = GameObject.FindGameObjectWithTag("Ground");
@@ -27,7 +28,7 @@ public class MapGenerator : MonoBehaviour {
         Debug.Log(ground.transform.localScale);
 		GenerateMap();
 
-        ObjectSpawner objSpawn = GetComponent<ObjectSpawner>();
+        objSpawn = GetComponent<ObjectSpawner>();
         Player = objSpawn.Player;
         Enemy = objSpawn.Enemy;
         EnemiesNumber = objSpawn.EnemiesNumber;
@@ -36,40 +37,54 @@ public class MapGenerator : MonoBehaviour {
         PlaceEnemies();
 	}
 
+    private float GetRandomMinDistance()
+    {
+        if (objSpawn.UseRandomMobDistance)
+        {
+            return UnityEngine.Random.Range(-MinDistance+1, MinDistance); 
+        }
+        else
+        {
+            return 0.0f;
+        }
+    }
+
     private void PlaceEnemies()
     {
         // Attempts to put [EnemyNumber] of enemies in the game, provided a minimum distance between each enemy.
         if (Enemy == null || Player == null)
             return;
 
+        float RandomMinDistance = GetRandomMinDistance(); // Value to be added to the minimum distance between mobs.
         List<Vector3> enemyPositions = new List<Vector3>();
         enemyPositions.Add(Player.transform.position);
-            for (int x = 1; x < width; x++)
+        for (int x = 1; x < width; x++)
+        {
+            for (int y = 1; y < height; y++)
             {
-                for (int y = 1; y < height; y++)
+                if (map[x, y] == 0 && map[x,y+1] == 0 && map[x,y-1] == 0 && map[x-1,y]==0 && map[x+1,y]==0)
                 {
-                    if (map[x, y] == 0 && map[x,y+1] == 0 && map[x,y-1] == 0 && map[x-1,y]==0 && map[x+1,y]==0)
+                    bool mark = false;
+                    Vector3 pos = new Vector3(x - width / 2 + 1, -1, y - height / 2 + 1);
+                    foreach(Vector3 ePos in enemyPositions)
                     {
-                        bool mark = false;
-                        Vector3 pos = new Vector3(x - width / 2 + 1, -1, y - height / 2 + 1);
-                        foreach(Vector3 v in enemyPositions)
+                        if(Mathf.Abs((ePos-pos).magnitude) < MinDistance + RandomMinDistance)
                         {
-                            if(Mathf.Abs((v-pos).magnitude) < MinDistance)
-                            {
-                                mark = true;
-                                break;
-                            }
+                            mark = true;
+                            break;
                         }
-                        if (mark == false)
-                        {
-                            Instantiate(Enemy, pos, transform.rotation);
-                            enemyPositions.Add(pos);
-                        }
-                        if (enemyPositions.Count >= EnemiesNumber + 1)
-                            return;
                     }
+                    if (mark == false)
+                    {
+                        Instantiate(Enemy, pos, transform.rotation);
+                        enemyPositions.Add(pos);
+                        RandomMinDistance = GetRandomMinDistance();
+                    }
+                    if (enemyPositions.Count >= EnemiesNumber + 1)
+                        return;
                 }
             }
+        }
     }
 
     void Update() {
