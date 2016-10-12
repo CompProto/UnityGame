@@ -35,6 +35,7 @@ public class MapGenerator : MonoBehaviour {
         MinDistance = objSpawn.MinimumDistance;
         PlacePlayer();
         PlaceEnemies();
+        
 	}
 
     private float GetRandomMinDistance()
@@ -58,9 +59,9 @@ public class MapGenerator : MonoBehaviour {
         float RandomMinDistance = GetRandomMinDistance(); // Value to be added to the minimum distance between mobs.
         List<Vector3> enemyPositions = new List<Vector3>();
         enemyPositions.Add(Player.transform.position);
-        for (int x = 1; x < width; x++)
+        for (int x = 1; x < width-1; x++)
         {
-            for (int y = 1; y < height; y++)
+            for (int y = 1; y < height-1; y++)
             {
                 if (map[x, y] == 0 && map[x,y+1] == 0 && map[x,y-1] == 0 && map[x-1,y]==0 && map[x+1,y]==0)
                 {
