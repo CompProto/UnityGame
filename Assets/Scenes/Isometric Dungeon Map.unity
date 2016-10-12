@@ -260,6 +260,7 @@ MonoBehaviour:
   Player: {fileID: 1155251035}
   Enemy: {fileID: 1000011810310008, guid: fdbb87448f8d4d84191efd3f17a9d517, type: 2}
   EnemiesNumber: 200
+  MinimumDistance: 10
 --- !u!1 &631091595
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +525,11 @@ Prefab:
     - target: {fileID: 1000013051213036, guid: 468dfa472f4ac354c9975c890b82077b, type: 2}
       propertyPath: m_TagString
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 20000013293272534, guid: 468dfa472f4ac354c9975c890b82077b,
+        type: 2}
+      propertyPath: far clip plane
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 468dfa472f4ac354c9975c890b82077b, type: 2}

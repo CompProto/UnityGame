@@ -12,5 +12,6 @@ public class ObjectSpawner : MonoBehaviour {
     public int EnemiesNumber = 10;
     [Range(1.0f, 50.0f)]
     public float MinimumDistance = 10.0f; // Minimum distance between enemies
+    public bool UseRandomMobDistance = true; // Randomize the distance between enemies
 
 }
