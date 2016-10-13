@@ -10,6 +10,7 @@ public class DungeonCamera : MonoBehaviour
     public GameObject BlackHole;
 
     private Camera DungeonCam;
+    private AudioSource source;
 
     Vector3 offset;
 
@@ -17,6 +18,7 @@ public class DungeonCamera : MonoBehaviour
     {
         offset = transform.position - targetPlayer.transform.position;
         DungeonCam = GetComponent<Camera>();
+        source = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -47,6 +49,7 @@ public class DungeonCamera : MonoBehaviour
                 spawnPos.y += 1; // Spawn slightly above the ground
                 //Debug.Log("Hit: " + vHit.point);
                 Instantiate(BlackHole, spawnPos, transform.rotation);
+                source.Play();
             }
         }
     }

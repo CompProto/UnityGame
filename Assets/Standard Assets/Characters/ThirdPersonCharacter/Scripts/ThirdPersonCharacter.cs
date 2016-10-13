@@ -25,6 +25,9 @@ public class ThirdPersonCharacter : MonoBehaviour
     float m_GroundCheckDistance = 0.1f;
 
     public ParticleSystem SmokeTrail, ChargeHit;
+    public AudioClip Explosion, Charge;
+
+    private AudioSource source;
 
 
     Rigidbody m_Rigidbody;
@@ -54,6 +57,7 @@ public class ThirdPersonCharacter : MonoBehaviour
 
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         m_OrigGroundCheckDistance = m_GroundCheckDistance;
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -78,6 +82,7 @@ public class ThirdPersonCharacter : MonoBehaviour
                 chargeTimer = 0;
                 isCharging = true;
                 SmokeTrail.Play();
+                source.PlayOneShot(Charge, 1.0f);
             }
         }
         chargeTimer += Time.fixedDeltaTime;
@@ -108,6 +113,7 @@ public class ThirdPersonCharacter : MonoBehaviour
                 if (hit)
                 {
                     ChargeHit.Play();
+                    source.PlayOneShot(Explosion, 1.0f);
                 }
             }
 
