@@ -210,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 3
   range: 5
+  EnemyTag: PowerUp
   force: 50
 --- !u!198 &198000010273671240
 ParticleSystem:

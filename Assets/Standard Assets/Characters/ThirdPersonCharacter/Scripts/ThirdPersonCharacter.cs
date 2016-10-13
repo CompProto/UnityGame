@@ -24,6 +24,8 @@ public class ThirdPersonCharacter : MonoBehaviour
     [SerializeField]
     float m_GroundCheckDistance = 0.1f;
 
+    public ParticleSystem SmokeTrail, ChargeHit;
+
 
     Rigidbody m_Rigidbody;
     Animator m_Animator;
@@ -75,6 +77,7 @@ public class ThirdPersonCharacter : MonoBehaviour
                 chargeCooldown = Time.time;
                 chargeTimer = 0;
                 isCharging = true;
+                SmokeTrail.Play();
             }
         }
         chargeTimer += Time.fixedDeltaTime;
@@ -91,13 +94,20 @@ public class ThirdPersonCharacter : MonoBehaviour
             {
                 Collider[] candidates = Physics.OverlapSphere(transform.position, 5.0f);
                 float force = 30.0f;
+                bool hit = false;
                 foreach (Collider candidate in candidates)
                 {
                     if (candidate.gameObject.tag == "PowerUp")
                     {
                         Vector3 forceDirection = candidate.transform.position - transform.position;
                         candidate.gameObject.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * force, ForceMode.Impulse);
+                        hit = true;
                     }
+                }
+                SmokeTrail.Stop();
+                if (hit)
+                {
+                    ChargeHit.Play();
                 }
             }
 

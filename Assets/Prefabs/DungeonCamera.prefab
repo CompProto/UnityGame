@@ -63,7 +63,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 20
+  far clip plane: 35
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -125,10 +125,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e7e72ccce596441a3b07fba5749c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targetPlayer: {fileID: 0}
   damping: 5
   minZoom: 4
   maxZoom: 10
+  BlackHole: {fileID: 0}
 --- !u!114 &114000012510023716
 MonoBehaviour:
   m_ObjectHideFlags: 1
