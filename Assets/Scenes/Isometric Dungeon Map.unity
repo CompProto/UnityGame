@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1155251035}
-  Enemy: {fileID: 1000012853405364, guid: 6b0689d0ec4da814ca0ac92caff98fa2, type: 2}
+  Enemy: {fileID: 1000011810310008, guid: fdbb87448f8d4d84191efd3f17a9d517, type: 2}
   EnemiesNumber: 200
   MinimumDistance: 10
   UseRandomMobDistance: 1
@@ -532,6 +532,22 @@ Prefab:
       propertyPath: far clip plane
       value: 35
       objectReference: {fileID: 0}
+    - target: {fileID: 114000011845528004, guid: 468dfa472f4ac354c9975c890b82077b,
+        type: 2}
+      propertyPath: DarkHole
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011845528004, guid: 468dfa472f4ac354c9975c890b82077b,
+        type: 2}
+      propertyPath: targetPlayer
+      value: 
+      objectReference: {fileID: 1500571346}
+    - target: {fileID: 114000011845528004, guid: 468dfa472f4ac354c9975c890b82077b,
+        type: 2}
+      propertyPath: BlackHole
+      value: 
+      objectReference: {fileID: 1000012824770030, guid: 1c8531bb47d2b604089230842b5e2295,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 468dfa472f4ac354c9975c890b82077b, type: 2}
   m_IsPrefabParent: 0
