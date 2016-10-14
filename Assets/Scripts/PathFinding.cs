@@ -24,9 +24,9 @@ public class PathFinding : MonoBehaviour
     {
         // mapGen og map sættes, så man kan søge i det tilgænglige map.
         mapGen = (MapGenerator)FindObjectOfType(typeof(MapGenerator));
-        map = mapGen.map;
+       // map = mapGen.map;
         // Players position hentes
-        playerPosition = ((Player)GameObject.FindObjectOfType(typeof(Player))).transform.position;
+      //  playerPosition = ((Player)GameObject.FindObjectOfType(typeof(Player))).transform.position;
         //enemy position sættes 
         start = transform.position;
 
