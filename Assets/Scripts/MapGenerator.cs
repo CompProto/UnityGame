@@ -14,7 +14,7 @@ public class MapGenerator : MonoBehaviour {
 	[Range(30,56)]
 	public int randomFillPercent;
 
-	int[,] map;
+     public int[,] map { get; set; }
 
     // These values are fetched from ObjectSpawner.cs
     private GameObject Player, Enemy;
