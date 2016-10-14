@@ -34,7 +34,7 @@ public class ThirdPersonUserControl : MonoBehaviour
         // get the third person character ( this should never be null due to require component )
         m_Character = GetComponent<ThirdPersonCharacter>();
         source = GetComponent<AudioSource>();
-        source.volume = 0.7f;
+        source.volume = 0.5f;
         PlayDayMusic();
     }
 
