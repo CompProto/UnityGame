@@ -9,13 +9,14 @@ public class ThirdPersonUserControl : MonoBehaviour
 {
 
     public AudioClip DayMusic, ShadowMusic;
+    public ParticleSystem LevelUp;
 
     private AudioSource source;
     private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform
     private Vector3 m_CamForward;             // The current forward direction of the camera
     private Vector3 m_Move;
-    private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+    private bool m_Jump, charge;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
     private void Start()
     {
@@ -45,6 +46,20 @@ public class ThirdPersonUserControl : MonoBehaviour
         {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayShadowMusic();
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            PlayDayMusic();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            LevelUp.Play();
+        }
+        charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
     }
 
     public void PlayDayMusic()
@@ -78,17 +93,7 @@ public class ThirdPersonUserControl : MonoBehaviour
         // read inputs
         float h = CrossPlatformInputManager.GetAxis("Horizontal");
         float v = CrossPlatformInputManager.GetAxis("Vertical");
-        bool charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PlayShadowMusic();
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            PlayDayMusic();
-        }
-
+        
         // calculate move direction to pass to character
         if (m_Cam != null)
         {
@@ -108,7 +113,6 @@ public class ThirdPersonUserControl : MonoBehaviour
         // pass all parameters to the character control script
         m_Character.Move(m_Move, charge, m_Jump);
         m_Jump = false;
-
     }
 }
 
