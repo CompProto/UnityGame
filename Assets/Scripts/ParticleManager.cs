@@ -5,11 +5,16 @@ using Particle = UnityEngine.ParticleSystem.Particle;
 public class ParticleManager : MonoBehaviour {
 
     public GameObject target;
+    public GameObject source;
     private ParticleSystem p;
 
 	// Use this for initialization
 	void Start () {
-        p = GetComponent<ParticleSystem>();
+        if(source == null)
+        {
+            source = gameObject;
+        }
+        p = source.GetComponent<ParticleSystem>();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +26,6 @@ public class ParticleManager : MonoBehaviour {
         {
             particles[i].position = Vector3.Lerp(particles[i].position, target.transform.position,Time.deltaTime / 2.0f);
         }
-        
 
         p.SetParticles(particles, count);
 	}

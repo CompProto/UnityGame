@@ -6,19 +6,13 @@ public class DungeonCamera : MonoBehaviour
     public GameObject targetPlayer;
     public float damping = 1;
     public float minZoom = 3;
-    public float maxZoom = 10;
-    public GameObject BlackHole;
+    public float maxZoom = 10; 
 
-    private Camera DungeonCam;
-    private AudioSource source;
-
-    Vector3 offset;
+    private Vector3 offset;
 
     void Start()
     {
         offset = transform.position - targetPlayer.transform.position;
-        DungeonCam = GetComponent<Camera>();
-        source = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,20 +32,6 @@ public class DungeonCamera : MonoBehaviour
             offset *= 1 - scroll;
             // Debug.Log(Input.GetAxis("Mouse ScrollWheel")); 
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit vHit = new RaycastHit();
-            if (Physics.Raycast(ray, out vHit, 200))
-            {
-                Vector3 spawnPos = vHit.point;
-                spawnPos.y += 1; // Spawn slightly above the ground
-                //Debug.Log("Hit: " + vHit.point);
-                Instantiate(BlackHole, spawnPos, transform.rotation);
-                source.Play();
-            }
-        }
     }
 
     void FixedUpdate()
@@ -59,7 +39,6 @@ public class DungeonCamera : MonoBehaviour
         Vector3 desiredPosition = targetPlayer.transform.position + offset;
         Vector3 position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
         transform.position = position;
-
         transform.LookAt(targetPlayer.transform.position);
     }
 }
