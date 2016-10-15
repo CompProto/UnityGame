@@ -605,7 +605,7 @@ Prefab:
     - target: {fileID: 114000011845528004, guid: 468dfa472f4ac354c9975c890b82077b,
         type: 2}
       propertyPath: maxZoom
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 114000010062219646, guid: 468dfa472f4ac354c9975c890b82077b,
         type: 2}
@@ -630,7 +630,7 @@ Prefab:
     - target: {fileID: 114000012510023716, guid: 468dfa472f4ac354c9975c890b82077b,
         type: 2}
       propertyPath: intensity
-      value: 0.036
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114000012510023716, guid: 468dfa472f4ac354c9975c890b82077b,
         type: 2}
@@ -652,7 +652,9 @@ Prefab:
       propertyPath: minZoom
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000010062219646, guid: 468dfa472f4ac354c9975c890b82077b, type: 2}
+    - {fileID: 114000012510023716, guid: 468dfa472f4ac354c9975c890b82077b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 468dfa472f4ac354c9975c890b82077b, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1044158787
@@ -805,6 +807,61 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000013051213036, guid: 468dfa472f4ac354c9975c890b82077b,
     type: 2}
   m_PrefabInternal: {fileID: 876843085}
+--- !u!114 &1384400078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1384400077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6d4281e5d7cd44d8c6e38bc2c1b8d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  intensity: 0.403
+  chromaticAberration: 0.2
+  axialAberration: 0.5
+  blur: 0
+  blurSpread: 0.75
+  luminanceDependency: 0.25
+  blurDistance: 2.5
+  vignetteShader: {fileID: 4800000, guid: 627943dc7a9a74286b70a4f694a0acd5, type: 3}
+  separableBlurShader: {fileID: 4800000, guid: e97c14fbb5ea04c3a902cc533d7fc5d1, type: 3}
+  chromAberrationShader: {fileID: 4800000, guid: 2b4f29398d9484ccfa9fd220449f5eee,
+    type: 3}
+--- !u!114 &1384400080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1384400077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e9b95cf609d96409b6c40519432957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filterType: 2
+  preview: 0
+  previewScale: {x: 1, y: 1, z: 1}
+  movementScale: 0
+  rotationScale: 1
+  maxVelocity: 8
+  minVelocity: 0.1
+  velocityScale: 0.25
+  softZDistance: 0.005
+  velocityDownsample: 1
+  excludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  shader: {fileID: 4800000, guid: 85a88efa8c871af4a9d17c64791b6f4f, type: 3}
+  dx11MotionBlurShader: {fileID: 4800000, guid: f1b13d7a80660504a858ea24cfa418c6,
+    type: 3}
+  replacementClear: {fileID: 4800000, guid: 7699c5fbfa27745a1abe111ab7bf9785, type: 3}
+  noiseTexture: {fileID: 2800000, guid: 31f5a8611c4ed1245b18456206e798dc, type: 3}
+  jitter: 0.05
+  showVelocity: 0
+  showVelocityScale: 1
 --- !u!82 &1384400086
 AudioSource:
   m_ObjectHideFlags: 0
