@@ -18,6 +18,8 @@ public class ThirdPersonUserControl : MonoBehaviour
     private Vector3 m_Move;
     private bool m_Jump, charge;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
+    private SpellManager spellManager;
+
     private void Start()
     {
         // get the transform of the main camera
