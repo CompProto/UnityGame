@@ -9,6 +9,7 @@ public class ParticleAttractor : MonoBehaviour
     public float duration = 3.0f;
 
     private GameObject target;
+    private OrbitManager orbitManager;
     private ParticleSystem p;
     private float timer;
 
@@ -21,6 +22,7 @@ public class ParticleAttractor : MonoBehaviour
             Debug.Log("ParticleAttractor.cs : Source is null.");
         }
         p = source.GetComponent<ParticleSystem>();
+        orbitManager = source.GetComponent<OrbitManager>();
         timer = 0;
         target = source;
     }
@@ -34,6 +36,7 @@ public class ParticleAttractor : MonoBehaviour
         {
             target = source;
             p.Stop();
+            orbitManager.setActive(true);
         }
         else
         {
@@ -56,5 +59,6 @@ public class ParticleAttractor : MonoBehaviour
         this.target = _target;
         timer = -1 * duration;
         p.Play();
+        orbitManager.setActive(false);
     }
 }

@@ -8,6 +8,8 @@ public class OrbitManager : MonoBehaviour {
 
     private ParticleSystem p;
 
+    private bool isRotating = false;
+
 	// Use this for initialization
 	void Start () {
         p = GetComponent<ParticleSystem>();
@@ -17,6 +19,9 @@ public class OrbitManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+       // if(!isRotating)
+        //    return;
+
         int count = p.particleCount;
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[count];
         p.GetParticles(particles);
@@ -40,5 +45,10 @@ public class OrbitManager : MonoBehaviour {
         }
 
         p.SetParticles(particles, count);
+    }
+
+    public void setActive(bool b)
+    {
+        this.isRotating = b;
     }
 }
