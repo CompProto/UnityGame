@@ -9,6 +9,7 @@ TagManager:
   - LevelUpParticles
   - SpellCastManager
   - OrbitParticles
+  - Pathfinder
   layers:
   - Default
   - TransparentFX

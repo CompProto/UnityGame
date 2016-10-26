@@ -28,6 +28,16 @@ public class MapGenerator : MonoBehaviour {
         Debug.Log(ground.transform.localScale);
 		GenerateMap();
 
+        /*for (int i = 0; i < height; i++)
+        {
+            String toWrite = "";
+            for (int j = 0; j < width; j++)
+            {
+                toWrite = toWrite + map[j, i];
+            }
+            print(toWrite);
+        }*/
+
         objSpawn = GetComponent<ObjectSpawner>();
         Player = objSpawn.Player;
         Enemy = objSpawn.Enemy;
