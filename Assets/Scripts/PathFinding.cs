@@ -62,7 +62,7 @@ public class PathFinding : MonoBehaviour
 
             if (!isInit)
             {
-                WriteOutMap();
+              //  WriteOutMap(); // Husk at indsætte sti til biblioteket. filen vil blive oprettet
                 isInit = true;
             }
 
@@ -103,7 +103,7 @@ public class PathFinding : MonoBehaviour
 
         if (map == null || movementPath == null)
         {
-            System.IO.File.WriteAllText("C:\\Users\\KimdR\\Desktop\\nomap.txt", "er null");
+           
             return;
         }
 
@@ -233,20 +233,21 @@ public class PathFinding : MonoBehaviour
 
         for (int y = 0; y < height; y++)
         {
-            System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\map.txt", y - 60 + "|| ");
+            String path = ""; // Path til biblioteket hvor txt skal ligge.
+            System.IO.File.AppendAllText(path, y - 60 + "|| ");
             for (int x = 0; x < width; x++)
             {
                 if (movementPath[x, y] == 1000000)
                 {
-                    System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\map.txt", "n ");
+                    System.IO.File.AppendAllText(path, "n ");
                 }
                 else
                 {
-                    System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\map.txt", movementPath[x, y] + " ");
+                    System.IO.File.AppendAllText(path, movementPath[x, y] + " ");
                 }
                 if (x == width - 1)
                 {
-                    System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\map.txt", movementPath[x, y] + Environment.NewLine);
+                    System.IO.File.AppendAllText(path, movementPath[x, y] + Environment.NewLine);
                 }
             }
 
