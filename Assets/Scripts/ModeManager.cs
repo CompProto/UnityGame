@@ -5,6 +5,7 @@ public class ModeManager : MonoBehaviour
 {
 
     public AudioClip DayMusic, ShadowMusic;
+    public GameObject DarkSmoke, WhiteSmoke;
     public GameObject[] gameObjects;
     public Material[] materials; // There must be 2 materials for each gameobject. First material is the white version, second material is dark version
 
@@ -13,6 +14,7 @@ public class ModeManager : MonoBehaviour
     public float duration = 2.0f; // How long to swap between the materials
 
     private AudioSource source;
+    private ParticleSystem _DarkSmoke, _WhiteSmoke;
     private float timer = 1.0f;
 
     // Use this for initialization
@@ -23,16 +25,23 @@ public class ModeManager : MonoBehaviour
             Debug.Log("ERROR! There should be exactly 2 materials pr. gameobject in the ModeManager");
         }
         source = GetComponent<AudioSource>();
-        PlayDayMusic();
+        _DarkSmoke = DarkSmoke.GetComponent<ParticleSystem>();
+        _WhiteSmoke = WhiteSmoke.GetComponent<ParticleSystem>();
+        Play(DayMusic);
+        _WhiteSmoke.Play();
     }
 
     public void PlayDayMusic()
     {
+        _DarkSmoke.Stop();
+        _WhiteSmoke.Play();
         Play(DayMusic);
     }
 
     public void PlayShadowMusic()
     {
+        _WhiteSmoke.Stop();
+        _DarkSmoke.Play();
         Play(ShadowMusic);
     }
 
