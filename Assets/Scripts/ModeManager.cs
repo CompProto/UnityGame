@@ -50,6 +50,9 @@ public class ModeManager : MonoBehaviour
 
     public void ChangeMode()
     {
+        if (timer < 0.0f)
+            return;
+
         isDarkMode = !isDarkMode;
         Debug.Log("Changing materials and music.");
         if (isDarkMode)
