@@ -58,7 +58,7 @@ public class PathFinding : MonoBehaviour
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            print("Det tog  " + elapsedMs + "ms");
+           // print("Det tog  " + elapsedMs + "ms");
 
             if (!isInit)
             {
