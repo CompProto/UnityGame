@@ -48,21 +48,19 @@ public class PathFinding : MonoBehaviour
         timer = Time.time - startTime;
         playerPosition = GameObject.Find("ThirdPersonController").transform.position;
         playerTile = new Tile((int)playerPosition.x + 100, (int)playerPosition.z + 60, 0);
-        if (!isInit || timer >= 10)
+        if (!isInit || timer >= 0.5)
         {
 
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+         
 
             initMap();
             FindPath();
 
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            print("Det tog  " + elapsedMs + "ms");
+           
 
             if (!isInit)
             {
-              //  WriteOutMap(); // Husk at indsætte sti til biblioteket. filen vil blive oprettet
+               //  WriteOutMap(); // Husk at indsætte sti til biblioteket. filen vil blive oprettet
                 isInit = true;
             }
 
@@ -113,17 +111,23 @@ public class PathFinding : MonoBehaviour
 
                 Tile up = new Tile(x - 1, y, count + 1);
                 queue.Enqueue(up);
-                for (int i = 0; i < queue.Count; i++)
-
-                    movementPath[(int)up.x, (int)up.y] = (int)up.count;
+                movementPath[(int)up.x, (int)up.y] = (int)up.count;
             }
-        if (x < height - 1)
+            else if (map[x - 1, y] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
+            }
+        if (x < width - 1)
             if (map[x + 1, y] == 0 && movementPath[x + 1, y] == 999998)
             {
 
                 Tile down = new Tile(x + 1, y, count + 1);
                 queue.Enqueue(down);
                 movementPath[(int)down.x, (int)down.y] = (int)down.count;
+            }
+            else if (map[x + 1, y] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
             }
         if (y > 0)
             if (map[x, y - 1] == 0 && movementPath[x, y - 1] == 999998)
@@ -133,13 +137,21 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(left);
                 movementPath[(int)left.x, (int)left.y] = (int)left.count;
             }
-        if (y < width - 1)
+            else if (map[x, y -1] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
+            }
+        if (y < height - 1)
             if (map[x, y + 1] == 0 && movementPath[x, y + 1] == 999998)
             {
 
                 Tile right = new Tile(x, y + 1, count + 1);
                 queue.Enqueue(right);
                 movementPath[(int)right.x, (int)right.y] = (int)right.count;
+            }
+            else if (map[x , y +1] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
             }
 
     }
@@ -184,7 +196,7 @@ public class PathFinding : MonoBehaviour
                 Tile tl = new Tile(x - 1, y - 1, movementPath[x - 1, y - 1]); // topleft tile
                 neighbourList.Add(tl);
             }
-            if (x > width - 1)
+            if (y < height- 1)
             {
                 Tile tr = new Tile(x - 1, y + 1, movementPath[x - 1, y + 1]);  // top right
                 neighbourList.Add(tr);
@@ -204,9 +216,11 @@ public class PathFinding : MonoBehaviour
         {
             Tile bm = new Tile(x + 1, y, movementPath[x + 1, y]);  // bottom middle;
             neighbourList.Add(bm);
-            if (y > 0) { }
-            Tile bl = new Tile(x + 1, y + 1, movementPath[x + 1, y - 1]); // bottom left;
-            neighbourList.Add(bl);
+            if (y > 0)
+            {
+                Tile bl = new Tile(x + 1, y - 1, movementPath[x + 1, y - 1]); // bottom left;
+                neighbourList.Add(bl);
+            }
         }
 
         if (y < height - 1)
@@ -233,7 +247,9 @@ public class PathFinding : MonoBehaviour
 
         for (int y = 0; y < height; y++)
         {
-            String path = ""; // Path til biblioteket hvor txt skal ligge.
+
+            String path = "";
+            // String path = "C:\\Users\\KimdR\\Desktop\\map.txt"; // Path til biblioteket hvor txt skal ligge.
             System.IO.File.AppendAllText(path, y - 60 + "|| ");
             for (int x = 0; x < width; x++)
             {
@@ -253,12 +269,9 @@ public class PathFinding : MonoBehaviour
 
 
         }
-
-
-
-
+       
     }
-
+    
     public class Tile
     {
         public int x;
