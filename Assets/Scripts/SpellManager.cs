@@ -3,13 +3,14 @@ using System.Collections;
 
 public class SpellManager : MonoBehaviour {
 
+    public GameObject modeManager;
     public GameObject Camera;
-
     public GameObject BlackHole;
 
     private Camera DungeonCam;
     private AudioSource source;
     private ParticleAttractor pAttracktor;
+    private ModeManager modeChanger;
 
 
     // Use this for initialization
@@ -17,6 +18,7 @@ public class SpellManager : MonoBehaviour {
         DungeonCam = Camera.GetComponent<Camera>();
         source = GetComponent<AudioSource>();
         pAttracktor = GetComponent<ParticleAttractor>();
+        modeChanger = modeManager.GetComponent<ModeManager>();
     }
 	
 	// Update is called once per frame
@@ -60,5 +62,11 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-    }
+        // ACTION BAR KEYPRESS 2
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            modeChanger.ChangeMode();
+        }
+
+     }
 }

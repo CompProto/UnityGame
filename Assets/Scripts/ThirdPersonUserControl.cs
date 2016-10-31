@@ -8,10 +8,8 @@ using UnityStandardAssets.CrossPlatformInput;
 public class ThirdPersonUserControl : MonoBehaviour
 {
 
-    public AudioClip DayMusic, ShadowMusic;
     public ParticleSystem LevelUp;
 
-    private AudioSource source;
     private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform
     private Vector3 m_CamForward;             // The current forward direction of the camera
@@ -36,8 +34,6 @@ public class ThirdPersonUserControl : MonoBehaviour
 
         // get the third person character ( this should never be null due to require component )
         m_Character = GetComponent<ThirdPersonCharacter>();
-        source = GetComponent<AudioSource>();
-        PlayDayMusic();
     }
 
 
@@ -48,45 +44,13 @@ public class ThirdPersonUserControl : MonoBehaviour
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PlayShadowMusic();
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            PlayDayMusic();
-        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             LevelUp.Play();
         }
         charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
     }
-
-    public void PlayDayMusic()
-    {
-        Play(DayMusic);
-    }
-
-    public void PlayShadowMusic()
-    {
-        Play(ShadowMusic);
-    }
-
-    private void Play(AudioClip sound)
-    {
-        if (source.clip == sound && source.isPlaying)
-            return;
-
-        if (source.isPlaying)
-        {
-            source.Stop();
-        }
-        
-        source.clip = sound;
-        source.Play();
-    }
-
 
     // Fixed update is called in sync with physics
     private void FixedUpdate()
