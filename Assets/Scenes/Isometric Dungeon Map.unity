@@ -261,6 +261,7 @@ MonoBehaviour:
   modeManager: {fileID: 516274160}
   Camera: {fileID: 1384400077}
   BlackHole: {fileID: 1000012824770030, guid: 1c8531bb47d2b604089230842b5e2295, type: 2}
+  EnergyBomb: {fileID: 1000010107818208, guid: fbc3a74a6e46ae944a5a6bd37ffe0e89, type: 2}
 --- !u!4 &129156920
 Transform:
   m_ObjectHideFlags: 0

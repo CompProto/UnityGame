@@ -6,11 +6,13 @@ public class SpellManager : MonoBehaviour {
     public GameObject modeManager;
     public GameObject Camera;
     public GameObject BlackHole;
+    public GameObject EnergyBomb;
 
     private Camera DungeonCam;
     private AudioSource source;
     private ParticleAttractor pAttracktor;
     private ModeManager modeChanger;
+    private Transform PlayerPosition;
 
 
     // Use this for initialization
@@ -19,6 +21,7 @@ public class SpellManager : MonoBehaviour {
         source = GetComponent<AudioSource>();
         pAttracktor = GetComponent<ParticleAttractor>();
         modeChanger = modeManager.GetComponent<ModeManager>();
+        PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
     }
 	
 	// Update is called once per frame
@@ -59,6 +62,21 @@ public class SpellManager : MonoBehaviour {
                         break;
                     }
                 }
+            }
+        }
+
+        // ACTION BAR KEYPRESS 3
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit vHit = new RaycastHit();
+            if (Physics.Raycast(ray, out vHit, 200))
+            {               
+                Vector3 spawnPos = PlayerPosition.position;
+                spawnPos.y += 1.25f;
+                GameObject bomb = (GameObject) Instantiate(EnergyBomb, spawnPos, transform.rotation);
+                EnergyBombController eController = bomb.GetComponent<EnergyBombController>();
+                eController.ThrowBomb(vHit.point);
             }
         }
 
