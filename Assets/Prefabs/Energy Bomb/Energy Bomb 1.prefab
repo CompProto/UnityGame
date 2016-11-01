@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b6d37d86c83d9479979b05cbc7c24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nova: {fileID: 1000010664317656, guid: d9c75f9bfdacc4047ad76c60a4493162, type: 2}
+  Nova: {fileID: 1000010108006462, guid: 550a1091890a46a488b636aae57c0840, type: 2}
 --- !u!198 &198000010217866356
 ParticleSystem:
   m_ObjectHideFlags: 1
