@@ -7,12 +7,14 @@ public class SpellManager : MonoBehaviour {
     public GameObject Camera;
     public GameObject BlackHole;
     public GameObject EnergyBomb;
+    public GameObject DimensionDoor;
 
     private Camera DungeonCam;
     private AudioSource source;
     private ParticleAttractor pAttracktor;
     private ModeManager modeChanger;
     private Transform PlayerPosition;
+    private DimensionDoorManager doorManager;
 
 
     // Use this for initialization
@@ -22,6 +24,7 @@ public class SpellManager : MonoBehaviour {
         pAttracktor = GetComponent<ParticleAttractor>();
         modeChanger = modeManager.GetComponent<ModeManager>();
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        doorManager = DimensionDoor.GetComponent<DimensionDoorManager>();
     }
 	
 	// Update is called once per frame
@@ -80,7 +83,13 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 2
+        // ACTION BAR KEYPRESS 4
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            doorManager.CastDimensionDoor();
+        }
+
+        // ACTION BAR KEYPRESS R
         if (Input.GetKeyDown(KeyCode.R))
         {
             modeChanger.ChangeMode();
