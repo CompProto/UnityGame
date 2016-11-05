@@ -6,11 +6,17 @@ public class SpellManager : MonoBehaviour {
     public GameObject modeManager;
     public GameObject Camera;
     public GameObject BlackHole;
+    public GameObject EnergyBomb;
+    public GameObject DimensionDoor;
+    public GameObject Barrier;
 
     private Camera DungeonCam;
     private AudioSource source;
     private ParticleAttractor pAttracktor;
     private ModeManager modeChanger;
+    private Transform PlayerPosition;
+    private DimensionDoorManager doorManager;
+    private BarrierManager barrierManager;
 
 
     // Use this for initialization
@@ -19,6 +25,9 @@ public class SpellManager : MonoBehaviour {
         source = GetComponent<AudioSource>();
         pAttracktor = GetComponent<ParticleAttractor>();
         modeChanger = modeManager.GetComponent<ModeManager>();
+        PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        doorManager = DimensionDoor.GetComponent<DimensionDoorManager>();
+        barrierManager = Barrier.GetComponent<BarrierManager>();
     }
 	
 	// Update is called once per frame
@@ -62,7 +71,34 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 2
+        // ACTION BAR KEYPRESS 3
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit vHit = new RaycastHit();
+            if (Physics.Raycast(ray, out vHit, 200))
+            {               
+                Vector3 spawnPos = PlayerPosition.position;
+                spawnPos.y += 1.25f;
+                GameObject bomb = (GameObject) Instantiate(EnergyBomb, spawnPos, transform.rotation);
+                EnergyBombController eController = bomb.GetComponent<EnergyBombController>();
+                eController.ThrowBomb(vHit.point);
+            }
+        }
+
+        // ACTION BAR KEYPRESS 4
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            doorManager.CastDimensionDoor();
+        }
+
+        // ACTION BAR KEYPRESS 5
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            barrierManager.ActivateBarrier();
+        }
+
+        // ACTION BAR KEYPRESS R
         if (Input.GetKeyDown(KeyCode.R))
         {
             modeChanger.ChangeMode();
