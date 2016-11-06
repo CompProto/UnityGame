@@ -8,8 +8,6 @@ public class BlackHole : MonoBehaviour {
     [Range(0.5f, 10.0f)]
     public float range = 5.0f;
 
-    public string EnemyTag = "PowerUp";
-
     public float force = 50;
 
     private ParticleSystem orb;
@@ -33,7 +31,7 @@ public class BlackHole : MonoBehaviour {
             Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
             foreach (Collider candidate in hits)
             {
-                if (candidate.gameObject.tag == EnemyTag)
+                if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
                 {
                     Vector3 forceDirection = candidate.transform.position - gameObject.transform.position;
                     candidate.gameObject.GetComponent<Rigidbody>().AddForce(-forceDirection.normalized * force, ForceMode.Force);

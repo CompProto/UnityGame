@@ -9,6 +9,8 @@ public class DimensionDoorManager : MonoBehaviour {
     public GameObject Explosion; // Must have same position as Door. Non-looping particle system, play on awake
     [Range(0.0f, 3.0f)]
     public float TimeToTeleport;
+    [Range(0.5f, 10.0f)]
+    public float TeleportRadius;
 
     private bool hasDoor; // true if a door has been placed
     private ParticleSystem doorParticles; // Looping particlesystem that illustrates the door position
@@ -16,7 +18,7 @@ public class DimensionDoorManager : MonoBehaviour {
     private GameObject _implosion;
     private GameObject _explosion;
     private float timer;
-    private bool teleporting;
+    private bool teleporting, enemyTeleporting;
     private AudioSource source;
 
     // Use this for initialization
@@ -37,26 +39,72 @@ public class DimensionDoorManager : MonoBehaviour {
                 timer = 0;
             }
         }
+        else if (enemyTeleporting)
+        {
+            timer += Time.deltaTime;
+            if(timer > TimeToTeleport * 4)
+            {
+                enemyTeleporting = false;
+                timer = 0;
+            }
+            Collider[] hits = Physics.OverlapSphere(Player.transform.position, TeleportRadius);
+            foreach (Collider candidate in hits)
+            {
+                if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
+                {
+                    // Pull enemies towards the player
+                    Vector3 forceDirection = candidate.transform.position - Player.transform.position;
+                    candidate.gameObject.GetComponent<Rigidbody>().AddForce(-forceDirection.normalized * 50, ForceMode.Force);
+                    if ((candidate.gameObject.transform.position - Player.transform.position).magnitude < 1.5f)
+                    {
+                        // Teleport the enemy when it's close to the player
+                        candidate.gameObject.transform.position = _door.transform.position;
+                    }
+                }
+            }
+        }
 	}
 
     public void CastDimensionDoor()
     {
-        if (hasDoor)
-            UseDimensionDoor();
-         else
-            PlaceDimensionDoor();
+        if (GameManager.instance.isDarkMode) // Dark mode
+        {
+            if (hasDoor)
+                TeleportEnemies();
+            else
+                PlaceDimensionDoor();
+        }
+        else // Light mode
+        {
+            if (hasDoor)
+                UseDimensionDoor();
+            else
+                PlaceDimensionDoor();
+        }   
     }
 
-    private void UseDimensionDoor()
+    private void TeleportEnemies()
+    {
+        StartEffects();
+        enemyTeleporting = true;
+        hasDoor = false;
+    }
+
+    private void StartEffects()
     {
         _implosion = (GameObject)Instantiate(Implosion, Player.transform.position, Player.transform.rotation);
         _explosion = (GameObject)Instantiate(Explosion, _door.transform.position, Player.transform.rotation);
-        teleporting = true;
         source.Play();
         doorParticles.Stop();
         Destroy(_door, 2.0f);
         Destroy(_implosion, 2.5f);
         Destroy(_explosion, 2.5f);
+    }
+
+    private void UseDimensionDoor()
+    {
+        StartEffects();
+        teleporting = true;
         hasDoor = false;
     }
 

@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1e5ab3daf18894fa20dcd37e7f0411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyTag: PowerUp
 --- !u!4 &40231662
 Transform:
   m_ObjectHideFlags: 0
@@ -401,6 +402,7 @@ MonoBehaviour:
   Implosion: {fileID: 1000011907902446, guid: ed89e3af2618ae8409c3615556e834ca, type: 2}
   Explosion: {fileID: 1000013812039258, guid: 3507e48d9875b284296ba310cb8e7bec, type: 2}
   TimeToTeleport: 0.5
+  TeleportRadius: 5
 --- !u!4 &285696051
 Transform:
   m_ObjectHideFlags: 0
@@ -1187,6 +1189,11 @@ Prefab:
         type: 2}
       propertyPath: TimeToTeleport
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013475347896, guid: 1b6f13f5e09993e4bb3563349960da39,
+        type: 2}
+      propertyPath: TeleportRadius
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b6f13f5e09993e4bb3563349960da39, type: 2}

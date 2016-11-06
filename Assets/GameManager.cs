@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     public bool isDarkMode { get; set; }
+
+    public string EnemyTag = "PowerUp"; // TODO - change to correct tag
     
     void Awake()
     {

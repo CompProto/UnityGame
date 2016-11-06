@@ -68,6 +68,7 @@ public class ModeManager : MonoBehaviour
         Debug.Log("Changing materials and music.");
         soundChanged = false;
         timer = -duration;
+        GameManager.instance.isDarkMode = isDarkMode;
     }
 
     void Update()
