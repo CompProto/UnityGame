@@ -11,6 +11,7 @@ public class EnergyBombController : MonoBehaviour
     private Vector3 tar;
     private ParticleSystem particles;
     private AudioSource source;
+    private bool NovaSpawned = false;
 
     // Use this for initialization
     void Start()
@@ -19,16 +20,37 @@ public class EnergyBombController : MonoBehaviour
         source.clip = ImpactSound;
     }
 
-    bool t = false;
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y < tar.y && !t)
+        if (transform.position.y < tar.y && !NovaSpawned)
         {
-            t = true;
-            // Start Nova
+            NovaSpawned = true;
+            // Start & spawn Nova
             source.Play();
-            GameObject nova = (GameObject)Instantiate(Nova, tar + new Vector3(0,0.5f,0), transform.rotation * Quaternion.Euler(90, 0, 0));           
+            GameObject nova = (GameObject)Instantiate(Nova, tar + new Vector3(0, 0.5f, 0), transform.rotation * Quaternion.Euler(90, 0, 0));
+            
+            // Damage all enemies depending on distance to black hole
+            GameObject blackHole = GameObject.FindGameObjectWithTag("BlackHole");
+            if (blackHole != null)
+            {
+                float dist = (blackHole.transform.position - tar).magnitude;
+                float damage;
+                if (GameManager.instance.isDarkMode)
+                    damage = 1; // TODO - Calculation for darkmode
+                else
+                    damage = 2; // TODO - calculation for light mode
+
+                Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+                foreach (Collider candidate in hits)
+                {
+                    if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
+                    {
+                        // TODO - do damage to each enemy
+                    }
+                }
+            }
+
             Destroy(gameObject, 2.5f);
         }
     }

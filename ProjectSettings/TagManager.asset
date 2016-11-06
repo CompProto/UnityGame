@@ -10,6 +10,7 @@ TagManager:
   - SpellCastManager
   - OrbitParticles
   - Pathfinder
+  - BlackHole
   layers:
   - Default
   - TransparentFX

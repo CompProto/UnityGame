@@ -28,6 +28,11 @@ public class BlackHole : MonoBehaviour {
         }
         else
         {
+            if (GameManager.instance.isDarkMode)
+                force = Mathf.Abs(force) * -1;
+            else
+                force = Mathf.Abs(force);
+
             Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
             foreach (Collider candidate in hits)
             {
