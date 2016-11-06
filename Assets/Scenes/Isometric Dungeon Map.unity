@@ -182,7 +182,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6a59b9c092fef2e4cb458e6e398364be, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -261,9 +261,10 @@ MonoBehaviour:
   modeManager: {fileID: 516274160}
   Camera: {fileID: 1384400077}
   BlackHole: {fileID: 1000012824770030, guid: 1c8531bb47d2b604089230842b5e2295, type: 2}
-  EnergyBomb: {fileID: 1000010107818208, guid: fbc3a74a6e46ae944a5a6bd37ffe0e89, type: 2}
+  EnergyBomb: {fileID: 1000012089052624, guid: 539e8a6c7d8d25c4ca3d71838cdc62a4, type: 2}
   DimensionDoor: {fileID: 285696049}
   Barrier: {fileID: 1611232680}
+  BlackHoleSound: {fileID: 8300000, guid: 6a59b9c092fef2e4cb458e6e398364be, type: 3}
 --- !u!4 &129156920
 Transform:
   m_ObjectHideFlags: 0

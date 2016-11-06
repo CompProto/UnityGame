@@ -10,6 +10,8 @@ public class SpellManager : MonoBehaviour {
     public GameObject DimensionDoor;
     public GameObject Barrier;
 
+    public AudioClip BlackHoleSound;
+
     private Camera DungeonCam;
     private AudioSource source;
     private ParticleAttractor pAttracktor;
@@ -44,6 +46,7 @@ public class SpellManager : MonoBehaviour {
                 spawnPos.y += 1; // Spawn slightly above the ground
                 //Debug.Log("Hit: " + vHit.point);
                 Instantiate(BlackHole, spawnPos, transform.rotation);
+                source.clip = BlackHoleSound;
                 source.Play();
             }
         }

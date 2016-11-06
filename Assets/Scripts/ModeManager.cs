@@ -16,6 +16,7 @@ public class ModeManager : MonoBehaviour
     private AudioSource source;
     private ParticleSystem _DarkSmoke, _WhiteSmoke;
     private float timer = 1.0f;
+    private bool soundChanged;
 
     // Use this for initialization
     void Start()
@@ -64,10 +65,7 @@ public class ModeManager : MonoBehaviour
 
         isDarkMode = !isDarkMode;
         Debug.Log("Changing materials and music.");
-        if (isDarkMode)
-            PlayShadowMusic();
-        else
-            PlayDayMusic();
+        soundChanged = false;
         timer = -duration;
     }
 
@@ -83,7 +81,29 @@ public class ModeManager : MonoBehaviour
                 else
                     gameObjects[i].GetComponent<Renderer>().material.Lerp(materials[2 * i + 1], materials[2 * i], timer + 2);
             }
+            ManageMusic();
         }
         timer += Time.deltaTime;
+    }
+
+    private void ManageMusic()
+    {
+        if (!soundChanged)
+        {
+            if (source.volume > 0)
+                source.volume -= Time.deltaTime;
+            else
+            {
+                if (isDarkMode)
+                    PlayShadowMusic();
+                else
+                    PlayDayMusic();
+                soundChanged = true;
+            }
+        }
+        else if (source.volume < 1.0f)
+        {
+            source.volume += Time.deltaTime;
+        }
     }
 }

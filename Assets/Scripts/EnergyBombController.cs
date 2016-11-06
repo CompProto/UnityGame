@@ -5,15 +5,18 @@ public class EnergyBombController : MonoBehaviour
 {
 
     public GameObject Nova;
+    public AudioClip ImpactSound;
 
     private Rigidbody body;
     private Vector3 tar;
     private ParticleSystem particles;
+    private AudioSource source;
 
     // Use this for initialization
     void Start()
     {
-
+        source = gameObject.GetComponent<AudioSource>();
+        source.clip = ImpactSound;
     }
 
     bool t = false;
@@ -24,8 +27,9 @@ public class EnergyBombController : MonoBehaviour
         {
             t = true;
             // Start Nova
+            source.Play();
             GameObject nova = (GameObject)Instantiate(Nova, tar + new Vector3(0,0.5f,0), transform.rotation * Quaternion.Euler(90, 0, 0));           
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject, 2.5f);
         }
     }
 
