@@ -3,12 +3,13 @@ using System.Collections;
 
 public class ModeManager : MonoBehaviour
 {
-
+    [Range(0.0f, 1.0f)]
+    public float MusicVolume = 0.5f;
     public AudioClip DayMusic, ShadowMusic;
     public GameObject DarkSmoke, WhiteSmoke;
     public GameObject[] gameObjects;
     public Material[] materials; // There must be 2 materials for each gameobject. First material is the white version, second material is dark version
-
+    
     public bool isDarkMode = false; 
 
     public float duration = 2.0f; // How long to swap between the materials
@@ -101,7 +102,7 @@ public class ModeManager : MonoBehaviour
                 soundChanged = true;
             }
         }
-        else if (source.volume < 1.0f)
+        else if (source.volume < MusicVolume)
         {
             source.volume += Time.deltaTime;
         }
