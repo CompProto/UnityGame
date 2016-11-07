@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ModeManager : MonoBehaviour
@@ -10,9 +11,10 @@ public class ModeManager : MonoBehaviour
     public GameObject[] gameObjects;
     public Material[] materials; // There must be 2 materials for each gameobject. First material is the white version, second material is dark version
     
-    public bool isDarkMode = false; 
-
+    public bool isDarkMode = false;
     public float duration = 2.0f; // How long to swap between the materials
+    public Slider ModeSlider;
+    public float ModeUnitSpeed = 5; // ModeUnits pr. second
 
     private AudioSource source;
     private ParticleSystem _DarkSmoke, _WhiteSmoke;
@@ -31,6 +33,15 @@ public class ModeManager : MonoBehaviour
         _WhiteSmoke = WhiteSmoke.GetComponent<ParticleSystem>();
         Play(DayMusic);
         _WhiteSmoke.Play();
+    }
+
+    void FixedUpdate()
+    {
+        float value = Time.fixedDeltaTime * ModeUnitSpeed;
+        if (isDarkMode)
+            ModeSlider.value -= value;
+        else
+            ModeSlider.value += value;
     }
 
     public void PlayDayMusic()
