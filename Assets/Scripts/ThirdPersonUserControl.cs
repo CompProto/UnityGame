@@ -36,7 +36,6 @@ public class ThirdPersonUserControl : MonoBehaviour
         m_Character = GetComponent<ThirdPersonCharacter>();
     }
 
-
     private void Update()
     {
         if (!m_Jump)
@@ -55,6 +54,12 @@ public class ThirdPersonUserControl : MonoBehaviour
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
+        if (GameManager.instance.isDead)
+        {
+            m_Character.Move(new Vector3(0,0,0), false, false);
+            return;
+        }
+
         // read inputs
         float h = CrossPlatformInputManager.GetAxis("Horizontal");
         float v = CrossPlatformInputManager.GetAxis("Vertical");

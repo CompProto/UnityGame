@@ -6,19 +6,24 @@ public class PlayerHealth : MonoBehaviour {
 
     public Slider HealthBar;
     public Slider EnergyBar;
+    public float HealthRegen = 5.0f;
+    public float EnergyRegen = 5.0f;
 
     private bool isDead;
+    private ThirdPersonUserControl UserControl;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         EnergyBar.value = 100.0f; // TODO - set to max energy
-     //   HealthBar.value = 100.0f; // TODO - set to max health
+                                  //   HealthBar.value = 100.0f; // TODO - set to max health
+        UserControl = gameObject.GetComponent<ThirdPersonUserControl>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
         // TODO - remove!
+        if (isDead)
+            return;
         if (Random.Range(0.0f, 1.0f) > 0.5f)
             TakeDamage(0.5f);
         else
@@ -28,8 +33,11 @@ public class PlayerHealth : MonoBehaviour {
 
     void FixedUpdate()
     {
-        Heal(5.0f * Time.fixedDeltaTime); // TODO, how much health regen pr second?
-        GainEnergy(5.0f * Time.fixedDeltaTime); // TODO, how much energy regen pr second?
+        if (!isDead)
+        {
+            Heal(HealthRegen * Time.fixedDeltaTime); // TODO, how much health regen pr second?
+            GainEnergy(EnergyRegen * Time.fixedDeltaTime); // TODO, how much energy regen pr second?
+        }
     }
 
     public bool SpendEnergy(float amount)
@@ -64,6 +72,7 @@ public class PlayerHealth : MonoBehaviour {
     private void Death()
     {
         isDead = true;
+        GameManager.instance.isDead = true; // mark player as dead
         // TODO, stop player movement etc
     }
 

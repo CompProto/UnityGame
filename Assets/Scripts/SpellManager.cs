@@ -37,6 +37,9 @@ public class SpellManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (GameManager.instance.isDead)
+            return;
+
         // ACTION BAR KEYPRESS 1 - BLACK HOLE
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
