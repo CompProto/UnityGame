@@ -102,7 +102,7 @@ public class ThirdPersonCharacter : MonoBehaviour
                 bool hit = false;
                 foreach (Collider candidate in candidates)
                 {
-                    if (candidate.gameObject.tag == "PowerUp")
+                    if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
                     {
                         Vector3 forceDirection = candidate.transform.position - transform.position;
                         candidate.gameObject.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * force, ForceMode.Impulse);

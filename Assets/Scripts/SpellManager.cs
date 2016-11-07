@@ -19,6 +19,7 @@ public class SpellManager : MonoBehaviour {
     private Transform PlayerPosition;
     private DimensionDoorManager doorManager;
     private BarrierManager barrierManager;
+    private PlayerHealth _PlayerHealth;
 
 
     // Use this for initialization
@@ -30,12 +31,13 @@ public class SpellManager : MonoBehaviour {
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         doorManager = DimensionDoor.GetComponent<DimensionDoorManager>();
         barrierManager = Barrier.GetComponent<BarrierManager>();
+        _PlayerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        // ACTION BAR KEYPRESS 1
+        // ACTION BAR KEYPRESS 1 - BLACK HOLE
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
@@ -51,8 +53,8 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 2
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        // ACTION BAR KEYPRESS 2 - ASTRAL PRESENCE
+        if (Input.GetKeyDown(KeyCode.Alpha2) && _PlayerHealth.SpendEnergy(25.0f)) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -74,8 +76,8 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 3
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        // ACTION BAR KEYPRESS 3 - ENERGY BOMB
+        if (Input.GetKeyDown(KeyCode.Alpha3) && _PlayerHealth.SpendEnergy(10.0f)) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -89,7 +91,7 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 4
+        // ACTION BAR KEYPRESS 4 - DIMENSION DOOR
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             doorManager.CastDimensionDoor();

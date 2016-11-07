@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class DimensionDoorManager : MonoBehaviour {
@@ -7,10 +8,12 @@ public class DimensionDoorManager : MonoBehaviour {
     public GameObject Door; // Prefab with particlesystem that can be spawned where the door should be. Also holds the position
     public GameObject Implosion; // Must have same position as Player. Non-looping particle system, play on awake
     public GameObject Explosion; // Must have same position as Door. Non-looping particle system, play on awake
+    public Image flash; // Image to be flashed when teleporting
     [Range(0.0f, 3.0f)]
     public float TimeToTeleport;
     [Range(0.5f, 10.0f)]
     public float TeleportRadius;
+    public float flashSpeed = 5f;
 
     private bool hasDoor; // true if a door has been placed
     private ParticleSystem doorParticles; // Looping particlesystem that illustrates the door position
@@ -20,11 +23,13 @@ public class DimensionDoorManager : MonoBehaviour {
     private float timer;
     private bool teleporting, enemyTeleporting;
     private AudioSource source;
+    private Color flashColor;
 
     // Use this for initialization
     void Start () {
         timer = 0;
         source = gameObject.GetComponent<AudioSource>();
+        flashColor = new Color(0.0f, 0.0f, 0.0f, 0.9f);
 	}
 	
 	// Update is called once per frame
@@ -37,6 +42,7 @@ public class DimensionDoorManager : MonoBehaviour {
                 Player.transform.position = _door.transform.position; // "Teleport" the player
                 teleporting = false;
                 timer = 0;
+                flash.color = flashColor;
             }
         }
         else if (enemyTeleporting)
@@ -62,6 +68,10 @@ public class DimensionDoorManager : MonoBehaviour {
                     }
                 }
             }
+        }
+        else
+        {
+            flash.color = Color.Lerp(flash.color, Color.clear, Time.deltaTime * flashSpeed);
         }
 	}
 
