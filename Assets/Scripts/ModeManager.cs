@@ -10,7 +10,8 @@ public class ModeManager : MonoBehaviour
     public GameObject DarkSmoke, WhiteSmoke;
     public GameObject[] gameObjects;
     public Material[] materials; // There must be 2 materials for each gameobject. First material is the white version, second material is dark version
-    
+    public Image Overlay;
+        
     public bool isDarkMode = false;
     public float duration = 2.0f; // How long to swap between the materials
     public Slider ModeSlider;
@@ -20,6 +21,7 @@ public class ModeManager : MonoBehaviour
     private ParticleSystem _DarkSmoke, _WhiteSmoke;
     private float timer = 1.0f;
     private bool soundChanged;
+    private Color OverlayColor;
 
     // Use this for initialization
     void Start()
@@ -42,6 +44,21 @@ public class ModeManager : MonoBehaviour
             ModeSlider.value -= value;
         else
             ModeSlider.value += value;
+
+        if(ModeSlider.value >= 0) // Light
+        {
+            if (isDarkMode)  
+                Overlay.color = new Color(1, 1, 1, ModeSlider.value/100.0f * 2); // Bevæg mod clear
+            else
+                Overlay.color = new Color(1, 1, 1, ModeSlider.value / 100.0f * 2);// bevæg mod light
+        }
+        else
+        {
+            if (isDarkMode)
+                Overlay.color = new Color(0, 0, 0, -ModeSlider.value / 100.0f * 2);// bevæg mod dark
+            else
+                Overlay.color = new Color(0, 0, 0, -ModeSlider.value / 100.0f * 2); // Bevæg mod clear
+        }
     }
 
     public void PlayDayMusic()
