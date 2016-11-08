@@ -8,17 +8,20 @@ namespace Mechanics.Objects
 {
     public abstract class Character
     {
-        private Dictionary<Stats, StatBase> characterStats;
+        private float wounds;
+        private float consumedSpellpoints;
+        protected Dictionary<Stats, StatBase> characterStats;
         private Dictionary<Stats, StatBase> combinedStats;
         private List<Item> equippedItems;
-        protected Dictionary<MECHANICS.ABILITIES, AbilityBase> lastUsage;
+        protected Dictionary<MECHANICS.ABILITIES, AbilityBase> abilities;
 
         public Character(SingleValueStat[] baseStats = null)
         {
             this.equippedItems = new List<Item>() { };
             this.characterStats = MECHANICS.Convert(baseStats);
             this.combinedStats = new Dictionary<Stats, StatBase>();
-            this.lastUsage = new Dictionary<MECHANICS.ABILITIES, AbilityBase>();
+            this.abilities = new Dictionary<MECHANICS.ABILITIES, AbilityBase>();
+            this.UpdateStats();
         }
 
         // Equipped rune.
@@ -29,11 +32,19 @@ namespace Mechanics.Objects
 
         // Stats
         public float SpellPoints { get { return this[Stats.ENERGY]; } }
-        public float ConsumedSpellPoints { get; set; }
+        public float ConsumedSpellPoints
+        {
+            get { return this.consumedSpellpoints; }
+            set { this.consumedSpellpoints = value; if(this.consumedSpellpoints < 0f) this.consumedSpellpoints = 0f; }
+        }
         public float Life { get { return this[Stats.LIFEFORCE]; } }
-        public float Wounds { get; set; }
-        public float Barrier { get; set; }
-
+        public float Wounds
+        {
+            get { return this.wounds; }
+            set { this.wounds = value; if (this.wounds < 0f) this.wounds = 0f; }
+        }
+        public float Absorb { get; set; }
+        public bool IsDead { get; private set; }
         // For getting translated values
         public float this[Stats index]
         {
@@ -58,31 +69,34 @@ namespace Mechanics.Objects
             SingleValueStat parity = this.GetStat(Stats.PARITY).ConvertTo(Stats.PARITY, reduction);
             float mitigation = MECHANICS.EvaluateStat(parity);
             float incomingDamage = damage * mitigation;
-            if (this.Barrier > 0)
+            if (this.Absorb > 0)
             {
                 if (this.Roll(this[Stats.BARRIER_BLOCK_CHANCE]))
                 {
-                    this.Barrier -= incomingDamage;
+                    this.Absorb -= incomingDamage;
                     incomingDamage = 0;
-                    if (this.Barrier < 0)
+                    if (this.Absorb < 0)
                     {
-                        incomingDamage = -this.Barrier;
-                        this.Barrier = 0;
+                        incomingDamage = -this.Absorb;
+                        this.Absorb = 0;
                     }
                 }
             }
             this.Wounds += incomingDamage;
-            if (this.Wounds > this.Life)
-            {
-                // DEAD
-            }
+            this.IsDead = this.Wounds > this.Life;
+        }
+
+        public void Update()
+        {
+            this.Wounds -= this.Life * MECHANICS.TABLES.SPECIALS.HEALTH_PR_SECOND;
+            this.ConsumedSpellPoints -= this.SpellPoints * MECHANICS.TABLES.SPECIALS.SPELLPOINTS_PR_SECOND;
         }
 
         public bool CanUse(MECHANICS.ABILITIES ability)
         {
-            if (this.lastUsage.ContainsKey(ability))
+            if (this.abilities.ContainsKey(ability))
             {
-                return this.lastUsage[ability].CanApply();
+                return this.abilities[ability].CanApply();
             }
 
             return false;
@@ -97,9 +111,9 @@ namespace Mechanics.Objects
         /// For effects that work over a duration, the factor should be framecount / duration. </param>
         public void UseAbility(MECHANICS.ABILITIES ability, Character target, float factor)
         {
-            if (this.lastUsage.ContainsKey(ability))
+            if (this.abilities.ContainsKey(ability))
             {
-                this.lastUsage[ability].Execute(target, factor);
+                this.abilities[ability].Execute(target, factor);
             }
         }
         /// <summary>
@@ -108,9 +122,9 @@ namespace Mechanics.Objects
         /// <param name="ability"></param>
         public void EndAbility(MECHANICS.ABILITIES ability)
         {
-            if (this.lastUsage.ContainsKey(ability))
+            if (this.abilities.ContainsKey(ability))
             {
-                this.lastUsage[ability].End();
+                this.abilities[ability].End();
             }
         }
         public float Roll(Interval interval)

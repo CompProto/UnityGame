@@ -1,29 +1,41 @@
 ﻿using Mechanics.Enumerations;
 using System;
+using UnityEngine;
 
 namespace Mechanics.Objects.Abilities
 {
     public class BarrierEffect : AbilityBase
     {
-        private int lastUsage;
-        private float absorbAmount;
+        private float lastUsage;
+        private bool isRunning;
 
         public BarrierEffect(Character self) : base(self)
         {
-            this.absorbAmount = self.Roll(MECHANICS.TABLES.AOE.DAMAGEVALUES.MEDIUM) * this.self[Stats.BARRIER_POTENCY]; 
-            this.lastUsage = 0;
+            this.lastUsage = Time.time;
+            this.isRunning = false;
         }
+
+        public static float Cooldown { get { return MECHANICS.TABLES.SINGLE_TARGET.COOLDOWNVALUES.MEDIUM; } }
+        public static float Duration { get { return MECHANICS.TABLES.SINGLE_TARGET.DURATIONVALUES.MEDIUM; } }
+        public static Interval BarrierRange { get { return MECHANICS.TABLES.SINGLE_TARGET.DAMAGEVALUES.MEDIUM; } }
+
         public override bool CanApply()
         {
-            return this.lastUsage < Environment.TickCount + (MECHANICS.TABLES.SINGLE_TARGET.COOLDOWNVALUES.MEDIUM * this.self[Stats.ALACRITY]); 
+            return (Cooldown * this.self[Stats.ALACRITY]) < Time.time - this.lastUsage;
         }
         public override void Execute(Character target, float factor)
         {
-            target.Barrier = this.absorbAmount;
+            if (!this.isRunning)
+            {
+                this.lastUsage = Time.time;
+                this.isRunning = true;
+            }
+            self.Absorb = self.Roll(BarrierRange) * this.self[Stats.BARRIER_POTENCY];
         }
         public override void End()
         {
-            this.lastUsage = Environment.TickCount;
+            this.isRunning = false;
+            this.self.Absorb = 0f;
         }
     }
 }

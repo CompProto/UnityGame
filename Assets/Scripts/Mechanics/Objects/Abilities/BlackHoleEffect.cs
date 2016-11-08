@@ -1,34 +1,46 @@
 ﻿using Mechanics.Enumerations;
 using System;
+using UnityEngine;
 
 namespace Mechanics.Objects.Abilities
 {
     public class BlackHoleEffect : DamageEffect
     {
-        private int lastUsage;
+        private float lastUsage;
+        private bool isRunning;
 
         public BlackHoleEffect(Character self) : base(self)
         {
-            this.damageInterval = MECHANICS.TABLES.AOE.DAMAGEVALUES.MEDIUM;
-            this.lastUsage = 0;
+            this.lastUsage = Time.time;
+            this.isRunning = false;
+            this.damageInterval = DamageRange;
         }
+
+        public static float Cooldown { get { return MECHANICS.TABLES.AOE.COOLDOWNVALUES.MEDIUM; } }
+        public static float Duration { get { return MECHANICS.TABLES.AOE.DURATIONVALUES.MEDIUM; } }
+        public static Interval DamageRange { get { return MECHANICS.TABLES.AOE.DAMAGEVALUES.MEDIUM; } }
 
         public override bool CanApply()
         {
-            return this.lastUsage < Environment.TickCount + (MECHANICS.TABLES.AOE.COOLDOWNVALUES.MEDIUM * this.self[Stats.ALACRITY]);
+            return (Cooldown * this.self[Stats.ALACRITY]) < Time.time - this.lastUsage;
         }
 
         public override void Execute(Character target, float factor)
         {
-            if (this.CanApply())
+            if (!this.isRunning)
             {
-                base.Execute(target, factor);                        
+                this.lastUsage = Time.time;
+                this.isRunning = true;
+            }
+            if (target != null)
+            {
+                base.Execute(target, factor);
             }
         }
 
         public override void End()
         {
-            this.lastUsage = Environment.TickCount;
+            this.isRunning = false;
         }
     }
 }

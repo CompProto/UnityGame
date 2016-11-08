@@ -1,10 +1,6 @@
 ﻿using Mechanics.Enumerations;
 using Mechanics.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RPG.Assets.Scripts.Mechanics.Enumerations;
 
 namespace Mechanics
 {
@@ -22,7 +18,7 @@ namespace Mechanics
                 new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
                 new SingleValueStat(Stats.POTENCY, 1f, 0f),
             };
-
+            Enemy e = new Enemy(EnemyType.CLOSERANGE, new Interval(1, 3));
             Player c = new Player(baseStats);
             ItemGenerator ig = new ItemGenerator();
             ig.Initialize();

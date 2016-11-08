@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mechanics.Objects;
 
 public class SpellManager : MonoBehaviour {
 
@@ -32,6 +33,7 @@ public class SpellManager : MonoBehaviour {
         doorManager = DimensionDoor.GetComponent<DimensionDoorManager>();
         barrierManager = Barrier.GetComponent<BarrierManager>();
         _PlayerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        
     }
 	
 	// Update is called once per frame
@@ -41,7 +43,7 @@ public class SpellManager : MonoBehaviour {
             return;
 
         // ACTION BAR KEYPRESS 1 - BLACK HOLE
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.BLACKHOLE))
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -57,7 +59,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS 2 - ASTRAL PRESENCE
-        if (Input.GetKeyDown(KeyCode.Alpha2) && _PlayerHealth.SpendEnergy(25.0f)) // TODO - update with actual energy cost
+        if (Input.GetKeyDown(KeyCode.Alpha2) ) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -80,7 +82,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS 3 - ENERGY BOMB
-        if (Input.GetKeyDown(KeyCode.Alpha3) && _PlayerHealth.SpendEnergy(10.0f)) // TODO - update with actual energy cost
+        if (Input.GetKeyDown(KeyCode.Alpha3) ) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -101,7 +103,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS 5
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        if (Input.GetKeyDown(KeyCode.Alpha5) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BARRIER))
         {
             barrierManager.ActivateBarrier();
         }

@@ -20,7 +20,6 @@
         CRITICAL_HIT_DAMAGE,
         ALL_PRIMARY_STATS,
         ALACRITY,
-        ENLIGHTENMENT,
         UNKNOWN
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Mechanics.Objects.Abilities
 {
@@ -29,7 +30,7 @@ namespace Mechanics.Objects.Abilities
 
             if (this.self.Roll(this.self[Stats.RECOVERY]))
             {
-                this.self.ConsumedSpellPoints += this.self.SpellPoints * 0.02f;
+                this.self.ConsumedSpellPoints -= this.self.SpellPoints * MECHANICS.TABLES.SPECIALS.RECOVERY_PROC_VALUE * factor;
             }
 
         }

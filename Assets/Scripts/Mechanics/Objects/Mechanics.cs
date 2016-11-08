@@ -129,9 +129,6 @@ namespace Mechanics.Objects
                         range = CONSTRAINTS.MAX_ALACRITY - CONSTRAINTS.MIN_ALACRITY;
                         return CONSTRAINTS.MAX_ALACRITY - range * Translate(GROWTH.SLOW, CEILINGS.ALACRITY, actualStat.ActualValue);
 
-                    case Stats.ENLIGHTENMENT:
-                        return actualStat.ActualValue * SCALINGS.ENLIGHTENMENT_CONTRIBUTION;
-
                     default:
                         return actualStat.ActualValue;
                 }
@@ -248,7 +245,6 @@ namespace Mechanics.Objects
             public readonly static float PRIMARY_STAT_CONTRIBUTION = 3f;
             public readonly static float LIFEFORCE_HITPOINTS = 10f;
             public readonly static float ENERGY_SPELLPOINTS = 10f;
-            public readonly static float ENLIGHTENMENT_CONTRIBUTION = 1f;
         }
         public static class TABLES
         {
@@ -263,22 +259,22 @@ namespace Mechanics.Objects
                 }
                 public static class COOLDOWNVALUES
                 {
-                    public static readonly int NONE = 0;
-                    public static readonly int VERY_LOW = 1600;
-                    public static readonly int LOW = 2500;
-                    public static readonly int MEDIUM = 5000;
-                    public static readonly int HIGH = 12000;
-                    public static readonly int VERY_HIGH = 28000;
+                    public static readonly float NONE = 0;
+                    public static readonly float VERY_LOW = 1.6f;
+                    public static readonly float LOW = 2.5f;
+                    public static readonly float MEDIUM = 5.0f;
+                    public static readonly float HIGH = 12.0f;
+                    public static readonly float VERY_HIGH = 28.0f;
                 }
                 public static class DURATIONVALUES
                 {
-                    public static readonly int NONE = 0;
-                    public static readonly int INSTANT = 10;
-                    public static readonly int VERY_LOW = 1600;
-                    public static readonly int LOW = 2500;
-                    public static readonly int MEDIUM = 5000;
-                    public static readonly int HIGH = 12000;
-                    public static readonly int VERY_HIGH = 28000;
+                    public static readonly float NONE = 0;
+                    public static readonly float INSTANT = 0.01f;
+                    public static readonly float VERY_LOW = 1.6f;
+                    public static readonly float LOW = 2.5f;
+                    public static readonly float MEDIUM = 5.0f;
+                    public static readonly float HIGH = 12.0f;
+                    public static readonly float VERY_HIGH = 28.0f;
                 }
                 public static class RESOURCECOSTVALUES
                 {
@@ -301,22 +297,22 @@ namespace Mechanics.Objects
                 }
                 public static class COOLDOWNVALUES
                 {
-                    public static readonly int NONE = 0;
-                    public static readonly int VERY_LOW = 750;
-                    public static readonly int LOW = 1000;
-                    public static readonly int MEDIUM = 3000;
-                    public static readonly int HIGH = 8000;
-                    public static readonly int VERY_HIGH = 15000;
+                    public static readonly float NONE = 0;
+                    public static readonly float VERY_LOW = 0.75f;
+                    public static readonly float LOW = 1.0f;
+                    public static readonly float MEDIUM = 3.0f;
+                    public static readonly float HIGH = 8.0f;
+                    public static readonly float VERY_HIGH = 15.0f;
                 }
                 public static class DURATIONVALUES
                 {
-                    public static readonly int NONE = 0;
-                    public static readonly int INSTANT = 10;
-                    public static readonly int VERY_LOW = 750;
-                    public static readonly int LOW = 1000;
-                    public static readonly int MEDIUM = 3000;
-                    public static readonly int HIGH = 8000;
-                    public static readonly int VERY_HIGH = 15000;
+                    public static readonly float NONE = 0;
+                    public static readonly float INSTANT = 0.01f;
+                    public static readonly float VERY_LOW = 0.75f;
+                    public static readonly float LOW = 1.0f;
+                    public static readonly float MEDIUM = 3.0f;
+                    public static readonly float HIGH = 8.0f;
+                    public static readonly float VERY_HIGH = 15.0f;
                 }
                 public static class RESOURCECOSTVALUES
                 {
@@ -328,7 +324,12 @@ namespace Mechanics.Objects
                     public static readonly float VERY_HIGH = 160f;
                 }
             }
-
+            public static class SPECIALS
+            {
+                public static readonly float HEALTH_PR_SECOND = 0.01f;
+                public static readonly float SPELLPOINTS_PR_SECOND = 0.01f;
+                public static readonly float RECOVERY_PROC_VALUE = 0.02f;
+            }
         }
         public enum ABILITIES
         {
