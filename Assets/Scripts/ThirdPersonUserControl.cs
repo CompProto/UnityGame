@@ -18,6 +18,11 @@ public class ThirdPersonUserControl : MonoBehaviour
 
     private SpellManager spellManager;
 
+    private Vector3 output;
+    private Ray ray;
+    private bool go = false;
+    private RaycastHit hit;
+
     private void Start()
     {
         // get the transform of the main camera
@@ -38,6 +43,23 @@ public class ThirdPersonUserControl : MonoBehaviour
 
     private void Update()
     {
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            hit = new RaycastHit();
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 200))
+            {
+                if (hit.collider.gameObject.tag=="Ground")
+                {
+                output = hit.point - gameObject.transform.position;
+                output.Normalize();
+                go = true;
+                }
+            }
+        }
+
         if (!m_Jump)
         {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
@@ -60,22 +82,40 @@ public class ThirdPersonUserControl : MonoBehaviour
             return;
         }
 
-        // read inputs
-        float h = CrossPlatformInputManager.GetAxis("Horizontal");
-        float v = CrossPlatformInputManager.GetAxis("Vertical");
-        
-        // calculate move direction to pass to character
-        if (m_Cam != null)
+        if (go)
         {
-            // calculate camera relative direction to move:
-            m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-            m_Move = v * m_CamForward + h * m_Cam.right;
+            if ((0.5).CompareTo(Vector3.Distance(gameObject.transform.position, hit.point)) == 1)
+            {
+                go = false;
+            }
+        }
+
+        if (go)
+        {
+            m_Move = output;
         }
         else
         {
-            // we use world-relative directions in the case of no main camera
-            m_Move = v * Vector3.forward + h * Vector3.right;
+            m_Move = 0 * Vector3.one;
+            output = 0 * Vector3.one;
         }
+
+        //// read inputs
+        //float h = CrossPlatformInputManager.GetAxis("Horizontal");
+        //float v = CrossPlatformInputManager.GetAxis("Vertical");
+        
+        //// calculate move direction to pass to character
+        //if (m_Cam != null)
+        //{
+        //    // calculate camera relative direction to move:
+        //    m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+        //    m_Move = v * m_CamForward + h * m_Cam.right;
+        //}
+        //else
+        //{
+        //    // we use world-relative directions in the case of no main camera
+        //    m_Move = v * Vector3.forward + h * Vector3.right;
+        //}
 #if !MOBILE_INPUT
         // walk speed multiplier
         if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
