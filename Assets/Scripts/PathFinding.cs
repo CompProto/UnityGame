@@ -48,7 +48,7 @@ public class PathFinding : MonoBehaviour
         timer = Time.time - startTime;
         playerPosition = GameObject.Find("ThirdPersonController").transform.position;
         playerTile = new Tile((int)playerPosition.x + 100, (int)playerPosition.z + 60, 0);
-        if (!isInit || timer >= 0.5)
+        if (!isInit || timer >= 3)
         {
 
          
@@ -83,7 +83,7 @@ public class PathFinding : MonoBehaviour
         {
             //System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\queue.txt", queue.Count + Environment.NewLine);
             current = queue.Dequeue();
-            if (current.count <= 50)
+            if (current.count <= 200)
             {
                 FindNeighbours(current);
             }
@@ -113,10 +113,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(up);
                 movementPath[(int)up.x, (int)up.y] = (int)up.count;
             }
-            else if (map[x - 1, y] == 1)
-            {
-                movementPath[x, y] = movementPath[x, y] + 200;
-            }
+            //else if (map[x - 1, y] == 1)
+            //{
+            //    movementPath[x, y] = movementPath[x, y] + 200;
+            //}
         if (x < width - 1)
             if (map[x + 1, y] == 0 && movementPath[x + 1, y] == 999998)
             {
@@ -125,10 +125,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(down);
                 movementPath[(int)down.x, (int)down.y] = (int)down.count;
             }
-            else if (map[x + 1, y] == 1)
-            {
-                movementPath[x, y] = movementPath[x, y] + 200;
-            }
+            //else if (map[x + 1, y] == 1)
+            //{
+            //    movementPath[x, y] = movementPath[x, y] + 200;
+            //}
         if (y > 0)
             if (map[x, y - 1] == 0 && movementPath[x, y - 1] == 999998)
             {
@@ -137,10 +137,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(left);
                 movementPath[(int)left.x, (int)left.y] = (int)left.count;
             }
-            else if (map[x, y -1] == 1)
-            {
-                movementPath[x, y] = movementPath[x, y] + 200;
-            }
+            //else if (map[x, y -1] == 1)
+            //{
+            //    movementPath[x, y] = movementPath[x, y] + 200;
+            ////}
         if (y < height - 1)
             if (map[x, y + 1] == 0 && movementPath[x, y + 1] == 999998)
             {
@@ -149,10 +149,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(right);
                 movementPath[(int)right.x, (int)right.y] = (int)right.count;
             }
-            else if (map[x , y +1] == 1)
-            {
-                movementPath[x, y] = movementPath[x, y] + 200;
-            }
+            //else if (map[x , y +1] == 1)
+            //{
+            //    movementPath[x, y] = movementPath[x, y] + 200;
+            //}
 
     }
     void initMap()
@@ -283,6 +283,18 @@ public class PathFinding : MonoBehaviour
             this.x = x;
             this.y = y;
             this.count = count;
+        }
+
+        public bool Equals(Tile otherTIle)
+        {
+            if(this.x == otherTIle.x && this.y == otherTIle.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
