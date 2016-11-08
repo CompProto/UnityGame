@@ -17,6 +17,7 @@ public class ThirdPersonUserControl : MonoBehaviour
     private bool m_Jump, charge;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
     private SpellManager spellManager;
+    private MapGenerator mapGenerator;
 
     private Vector3 output;
     private Ray ray;
@@ -39,19 +40,21 @@ public class ThirdPersonUserControl : MonoBehaviour
 
         // get the third person character ( this should never be null due to require component )
         m_Character = GetComponent<ThirdPersonCharacter>();
+
+        mapGenerator = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
     }
 
     private void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             hit = new RaycastHit();
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 200))
             {
-                if (hit.collider.gameObject.tag=="Ground")
+                if (mapGenerator.map[(int)hit.point.x+(mapGenerator.width/2), (int)hit.point.z+(mapGenerator.height/2)] == 0)
                 {
                 output = hit.point - gameObject.transform.position;
                 output.Normalize();
@@ -84,7 +87,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 
         if (go)
         {
-            if ((0.5).CompareTo(Vector3.Distance(gameObject.transform.position, hit.point)) == 1)
+            if ((0.75).CompareTo(Vector3.Distance(gameObject.transform.position, hit.point)) == 1)
             {
                 go = false;
             }
@@ -100,22 +103,6 @@ public class ThirdPersonUserControl : MonoBehaviour
             output = 0 * Vector3.one;
         }
 
-        //// read inputs
-        //float h = CrossPlatformInputManager.GetAxis("Horizontal");
-        //float v = CrossPlatformInputManager.GetAxis("Vertical");
-        
-        //// calculate move direction to pass to character
-        //if (m_Cam != null)
-        //{
-        //    // calculate camera relative direction to move:
-        //    m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-        //    m_Move = v * m_CamForward + h * m_Cam.right;
-        //}
-        //else
-        //{
-        //    // we use world-relative directions in the case of no main camera
-        //    m_Move = v * Vector3.forward + h * Vector3.right;
-        //}
 #if !MOBILE_INPUT
         // walk speed multiplier
         if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
