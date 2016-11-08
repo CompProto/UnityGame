@@ -51,7 +51,6 @@ public class EnemyController : MonoBehaviour
                 positionTile = new PathFinding.Tile((int)transform.position.x, (int)transform.position.z, 0);
                 stuckTiles[indexCounter] = positionTile;
 
-                print("Am I printing");
                 indexCounter++;
 
                 int similarCount = 0;
@@ -64,9 +63,9 @@ public class EnemyController : MonoBehaviour
                             if (stuckTiles[i].Equals(stuckTiles[x]))
                             {
                                 similarCount++;
-                                if (similarCount > 30)
+                                if (similarCount > 40)
                                 {
-                                    Debug.Log("something might be wrong " + similarCount);
+                                    
                                     isStuck = true;
 
                                     similarCount = 0;
@@ -85,15 +84,14 @@ public class EnemyController : MonoBehaviour
     Vector3 GetOutOfStuck()
     {
         Vector3 AB_normalized = (playerPosition - transform.position).normalized;
-        Debug.Log((playerPosition - AB_normalized).ToString());
+        
 
         for (float i = 20; i > 0; i--)
         {
 
             Vector3 temp = playerPosition - AB_normalized * i;
             temp.y = -0.9f;
-            Debug.DrawLine(playerPosition, temp);
-            Debug.Log("Temp pos =  " + temp.ToString() + " player position = " + playerPosition.ToString());
+           
             if (!Physics.Linecast(playerPosition, temp))
             {
 
@@ -135,19 +133,20 @@ public class EnemyController : MonoBehaviour
 
     float MoveToNextTile()
     {
+        try
+        {
+            PathFinding.Tile tempTile = path.GetNextTile(transform.position);
+            nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f);
+            Debug.DrawLine(transform.position, playerPosition);
+            return tempTile.count;
+        }
+        catch (System.NullReferenceException)
+        {
+            nextTile = transform.position;
+            return 100000000;
+        }
+       
 
-        PathFinding.Tile tempTile = path.GetNextTile(transform.position);
-        nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f);
-        Debug.DrawLine(transform.position, playerPosition);
-
-        // Debug.Log(nextTile.ToString());
-
-
-
-
-
-
-        return tempTile.count;
     }
     Vector3 CurrentTile()
     {

@@ -83,7 +83,7 @@ public class PathFinding : MonoBehaviour
         {
             //System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\queue.txt", queue.Count + Environment.NewLine);
             current = queue.Dequeue();
-            if (current.count <= 200)
+            if (current.count <= 50)
             {
                 FindNeighbours(current);
             }
@@ -113,10 +113,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(up);
                 movementPath[(int)up.x, (int)up.y] = (int)up.count;
             }
-            //else if (map[x - 1, y] == 1)
-            //{
-            //    movementPath[x, y] = movementPath[x, y] + 200;
-            //}
+            else if (map[x - 1, y] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
+            }
         if (x < width - 1)
             if (map[x + 1, y] == 0 && movementPath[x + 1, y] == 999998)
             {
@@ -125,10 +125,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(down);
                 movementPath[(int)down.x, (int)down.y] = (int)down.count;
             }
-            //else if (map[x + 1, y] == 1)
-            //{
-            //    movementPath[x, y] = movementPath[x, y] + 200;
-            //}
+            else if (map[x + 1, y] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
+            }
         if (y > 0)
             if (map[x, y - 1] == 0 && movementPath[x, y - 1] == 999998)
             {
@@ -137,10 +137,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(left);
                 movementPath[(int)left.x, (int)left.y] = (int)left.count;
             }
-            //else if (map[x, y -1] == 1)
-            //{
-            //    movementPath[x, y] = movementPath[x, y] + 200;
-            ////}
+            else if (map[x, y -1] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
+            }
         if (y < height - 1)
             if (map[x, y + 1] == 0 && movementPath[x, y + 1] == 999998)
             {
@@ -149,10 +149,10 @@ public class PathFinding : MonoBehaviour
                 queue.Enqueue(right);
                 movementPath[(int)right.x, (int)right.y] = (int)right.count;
             }
-            //else if (map[x , y +1] == 1)
-            //{
-            //    movementPath[x, y] = movementPath[x, y] + 200;
-            //}
+            else if (map[x , y +1] == 1)
+            {
+                movementPath[x, y] = movementPath[x, y] + 200;
+            }
 
     }
     void initMap()
@@ -181,64 +181,73 @@ public class PathFinding : MonoBehaviour
     {
         Tile enemy = new Tile((int)Mathf.Floor(enemyPosition.x) + 100, (int)Mathf.Floor(enemyPosition.z) + 60, 0);
 
-
-        //Debug.Log("GetNextTile + enemy.x :" + enemy.x + " enemy.y :" + enemy.y);
-        int x = enemy.x;
-        int y = enemy.y;
-
-        List<Tile> neighbourList = new List<Tile>();
-        if (x > 0)
+        try
         {
-            Tile tm = new Tile(x - 1, y, movementPath[x - 1, y]);       // topmid
-            neighbourList.Add(tm);
+            //Debug.Log("GetNextTile + enemy.x :" + enemy.x + " enemy.y :" + enemy.y);
+            int x = enemy.x;
+            int y = enemy.y;
+
+
+            List<Tile> neighbourList = new List<Tile>();
+            if (x > 0)
+            {
+                Tile tm = new Tile(x - 1, y, movementPath[x - 1, y]);       // topmid
+                neighbourList.Add(tm);
+                if (y > 0)
+                {
+                    Tile tl = new Tile(x - 1, y - 1, movementPath[x - 1, y - 1]); // topleft tile
+                    neighbourList.Add(tl);
+                }
+                if (y < height - 1)
+                {
+                    Tile tr = new Tile(x - 1, y + 1, movementPath[x - 1, y + 1]);  // top right
+                    neighbourList.Add(tr);
+                }
+            }
             if (y > 0)
             {
-                Tile tl = new Tile(x - 1, y - 1, movementPath[x - 1, y - 1]); // topleft tile
-                neighbourList.Add(tl);
+                Tile ml = new Tile(x, y - 1, movementPath[x, y - 1]); // middle left
+                neighbourList.Add(ml);
             }
-            if (y < height- 1)
+            if (y < height - 1)
             {
-                Tile tr = new Tile(x - 1, y + 1, movementPath[x - 1, y + 1]);  // top right
-                neighbourList.Add(tr);
+                Tile mr = new Tile(x, y + 1, movementPath[x, y + 1]); // middle right
+                neighbourList.Add(mr);
             }
-        }
-        if (y > 0)
-        {
-            Tile ml = new Tile(x, y - 1, movementPath[x, y - 1]); // middle left
-            neighbourList.Add(ml);
-        }
-        if (y < height - 1)
-        {
-            Tile mr = new Tile(x, y + 1, movementPath[x, y + 1]); // middle right
-            neighbourList.Add(mr);
-        }
-        if (x < width - 1)
-        {
-            Tile bm = new Tile(x + 1, y, movementPath[x + 1, y]);  // bottom middle;
-            neighbourList.Add(bm);
-            if (y > 0)
+            if (x < width - 1)
             {
-                Tile bl = new Tile(x + 1, y - 1, movementPath[x + 1, y - 1]); // bottom left;
-                neighbourList.Add(bl);
+                Tile bm = new Tile(x + 1, y, movementPath[x + 1, y]);  // bottom middle;
+                neighbourList.Add(bm);
+                if (y > 0)
+                {
+                    Tile bl = new Tile(x + 1, y - 1, movementPath[x + 1, y - 1]); // bottom left;
+                    neighbourList.Add(bl);
+                }
             }
+
+            if (y < height - 1)
+            {
+                Tile br = new Tile(x + 1, y + 1, movementPath[x + 1, y + 1]); // Buttom right;
+                neighbourList.Add(br);
+            }
+
+            Tile minCountTile = neighbourList[0];
+            for (int i = 1; i < neighbourList.Count; i++)
+            {
+                if (neighbourList[i].count < minCountTile.count)
+                {
+                    minCountTile = neighbourList[i];
+
+                }
+            }
+            return minCountTile;
+        }
+        catch (IndexOutOfRangeException)
+        {
+
         }
 
-        if (y < height - 1)
-        {
-            Tile br = new Tile(x + 1, y + 1, movementPath[x + 1, y + 1]); // Buttom right;
-            neighbourList.Add(br);
-        }
-
-        Tile minCountTile = neighbourList[0];
-        for (int i = 1; i < neighbourList.Count; i++)
-        {
-            if (neighbourList[i].count < minCountTile.count)
-            {
-                minCountTile = neighbourList[i];
-
-            }
-        }
-        return minCountTile;
+        return null;
     }
 
     void WriteOutMap()
