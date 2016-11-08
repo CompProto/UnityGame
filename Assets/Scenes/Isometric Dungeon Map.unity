@@ -1527,6 +1527,24 @@ Prefab:
       propertyPath: flash
       value: 
       objectReference: {fileID: 941903192}
+    - target: {fileID: 114000013475347896, guid: 1b6f13f5e09993e4bb3563349960da39,
+        type: 2}
+      propertyPath: Door
+      value: 
+      objectReference: {fileID: 1000014009376920, guid: 8bd99c1b7b1222549909dc5ec0925d02,
+        type: 2}
+    - target: {fileID: 114000013475347896, guid: 1b6f13f5e09993e4bb3563349960da39,
+        type: 2}
+      propertyPath: Explosion
+      value: 
+      objectReference: {fileID: 1000013812039258, guid: 3507e48d9875b284296ba310cb8e7bec,
+        type: 2}
+    - target: {fileID: 114000013475347896, guid: 1b6f13f5e09993e4bb3563349960da39,
+        type: 2}
+      propertyPath: Implosion
+      value: 
+      objectReference: {fileID: 1000011907902446, guid: ed89e3af2618ae8409c3615556e834ca,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b6f13f5e09993e4bb3563349960da39, type: 2}
   m_IsPrefabParent: 0
