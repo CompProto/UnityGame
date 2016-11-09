@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37356448, g: 0.3811204, b: 0.35887685, a: 1}
+  m_IndirectSpecularColor: {r: 0.37356424, g: 0.3811201, b: 0.35887662, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -337,6 +337,8 @@ MonoBehaviour:
   Camera: {fileID: 1384400077}
   BlackHole: {fileID: 1000012824770030, guid: 1c8531bb47d2b604089230842b5e2295, type: 2}
   EnergyBomb: {fileID: 1000012089052624, guid: 539e8a6c7d8d25c4ca3d71838cdc62a4, type: 2}
+  StandardAttack: {fileID: 1000012707471630, guid: e3972515c4bd9284ea0f5c70b73c475a,
+    type: 2}
   DimensionDoor: {fileID: 285696049}
   Barrier: {fileID: 1611232680}
   BlackHoleSound: {fileID: 8300000, guid: 6a59b9c092fef2e4cb458e6e398364be, type: 3}

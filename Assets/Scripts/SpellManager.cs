@@ -8,6 +8,7 @@ public class SpellManager : MonoBehaviour {
     public GameObject Camera;
     public GameObject BlackHole;
     public GameObject EnergyBomb;
+    public GameObject StandardAttack;
     public GameObject DimensionDoor;
     public GameObject Barrier;
 
@@ -114,5 +115,20 @@ public class SpellManager : MonoBehaviour {
             modeChanger.ChangeMode();
         }
 
-     }
+        // ACTION BAR KEYPRESS 3 - ENERGY BOMB
+        if (Input.GetKeyDown(KeyCode.S)) // TODO - update with actual energy cost
+        {
+            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit vHit = new RaycastHit();
+            if (Physics.Raycast(ray, out vHit, 200))
+            {
+                Vector3 spawnPos = PlayerPosition.position;
+                spawnPos.y += 1.25f;
+                GameObject atk = (GameObject)Instantiate(StandardAttack, spawnPos, transform.rotation);
+                StandardAttackController eController = atk.GetComponent<StandardAttackController>();
+                eController.ThrowBomb(vHit.point);
+            }
+        }
+
+    }
 }
