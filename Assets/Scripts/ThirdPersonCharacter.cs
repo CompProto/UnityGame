@@ -43,7 +43,7 @@ public class ThirdPersonCharacter : MonoBehaviour
     CapsuleCollider m_Capsule;
     bool m_Crouching;
     float chargeTimer = 0, chargeCooldown = 0;
-    int charges = 1;
+    public int charges = 1;
     private bool isCharging = false;
 
 

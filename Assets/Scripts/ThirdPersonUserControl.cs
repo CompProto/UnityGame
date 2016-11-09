@@ -46,8 +46,9 @@ public class ThirdPersonUserControl : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetMouseButton(0))
+        charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
+        
+        if (Input.GetMouseButton(0) || (charge && m_Character.charges > 0))
         {
             hit = new RaycastHit();
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -73,7 +74,6 @@ public class ThirdPersonUserControl : MonoBehaviour
         {
             LevelUp.Play();
         }
-        charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
     }
 
     // Fixed update is called in sync with physics
