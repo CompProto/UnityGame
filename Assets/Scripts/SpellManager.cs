@@ -43,24 +43,10 @@ public class SpellManager : MonoBehaviour {
         if (GameManager.instance.isDead)
             return;
 
-        // ACTION BAR KEYPRESS 1 - BLACK HOLE
-        if (Input.GetKeyDown(KeyCode.Alpha1) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.BLACKHOLE))
-        {
-            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit vHit = new RaycastHit();
-            if (Physics.Raycast(ray, out vHit, 200))
-            {
-                Vector3 spawnPos = vHit.point;
-                spawnPos.y += 1; // Spawn slightly above the ground
-                //Debug.Log("Hit: " + vHit.point);
-                Instantiate(BlackHole, spawnPos, transform.rotation);
-                source.clip = BlackHoleSound;
-                source.Play();
-            }
-        }
 
-        // ACTION BAR KEYPRESS 2 - ASTRAL PRESENCE
-        if (Input.GetKeyDown(KeyCode.Alpha2) ) // TODO - update with actual energy cost
+
+        // ACTION BAR KEYPRESS 1 - ASTRAL PRESENCE
+        if (Input.GetKeyDown(KeyCode.Alpha1) ) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -82,8 +68,36 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 3 - ENERGY BOMB
-        if (Input.GetKeyDown(KeyCode.Alpha3) ) // TODO - update with actual energy cost
+        // ACTION BAR KEYPRESS 2 - DIMENSION DOOR
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            doorManager.CastDimensionDoor();
+        }
+
+        // ACTION BAR KEYPRESS 3 - ENERGY BARRIER
+        if (Input.GetKeyDown(KeyCode.Alpha3) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BARRIER))
+        {
+            barrierManager.ActivateBarrier();
+        }
+
+        // ACTION BAR KEYPRESS 4 - BLACK HOLE
+        if (Input.GetKeyDown(KeyCode.Alpha4) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.BLACKHOLE))
+        {
+            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit vHit = new RaycastHit();
+            if (Physics.Raycast(ray, out vHit, 200))
+            {
+                Vector3 spawnPos = vHit.point;
+                spawnPos.y += 1; // Spawn slightly above the ground
+                //Debug.Log("Hit: " + vHit.point);
+                Instantiate(BlackHole, spawnPos, transform.rotation);
+                source.clip = BlackHoleSound;
+                source.Play();
+            }
+        }
+
+        // ACTION BAR KEYPRESS 5 - ENERGY BOMB
+        if (Input.GetKeyDown(KeyCode.Alpha5) ) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -97,26 +111,14 @@ public class SpellManager : MonoBehaviour {
             }
         }
 
-        // ACTION BAR KEYPRESS 4 - DIMENSION DOOR
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            doorManager.CastDimensionDoor();
-        }
-
-        // ACTION BAR KEYPRESS 5
-        if (Input.GetKeyDown(KeyCode.Alpha5) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BARRIER))
-        {
-            barrierManager.ActivateBarrier();
-        }
-
-        // ACTION BAR KEYPRESS R
-        if (Input.GetKeyDown(KeyCode.R))
+        // ACTION BAR KEYPRESS TAB - SHADOW WALK
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             modeChanger.ChangeMode();
         }
 
-        // ACTION BAR KEYPRESS 3 - ENERGY BOMB
-        if (Input.GetKeyDown(KeyCode.S)) // TODO - update with actual energy cost
+        // ACTION BAR KEYPRESS SHIFT + LEFTMOUSE CLICK - STANDARD ATTACK
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0)) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();

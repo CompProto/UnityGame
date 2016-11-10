@@ -1,25 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StandardAttackController : MonoBehaviour {
+public class StandardAttackController : MonoBehaviour
+{
 
     private Vector3 tar;
     private ParticleSystem particles;
     private AudioSource source;
     public AudioClip ImpactSound;
+    private bool pendingDestroy;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         source = gameObject.GetComponent<AudioSource>();
         source.clip = ImpactSound;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        if (transform.position.y < tar.y)
+    // Update is called once per frame
+    void Update()
+    {
+        if (transform.position.y < tar.y && !pendingDestroy)
         {
-            //source.Play();
+            source.Play();
+            particles.Stop();
+            Destroy(gameObject, 2.5f);
+            pendingDestroy = true;
         }
 
     }

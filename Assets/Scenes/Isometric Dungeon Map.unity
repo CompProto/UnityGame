@@ -483,7 +483,7 @@ MonoBehaviour:
   Camera: {fileID: 1384400077}
   BlackHole: {fileID: 1000012824770030, guid: 1c8531bb47d2b604089230842b5e2295, type: 2}
   EnergyBomb: {fileID: 1000012089052624, guid: 539e8a6c7d8d25c4ca3d71838cdc62a4, type: 2}
-  StandardAttack: {fileID: 1000012707471630, guid: e3972515c4bd9284ea0f5c70b73c475a,
+  StandardAttack: {fileID: 1000013097650080, guid: 8b89b50db33e1514999222cc6d51017a,
     type: 2}
   DimensionDoor: {fileID: 285696049}
   Barrier: {fileID: 1611232680}
