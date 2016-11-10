@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mechanics.Objects;
+using Mechanics.Objects.Abilities;
 
 public class StandardAttackController : MonoBehaviour
 {
@@ -24,6 +26,15 @@ public class StandardAttackController : MonoBehaviour
         {
             source.Play();
             particles.Stop();
+            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, PsychokinesisMechanic.HitRange);
+            foreach (Collider candidate in hits)
+            {
+                if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
+                {
+                    Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;
+                    GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.PSYCHO_KINESIS, enemyMechanics, 1f);
+                }
+            }
             Destroy(gameObject, 2.5f);
             pendingDestroy = true;
         }
@@ -39,6 +50,7 @@ public class StandardAttackController : MonoBehaviour
         float airtime = (8f / 100.0f) * dist; // Projectile travel time
         Vector3 ThrowSpeed = calculateBestThrowSpeed(transform.position, target, airtime);
         gameObject.GetComponent<Rigidbody>().AddForce(ThrowSpeed, ForceMode.VelocityChange);
+        GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.PSYCHO_KINESIS, null, 0f);
     }
 
     private Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)

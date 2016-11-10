@@ -17,6 +17,8 @@ namespace Mechanics.Objects
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, new EnergyBombMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.PSYCHO_KINESIS, new PsychokinesisMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.DIMENSION_DOOR, new DimensionDoorMechanic(this));
             this.UpdateStats();
         }
 
@@ -37,6 +39,8 @@ namespace Mechanics.Objects
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, new EnergyBombMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.PSYCHO_KINESIS, new PsychokinesisMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.DIMENSION_DOOR, new DimensionDoorMechanic(this));
             this.UpdateStats();
         }
 

@@ -306,7 +306,7 @@ namespace Mechanics.Objects
             }
             public static class SINGLE_TARGET
             {
-                public class DAMAGEVALUES
+                public class DAMAGE
                 {
                     public static readonly Interval NONE = new Interval(0f, 0f);
                     public static readonly Interval LOW = new Interval(25f, 65f);
@@ -316,7 +316,7 @@ namespace Mechanics.Objects
                 public static class COOLDOWN
                 {
                     public static readonly float NONE = 0;
-                    public static readonly float VERY_LOW = 0.75f;
+                    public static readonly float VERY_LOW = 0.5f;
                     public static readonly float LOW = 1.0f;
                     public static readonly float MEDIUM = 3.0f;
                     public static readonly float HIGH = 8.0f;

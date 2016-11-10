@@ -69,7 +69,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS 2 - DIMENSION DOOR
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.DIMENSION_DOOR))
         {
             doorManager.CastDimensionDoor();
         }
@@ -118,7 +118,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS SHIFT + LEFTMOUSE CLICK - STANDARD ATTACK
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0)) 
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.PSYCHO_KINESIS)) 
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();

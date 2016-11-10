@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Mechanics.Objects;
 
 public class DimensionDoorManager : MonoBehaviour {
 
@@ -77,20 +78,23 @@ public class DimensionDoorManager : MonoBehaviour {
 
     public void CastDimensionDoor()
     {
-        if (GameManager.instance.isDarkMode) // Dark mode
+        if (this.hasDoor)
         {
-            if (hasDoor)
+            if (GameManager.instance.isDarkMode) // Dark mode
+            {
                 TeleportEnemies();
+            }
             else
-                PlaceDimensionDoor();
-        }
-        else // Light mode
-        {
-            if (hasDoor)
+            {
                 UseDimensionDoor();
-            else
-                PlaceDimensionDoor();
-        }   
+            }
+            GameManager.instance.playerCharacter.EndAbility(MECHANICS.ABILITIES.DIMENSION_DOOR);
+        }
+        else
+        {
+            GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.DIMENSION_DOOR, null, 0f);
+            PlaceDimensionDoor();
+        }
     }
 
     private void TeleportEnemies()

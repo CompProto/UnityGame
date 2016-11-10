@@ -24,26 +24,27 @@ namespace Mechanics.Objects.Abilities
 
         public override void Execute(Character target, float factor)
         {
+            float correctedFactor = factor;
+
             if (!this.isRunning)
             {
                 this.isRunning = true;
             }
             this.self.ConsumedSpellPoints += Resource * factor;
-            if(this.self.SpellPointsLeft <= 0f)
+            if (this.self.SpellPointsLeft <= 0f)
             {
                 this.isRunning = false;
             }
-            if (GameManager.instance.isDarkMode)
+
+            if (target != null)
             {
-                float drain = this.self.Roll(this.damageInterval) * this.self[Stats.POTENCY] * factor;
-                this.self.Wounds -= drain;
-            }
-            else
-            {
-                if (target != null)
+                if (GameManager.instance.isDarkMode)
                 {
-                    base.Execute(target, factor);
+                    correctedFactor *= 0.5f;
+                    float drain = this.self.Roll(this.damageInterval) * this.self[Stats.POTENCY] * correctedFactor;
+                    this.self.Wounds -= drain;
                 }
+                base.Execute(target, correctedFactor);
             }
         }
 

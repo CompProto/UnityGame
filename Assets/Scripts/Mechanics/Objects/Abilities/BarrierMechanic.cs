@@ -17,7 +17,7 @@ namespace Mechanics.Objects.Abilities
 
         public static float Cooldown { get { return MECHANICS.TABLES.SINGLE_TARGET.COOLDOWN.MEDIUM; } }
         public static float Duration { get { return MECHANICS.TABLES.SINGLE_TARGET.DURATION.MEDIUM; } }
-        public static Interval BarrierRange { get { return MECHANICS.TABLES.SINGLE_TARGET.DAMAGEVALUES.MEDIUM; } }
+        public static Interval BarrierRange { get { return MECHANICS.TABLES.SINGLE_TARGET.DAMAGE.MEDIUM; } }
 
         public override bool CanApply()
         {
