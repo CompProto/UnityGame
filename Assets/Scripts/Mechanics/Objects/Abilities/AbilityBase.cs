@@ -14,6 +14,7 @@ namespace Mechanics.Objects.Abilities
         {
             this.self = self;
         }
+
         public abstract bool CanApply();
         public abstract void Execute(Character target, float factor);
         public abstract void End();

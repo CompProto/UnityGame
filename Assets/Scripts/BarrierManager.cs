@@ -5,54 +5,46 @@ using Mechanics.Objects.Abilities;
 
 public class BarrierManager : MonoBehaviour
 {
-
-    [Range(1.0f, 20.0f)]
-    public float duration = BarrierEffect.Duration;
-
     public AudioClip BarrierSound;
-
     private ParticleSystem barrierParticles;
     private float timer;
-    private bool isActive;
     private AudioSource source;
 
     // Use this for initialization
     void Start()
     {
-        barrierParticles = gameObject.GetComponent<ParticleSystem>();
-        source = gameObject.GetComponent<AudioSource>();
-        source.clip = BarrierSound;
+        this.barrierParticles = gameObject.GetComponent<ParticleSystem>();
+        this.source = gameObject.GetComponent<AudioSource>();
+        this.source.clip = BarrierSound;
     }
 
     void FixedUpdate()
     {
-        timer += Time.fixedDeltaTime;
-        if (timer >= 0 || GameManager.instance.playerCharacter.Absorb <= 0f)
+        this.timer += Time.fixedDeltaTime;
+        if (this.timer >= 0 || GameManager.instance.playerCharacter.Absorb <= 0f)
         {
-            isActive = false;
-            barrierParticles.Stop();
-
-            if (source.volume > 0)
-                source.volume -= Time.fixedDeltaTime;
-            else if (source.isPlaying)
+            this.barrierParticles.Stop();
+            if (this.source.volume > 0)
             {
-                source.Stop();
+                this.source.volume -= Time.fixedDeltaTime;
             }
-            else if (!source.isPlaying)
+            else if (this.source.isPlaying)
+            {
+                this.source.Stop();
+            }
+            else if (!this.source.isPlaying)
             {
                 GameManager.instance.playerCharacter.EndAbility(MECHANICS.ABILITIES.ENERGY_BARRIER);
             }
         }
-
     }
 
     public void ActivateBarrier()
     {
-        isActive = true;
-        barrierParticles.Play();
-        timer = -duration;
-        source.volume = 1.0f;
-        source.Play();
+        this.barrierParticles.Play();
+        this.timer = -BarrierMechanic.Duration;
+        this.source.volume = 1.0f;
+        this.source.Play();
         GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BARRIER, null, 1f);
     }
 }

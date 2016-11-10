@@ -250,14 +250,14 @@ namespace Mechanics.Objects
         {
             public static class AOE
             {
-                public static class DAMAGEVALUES
+                public static class DAMAGE
                 {
                     public static readonly Interval NONE = new Interval(0f, 0f);
                     public static readonly Interval LOW = new Interval(10f, 25f);
                     public static readonly Interval MEDIUM = new Interval(20f, 45f);
                     public static readonly Interval HIGH = new Interval(40f, 65f);
                 }
-                public static class COOLDOWNVALUES
+                public static class COOLDOWN
                 {
                     public static readonly float NONE = 0;
                     public static readonly float VERY_LOW = 1.6f;
@@ -266,7 +266,7 @@ namespace Mechanics.Objects
                     public static readonly float HIGH = 12.0f;
                     public static readonly float VERY_HIGH = 28.0f;
                 }
-                public static class DURATIONVALUES
+                public static class DURATION
                 {
                     public static readonly float NONE = 0;
                     public static readonly float INSTANT = 0.01f;
@@ -276,14 +276,32 @@ namespace Mechanics.Objects
                     public static readonly float HIGH = 12.0f;
                     public static readonly float VERY_HIGH = 28.0f;
                 }
-                public static class RESOURCECOSTVALUES
+                public static class RESOURCECOST
                 {
                     public static readonly float NONE = 0f;
-                    public static readonly float VERY_LOW = 25f;
-                    public static readonly float LOW = 50f;
-                    public static readonly float MEDIUM = 100f;
-                    public static readonly float HIGH = 200f;
-                    public static readonly float VERY_HIGH = 500f;
+                    public static readonly float VERY_LOW = 75f;
+                    public static readonly float LOW = 125f;
+                    public static readonly float MEDIUM = 187f;
+                    public static readonly float HIGH = 250f;
+                    public static readonly float VERY_HIGH = 450f;
+                }
+                public static class CASTINGRANGE
+                {
+                    public static readonly float NONE = 0f;
+                    public static readonly float VERY_LOW = 75f;
+                    public static readonly float LOW = 125f;
+                    public static readonly float MEDIUM = 187f;
+                    public static readonly float HIGH = 250f;
+                    public static readonly float VERY_HIGH = 450f;
+                }
+                public static class HITRANGE
+                {
+                    public static readonly float NONE = 0f;
+                    public static readonly float VERY_LOW = 1f;
+                    public static readonly float LOW = 2.5f;
+                    public static readonly float MEDIUM = 5f;
+                    public static readonly float HIGH = 7.5f;
+                    public static readonly float VERY_HIGH = 10f;
                 }
             }
             public static class SINGLE_TARGET
@@ -295,7 +313,7 @@ namespace Mechanics.Objects
                     public static readonly Interval MEDIUM = new Interval(55f, 115f);
                     public static readonly Interval HIGH = new Interval(105f, 165f);
                 }
-                public static class COOLDOWNVALUES
+                public static class COOLDOWN
                 {
                     public static readonly float NONE = 0;
                     public static readonly float VERY_LOW = 0.75f;
@@ -304,7 +322,7 @@ namespace Mechanics.Objects
                     public static readonly float HIGH = 8.0f;
                     public static readonly float VERY_HIGH = 15.0f;
                 }
-                public static class DURATIONVALUES
+                public static class DURATION
                 {
                     public static readonly float NONE = 0;
                     public static readonly float INSTANT = 0.01f;
@@ -314,14 +332,23 @@ namespace Mechanics.Objects
                     public static readonly float HIGH = 8.0f;
                     public static readonly float VERY_HIGH = 15.0f;
                 }
-                public static class RESOURCECOSTVALUES
+                public static class RESOURCECOST
                 {
                     public static readonly float NONE = 0f;
-                    public static readonly float VERY_LOW = 10f;
-                    public static readonly float LOW = 20f;
-                    public static readonly float MEDIUM = 40f;
-                    public static readonly float HIGH = 80f;
-                    public static readonly float VERY_HIGH = 160f;
+                    public static readonly float VERY_LOW = 25f;
+                    public static readonly float LOW = 50f;
+                    public static readonly float MEDIUM = 75f;
+                    public static readonly float HIGH = 100f;
+                    public static readonly float VERY_HIGH = 150f;
+                }
+                public static class CASTINGRANGE
+                {
+                    public static readonly float NONE = 0f;
+                    public static readonly float VERY_LOW = 75f;
+                    public static readonly float LOW = 125f;
+                    public static readonly float MEDIUM = 187f;
+                    public static readonly float HIGH = 250f;
+                    public static readonly float VERY_HIGH = 450f;
                 }
             }
             public static class SPECIALS

@@ -5,13 +5,7 @@ using Mechanics.Objects.Abilities;
 
 public class BlackHole : MonoBehaviour
 {
-    [Range(0.5f, 10.0f)]
-    public float duration = BlackHoleEffect.Duration;
-    [Range(0.5f, 10.0f)]
-    public float range = 5.0f;
-
     public float force = 50;
-
     private ParticleSystem orb;
     private float timer;
     private float damageFactor;
@@ -20,8 +14,8 @@ public class BlackHole : MonoBehaviour
     void Start()
     {
         orb = GetComponent<ParticleSystem>();
-        timer = duration;
-        this.damageFactor = 1f / (30.0f * this.duration);
+        timer = BlackHoleMechanic.Duration;
+        this.damageFactor = 1f / (30.0f * BlackHoleMechanic.Duration);
         GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.BLACKHOLE, null, this.damageFactor);
     }
 
@@ -40,12 +34,8 @@ public class BlackHole : MonoBehaviour
         }
         else
         {
-            if (GameManager.instance.isDarkMode)
-                force = Mathf.Abs(force) * -1;
-            else
-                force = Mathf.Abs(force);
-
-            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+            force = (GameManager.instance.isDarkMode) ? -Mathf.Abs(force) : Mathf.Abs(force);
+            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, BlackHoleMechanic.HitRange);
             foreach (Collider candidate in hits)
             {
                 if (candidate.gameObject.tag == GameManager.instance.EnemyTag)

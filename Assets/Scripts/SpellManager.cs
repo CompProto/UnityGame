@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Mechanics.Objects;
+using Mechanics.Objects.Abilities;
 
 public class SpellManager : MonoBehaviour {
 
@@ -38,15 +39,14 @@ public class SpellManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
         if (GameManager.instance.isDead)
             return;
 
-
-
         // ACTION BAR KEYPRESS 1 - ASTRAL PRESENCE
-        if (Input.GetKeyDown(KeyCode.Alpha1) ) // TODO - update with actual energy cost
+        if (Input.GetKeyDown(KeyCode.Alpha1) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ASTRAL_PRESENCE)) // TODO - update with actual energy cost
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -55,7 +55,7 @@ public class SpellManager : MonoBehaviour {
                 Vector3 spawnPos = vHit.point;
                 //spawnPos.y += 1; // Spawn slightly above the ground
                 //Debug.Log("Hit: " + vHit.point);
-                Collider[] candidates = Physics.OverlapSphere(spawnPos, 1.5f);
+                Collider[] candidates = Physics.OverlapSphere(spawnPos, AstralPressenceMechanic.HitRange);
                 foreach (Collider c in candidates)
                 {
                     if (c.gameObject.tag == "PowerUp")
@@ -97,7 +97,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS 5 - ENERGY BOMB
-        if (Input.GetKeyDown(KeyCode.Alpha5) ) // TODO - update with actual energy cost
+        if (Input.GetKeyDown(KeyCode.Alpha5) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BOMB)) 
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();
@@ -118,7 +118,7 @@ public class SpellManager : MonoBehaviour {
         }
 
         // ACTION BAR KEYPRESS SHIFT + LEFTMOUSE CLICK - STANDARD ATTACK
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0)) // TODO - update with actual energy cost
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0)) 
         {
             Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit vHit = new RaycastHit();

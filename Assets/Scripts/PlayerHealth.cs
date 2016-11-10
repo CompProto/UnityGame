@@ -18,7 +18,6 @@ public class PlayerHealth : MonoBehaviour {
         EnergyBar.maxValue = GameManager.instance.playerCharacter.SpellPoints; 
         HealthBar.maxValue = GameManager.instance.playerCharacter.Life;        
         UserControl = gameObject.GetComponent<ThirdPersonUserControl>();
-        GameManager.instance.playerCharacter.ConsumedSpellPoints = GameManager.instance.playerCharacter.SpellPoints;
         GameManager.instance.playerCharacter.Wounds = GameManager.instance.playerCharacter.Life-1f;
     }
 	

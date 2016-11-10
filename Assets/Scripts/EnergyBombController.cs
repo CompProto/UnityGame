@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mechanics.Objects;
+using Mechanics.Objects.Abilities;
 
 public class EnergyBombController : MonoBehaviour
 {
-
     public GameObject Nova;
     public AudioClip ImpactSound;
-
-    private Rigidbody body;
     private Vector3 tar;
     private ParticleSystem particles;
     private AudioSource source;
@@ -29,28 +28,24 @@ public class EnergyBombController : MonoBehaviour
             // Start & spawn Nova
             source.Play();
             GameObject nova = (GameObject)Instantiate(Nova, tar + new Vector3(0, 0.5f, 0), transform.rotation * Quaternion.Euler(90, 0, 0));
-            
+
             // Damage all enemies depending on distance to black hole
             GameObject blackHole = GameObject.FindGameObjectWithTag("BlackHole");
+            float damageScale = 1f;
             if (blackHole != null)
             {
-                float dist = (blackHole.transform.position - tar).magnitude;
-                float damage;
-                if (GameManager.instance.isDarkMode)
-                    damage = 1; // TODO - Calculation for darkmode
-                else
-                    damage = 2; // TODO - calculation for light mode
-
-                Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-                foreach (Collider candidate in hits)
+                float dist = Mathf.Min((blackHole.transform.position - tar).magnitude, EnergyBombMechanic.HitRange);
+                damageScale += GameManager.instance.isDarkMode ? dist / EnergyBombMechanic.HitRange : 1f -  (dist / EnergyBombMechanic.HitRange);
+            }
+            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, EnergyBombMechanic.HitRange);
+            foreach (Collider candidate in hits)
+            {
+                if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
                 {
-                    if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
-                    {
-                        // TODO - do damage to each enemy
-                    }
+                    Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;
+                    GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BOMB, enemyMechanics, damageScale);
                 }
             }
-
             Destroy(gameObject, 2.5f);
         }
     }
@@ -64,6 +59,7 @@ public class EnergyBombController : MonoBehaviour
         float airtime = (12.5f / 100.0f) * dist; // Projectile travel time
         Vector3 ThrowSpeed = calculateBestThrowSpeed(transform.position, target, airtime);
         gameObject.GetComponent<Rigidbody>().AddForce(ThrowSpeed, ForceMode.VelocityChange);
+        GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BOMB, null, 0f);
     }
 
     private Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)

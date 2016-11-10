@@ -13,13 +13,10 @@ namespace Mechanics.Objects
 
         public Player(SingleValueStat[] stats) : base(stats)
         {            
-            this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleEffect(this));
-            this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierEffect(this));
-            //this.abilities.Add(MECHANICS.ABILITIES.CHARGE, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.DIMENSION_DOOR, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.PSYCHO_KINESIS, 0);
+            this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanics(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, new EnergyBombMechanic(this));
             this.UpdateStats();
         }
 
@@ -36,13 +33,10 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.RECOVERY, 1f, 0f),
             };
             this.characterStats = MECHANICS.Convert(baseStats);
-            this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleEffect(this));
-            this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierEffect(this));
-            //this.abilities.Add(MECHANICS.ABILITIES.CHARGE, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.DIMENSION_DOOR, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, 0);
-            //this.abilities.Add(MECHANICS.ABILITIES.PSYCHO_KINESIS, 0);
+            this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanics(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, new EnergyBombMechanic(this));
             this.UpdateStats();
         }
 

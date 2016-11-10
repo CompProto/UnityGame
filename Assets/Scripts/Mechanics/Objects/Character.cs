@@ -37,6 +37,7 @@ namespace Mechanics.Objects
             get { return this.consumedSpellpoints; }
             set { this.consumedSpellpoints = value; if(this.consumedSpellpoints < 0f) this.consumedSpellpoints = 0f; }
         }
+        public float SpellPointsLeft {  get { return this.SpellPoints - this.ConsumedSpellPoints; } }
         public float Life { get { return this[Stats.LIFEFORCE]; } }
         public float Wounds
         {

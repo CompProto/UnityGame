@@ -29,23 +29,15 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         stuckTiles = new PathFinding.Tile[10];
-
-
         debugTimer = Time.time;
-
         startTime = Time.time;
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
-
-
-
     }
     void StuckDectection()
     {
-
         frameCount++;
         if (distToPlayer <= 35 && distToPlayer > 5)
         {
-
             if (frameCount % 10 == 0)
             {
                 positionTile = new PathFinding.Tile((int)transform.position.x, (int)transform.position.z, 0);
@@ -65,9 +57,7 @@ public class EnemyController : MonoBehaviour
                                 similarCount++;
                                 if (similarCount > 40)
                                 {
-                                    
                                     isStuck = true;
-
                                     similarCount = 0;
                                 }
 

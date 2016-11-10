@@ -7,11 +7,11 @@ using UnityEngine;
 
 namespace Mechanics.Objects.Abilities
 {
-    public abstract class DamageEffect : AbilityBase
+    public abstract class DamageMechanic : AbilityBase
     {
         protected Interval damageInterval;
 
-        public DamageEffect(Character self) : base(self)
+        public DamageMechanic(Character self) : base(self)
         {
         }
 
