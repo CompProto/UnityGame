@@ -16,6 +16,7 @@ public class ModeManager : MonoBehaviour
     public float duration = 2.0f; // How long to swap between the materials
     public Slider ModeSlider;
     public float ModeUnitSpeed = 5; // ModeUnits pr. second
+    public float OverlayOffset = 25;
 
     private AudioSource source;
     private ParticleSystem _DarkSmoke, _WhiteSmoke;
@@ -45,19 +46,19 @@ public class ModeManager : MonoBehaviour
         else
             ModeSlider.value += value;
 
-        if(ModeSlider.value >= 0) // Light
+        if(ModeSlider.value >= 25) // Light
         {
             if (isDarkMode)  
-                Overlay.color = new Color(1, 1, 1, ModeSlider.value/100.0f * 2); // Bevæg mod clear
+                Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
             else
-                Overlay.color = new Color(1, 1, 1, ModeSlider.value / 100.0f * 2);// bevæg mod light
+                Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod light
         }
-        else
+        else if(ModeSlider.value <= -25)
         {
             if (isDarkMode)
-                Overlay.color = new Color(0, 0, 0, -ModeSlider.value / 100.0f * 2);// bevæg mod dark
+                Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod dark
             else
-                Overlay.color = new Color(0, 0, 0, -ModeSlider.value / 100.0f * 2); // Bevæg mod clear
+                Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
         }
     }
 
