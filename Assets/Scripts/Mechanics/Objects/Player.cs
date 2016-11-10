@@ -15,7 +15,7 @@ namespace Mechanics.Objects
         {            
             this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
-            this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanics(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, new EnergyBombMechanic(this));
             this.UpdateStats();
         }
@@ -35,7 +35,7 @@ namespace Mechanics.Objects
             this.characterStats = MECHANICS.Convert(baseStats);
             this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
-            this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanics(this));
+            this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BOMB, new EnergyBombMechanic(this));
             this.UpdateStats();
         }
