@@ -36,7 +36,7 @@ public class ParticleAttractor : MonoBehaviour
         {
             target = source;
             p.Stop();
-            orbitManager.setActive(true);
+            orbitManager.ToggleAstralPresence();
         }
         else
         {
@@ -59,6 +59,6 @@ public class ParticleAttractor : MonoBehaviour
         this.target = _target;
         timer = -1 * duration;
         p.Play();
-        orbitManager.setActive(false);
+        orbitManager.ToggleAstralPresence();
     }
 }

@@ -12,6 +12,7 @@ public class SpellManager : MonoBehaviour {
     public GameObject StandardAttack;
     public GameObject DimensionDoor;
     public GameObject Barrier;
+    public GameObject AstralPressence;
 
     public AudioClip BlackHoleSound;
 
@@ -22,7 +23,7 @@ public class SpellManager : MonoBehaviour {
     private Transform PlayerPosition;
     private DimensionDoorEffect doorManager;
     private BarrierEffect barrierManager;
-    private PlayerHealth _PlayerHealth;
+    private OrbitManager _OrbitManager;
 
 
     // Use this for initialization
@@ -35,7 +36,7 @@ public class SpellManager : MonoBehaviour {
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         doorManager = DimensionDoor.GetComponent<DimensionDoorEffect>();
         barrierManager = Barrier.GetComponent<BarrierEffect>();
-        _PlayerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        _OrbitManager = AstralPressence.GetComponent<OrbitManager>();
     }
 	
 	// Update is called once per frame
@@ -46,26 +47,9 @@ public class SpellManager : MonoBehaviour {
             return;
 
         // ACTION BAR KEYPRESS 1 - ASTRAL PRESENCE
-        if (Input.GetKeyDown(KeyCode.Alpha1) && GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ASTRAL_PRESENCE)) // TODO - update with actual energy cost
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // Check for whether ability can be used has to be in OrbitManager script as this is a channeled ability
         {
-            Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit vHit = new RaycastHit();
-            if (Physics.Raycast(ray, out vHit, 200))
-            {
-                Vector3 spawnPos = vHit.point;
-                //spawnPos.y += 1; // Spawn slightly above the ground
-                //Debug.Log("Hit: " + vHit.point);
-                Collider[] candidates = Physics.OverlapSphere(spawnPos, AstralPressenceMechanic.HitRange);
-                foreach (Collider c in candidates)
-                {
-                    if (c.gameObject.tag == "PowerUp")
-                    {
-                        pAttracktor.AttackTarget(c.gameObject);
-                        Debug.Log("Enemy found at: " + c.gameObject.transform.position); // DEBUG
-                        break;
-                    }
-                }
-            }
+            _OrbitManager.ToggleAstralPresence();
         }
 
         // ACTION BAR KEYPRESS 2 - DIMENSION DOOR
