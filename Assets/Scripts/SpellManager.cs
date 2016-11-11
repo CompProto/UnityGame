@@ -20,22 +20,22 @@ public class SpellManager : MonoBehaviour {
     private ParticleAttractor pAttracktor;
     private ModeManager modeChanger;
     private Transform PlayerPosition;
-    private DimensionDoorManager doorManager;
-    private BarrierManager barrierManager;
+    private DimensionDoorEffect doorManager;
+    private BarrierEffect barrierManager;
     private PlayerHealth _PlayerHealth;
 
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         DungeonCam = Camera.GetComponent<Camera>();
         source = GetComponent<AudioSource>();
         pAttracktor = GetComponent<ParticleAttractor>();
         modeChanger = modeManager.GetComponent<ModeManager>();
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
-        doorManager = DimensionDoor.GetComponent<DimensionDoorManager>();
-        barrierManager = Barrier.GetComponent<BarrierManager>();
+        doorManager = DimensionDoor.GetComponent<DimensionDoorEffect>();
+        barrierManager = Barrier.GetComponent<BarrierEffect>();
         _PlayerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        
     }
 	
 	// Update is called once per frame
@@ -106,7 +106,7 @@ public class SpellManager : MonoBehaviour {
                 Vector3 spawnPos = PlayerPosition.position;
                 spawnPos.y += 1.25f;
                 GameObject bomb = (GameObject) Instantiate(EnergyBomb, spawnPos, transform.rotation);
-                EnergyBombController eController = bomb.GetComponent<EnergyBombController>();
+                EnergyBombEffect eController = bomb.GetComponent<EnergyBombEffect>();
                 eController.ThrowBomb(vHit.point);
             }
         }
@@ -127,7 +127,7 @@ public class SpellManager : MonoBehaviour {
                 Vector3 spawnPos = PlayerPosition.position;
                 spawnPos.y += 1.25f;
                 GameObject atk = (GameObject)Instantiate(StandardAttack, spawnPos, transform.rotation);
-                StandardAttackController eController = atk.GetComponent<StandardAttackController>();
+                PsychokinesisEffect eController = atk.GetComponent<PsychokinesisEffect>();
                 eController.ThrowBomb(vHit.point);
             }
         }

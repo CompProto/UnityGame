@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Mechanics.Objects;
 
-public class DimensionDoorManager : MonoBehaviour {
+public class DimensionDoorEffect : MonoBehaviour {
 
     public GameObject Player;
     public GameObject Door; // Prefab with particlesystem that can be spawned where the door should be. Also holds the position

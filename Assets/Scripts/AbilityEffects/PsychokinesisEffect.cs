@@ -3,14 +3,14 @@ using System.Collections;
 using Mechanics.Objects;
 using Mechanics.Objects.Abilities;
 
-public class EnergyBombController : MonoBehaviour
+public class PsychokinesisEffect : MonoBehaviour
 {
-    public GameObject Nova;
-    public AudioClip ImpactSound;
+
     private Vector3 tar;
     private ParticleSystem particles;
     private AudioSource source;
-    private bool NovaSpawned = false;
+    public AudioClip ImpactSound;
+    private bool pendingDestroy;
 
     // Use this for initialization
     void Start()
@@ -22,44 +22,35 @@ public class EnergyBombController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < tar.y && !NovaSpawned)
+        if (transform.position.y < tar.y && !pendingDestroy)
         {
-            NovaSpawned = true;
-            // Start & spawn Nova
             source.Play();
-            GameObject nova = (GameObject)Instantiate(Nova, tar + new Vector3(0, 0.5f, 0), transform.rotation * Quaternion.Euler(90, 0, 0));
-
-            // Damage all enemies depending on distance to black hole
-            GameObject blackHole = GameObject.FindGameObjectWithTag("BlackHole");
-            float damageScale = 1f;
-            if (blackHole != null)
-            {
-                float dist = Mathf.Min((blackHole.transform.position - tar).magnitude, EnergyBombMechanic.HitRange);
-                damageScale += GameManager.instance.isDarkMode ? dist / EnergyBombMechanic.HitRange : 1f -  (dist / EnergyBombMechanic.HitRange);
-            }
-            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, EnergyBombMechanic.HitRange);
+            particles.Stop();
+            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, PsychokinesisMechanic.HitRange);
             foreach (Collider candidate in hits)
             {
                 if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
                 {
                     Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;
-                    GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BOMB, enemyMechanics, damageScale);
+                    GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.PSYCHO_KINESIS, enemyMechanics, 1f);
                 }
             }
             Destroy(gameObject, 2.5f);
+            pendingDestroy = true;
         }
+
     }
 
     public void ThrowBomb(Vector3 target)
     {
         tar = target;
         particles = gameObject.GetComponent<ParticleSystem>();
-        particles.Play();
+        //particles.Play();
         float dist = (target - transform.position).magnitude;
-        float airtime = (12.5f / 100.0f) * dist; // Projectile travel time
+        float airtime = (8f / 100.0f) * dist; // Projectile travel time
         Vector3 ThrowSpeed = calculateBestThrowSpeed(transform.position, target, airtime);
         gameObject.GetComponent<Rigidbody>().AddForce(ThrowSpeed, ForceMode.VelocityChange);
-        GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BOMB, null, 0f);
+        GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.PSYCHO_KINESIS, null, 0f);
     }
 
     private Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)

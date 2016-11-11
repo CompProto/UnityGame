@@ -3,7 +3,7 @@ using System.Collections;
 using Mechanics.Objects;
 using Mechanics.Objects.Abilities;
 
-public class BlackHole : MonoBehaviour
+public class BlackHoleEffect : MonoBehaviour
 {
     public float force = 50;
     private ParticleSystem orb;

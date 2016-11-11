@@ -3,7 +3,7 @@ using System.Collections;
 using Mechanics.Objects;
 using Mechanics.Objects.Abilities;
 
-public class BarrierManager : MonoBehaviour
+public class BarrierEffect : MonoBehaviour
 {
     public AudioClip BarrierSound;
     private ParticleSystem barrierParticles;

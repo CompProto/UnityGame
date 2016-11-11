@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NovaController : MonoBehaviour {
+public class NovaEffect : MonoBehaviour {
 
     public float duration = 2.0f;
     public ParticleSystem particles;
@@ -10,7 +10,7 @@ public class NovaController : MonoBehaviour {
     private bool marked;
  //   private Color startColor;
 
-    public NovaController()
+    public NovaEffect()
     {
         timer = -duration;
     }
