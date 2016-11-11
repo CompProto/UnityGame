@@ -5,7 +5,6 @@ using Particle = UnityEngine.ParticleSystem.Particle;
 
 public class OrbitManager : MonoBehaviour
 {
-
     public GameObject target; // Usually the player
 
     private ParticleSystem p;
@@ -26,15 +25,13 @@ public class OrbitManager : MonoBehaviour
         if (!p.isPlaying)
             return;
 
-        if (GameManager.instance.isDarkMode)
+        Collider[] candidates = Physics.OverlapSphere(target.transform.position, Mechanics.Objects.Abilities.AstralPressenceMechanic.HitRange);
+        foreach (Collider c in candidates)
         {
-            Collider[] candidates = Physics.OverlapSphere(target.transform.position, Mechanics.Objects.Abilities.AstralPressenceMechanic.HitRange);
-            foreach (Collider c in candidates)
+            if (c.gameObject.tag == GameManager.instance.EnemyTag)
             {
-                if (c.gameObject.tag == GameManager.instance.EnemyTag)
-                {
-                    // TODO apply damage to target. Damage should probably be: damage = (TotalAbilityDamageForEntireDuration / Time.deltaTime)
-                }
+                Enemy enemyMechanics = c.gameObject.GetComponent<EnemyManager>().enemy;
+                GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ASTRAL_PRESENCE, enemyMechanics, Time.deltaTime/candidates.Length);
             }
         }
 
@@ -69,13 +66,13 @@ public class OrbitManager : MonoBehaviour
         {
             timer = 0;
             p.Play();
-            // TODO start mechanics ability here. This should start draining energy.
+            GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ASTRAL_PRESENCE, null, 0f);
         }
         else
         {
             timer = 0;
             p.Stop();
-            // TODO stop mechanics ability here. Energy will no longer be drained.
+            GameManager.instance.playerCharacter.EndAbility(MECHANICS.ABILITIES.ASTRAL_PRESENCE);
         }
     }
 }
