@@ -392,12 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10835aa39d594c4ca4473375cdb9282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 1769858860}
-  duration: 8.58
-  target: {fileID: 0}
-  orbitManager: {fileID: 0}
-  p: {fileID: 0}
-  timer: 0
 --- !u!82 &129156918
 AudioSource:
   m_ObjectHideFlags: 0
@@ -697,6 +691,11 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 169742016}
+--- !u!1 &216378263 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013509163846, guid: a97ecc8c4e96d904e89efa78fa76ad74,
+    type: 2}
+  m_PrefabInternal: {fileID: 218599049}
 --- !u!1001 &218599049
 Prefab:
   m_ObjectHideFlags: 0
@@ -1333,23 +1332,23 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 516274160}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46526247a134fb14dbce87c2d83eb872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MusicVolume: 0.5
-  DayMusic: {fileID: 0}
-  ShadowMusic: {fileID: 0}
-  DarkSmoke: {fileID: 0}
-  WhiteSmoke: {fileID: 0}
+  DayMusic: {fileID: 8300000, guid: 8135b5b130dd72d4886a7c369d32a15d, type: 3}
+  ShadowMusic: {fileID: 8300000, guid: 54756e8c4cd901b4bbe911f4517da982, type: 3}
+  DarkSmoke: {fileID: 921947832}
+  WhiteSmoke: {fileID: 216378263}
   gameObjects: []
   materials: []
-  Overlay: {fileID: 0}
+  Overlay: {fileID: 539137411}
   isDarkMode: 0
   duration: 2
-  ModeSlider: {fileID: 0}
-  ModeUnitSpeed: 5
+  ModeSlider: {fileID: 1546757583}
+  ModeUnitSpeed: 2
   OverlayOffset: 25
 --- !u!4 &516274162
 Transform:
@@ -2220,6 +2219,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e52514cad7f0c4a48ae20b00356c8684, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &921947832 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011778064618, guid: a6c24f4e5a8faa84cbc73002d49ff1ef,
+    type: 2}
+  m_PrefabInternal: {fileID: 1478380674}
 --- !u!1 &941903190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3833,11 +3837,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1766077037}
---- !u!1 &1769858860 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000011937336422, guid: 7c6565be02a975c44aaf97eec6790a64,
-    type: 2}
-  m_PrefabInternal: {fileID: 1620248594}
 --- !u!1 &1781483494
 GameObject:
   m_ObjectHideFlags: 0
