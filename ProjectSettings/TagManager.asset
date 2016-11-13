@@ -12,6 +12,7 @@ TagManager:
   - Pathfinder
   - BlackHole
   - MapGenerator
+  - Enemy
   layers:
   - Default
   - TransparentFX
