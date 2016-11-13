@@ -4,32 +4,37 @@ using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
-
-    public float health = 1000;
+    private Rigidbody rb;
     public float speed = 3;
     private int[,] movementPath;
     private PathFinding path;
     Vector3 playerPosition;
     Vector3 nextTile;
-    Vector3 previousLocation;
     float startTime;
-    LayerMask lMask;
-    Vector3 lastTile;
-    float debugTimer;
     PathFinding.Tile[] stuckTiles;
     PathFinding.Tile positionTile;
     int frameCount = 0;
     int indexCounter = 0;
     float distToPlayer = 0;
     bool isStuck = false;
+    bool walking = false;
+    bool attacking = false;
+    Animator anim;
+    float time = 0;
 
 
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
 
+
+    }
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         stuckTiles = new PathFinding.Tile[10];
-        debugTimer = Time.time;
+
         startTime = Time.time;
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
     }
@@ -57,6 +62,7 @@ public class EnemyController : MonoBehaviour
                                 similarCount++;
                                 if (similarCount > 40)
                                 {
+
                                     isStuck = true;
                                     similarCount = 0;
                                 }
@@ -74,20 +80,17 @@ public class EnemyController : MonoBehaviour
     Vector3 GetOutOfStuck()
     {
         Vector3 AB_normalized = (playerPosition - transform.position).normalized;
-        
+
 
         for (float i = 20; i > 0; i--)
         {
 
             Vector3 temp = playerPosition - AB_normalized * i;
             temp.y = -0.9f;
-           
+
             if (!Physics.Linecast(playerPosition, temp))
             {
-
-                Debug.Log("Raycast er false " + temp.ToString());
                 return temp;
-
             }
         }
         return nextTile;
@@ -108,17 +111,44 @@ public class EnemyController : MonoBehaviour
             isStuck = false;
         }
 
-        if (distToPlayer < 35 && distToPlayer > 5)
+        if (distToPlayer < 35 && distToPlayer >= 1)
         {
             if (MoveToNextTile() <= 50)
             {
+                Vector3 lookPos = nextTile - rb.position;
+                lookPos.y = 0;
+                Quaternion rotation = Quaternion.LookRotation(lookPos);
+                rotation *= Quaternion.Euler(0, 90, 0);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10f * Time.deltaTime);
                 transform.position = Vector3.MoveTowards(transform.position, nextTile, speed * Time.deltaTime);
+                walking = true;
+                attacking = false;
             }
-        }
 
+        }
+        else if (distToPlayer <= 1)
+        {
+            attacking = true;
+            walking = false;
+        }
+    }
+
+    void Animation()
+    {
+        anim.SetBool("IsCrawling", walking);
+        anim.SetBool("IsAttacking", attacking);
 
     }
 
+    void FixedUpdate()
+    {
+        time = time + Time.deltaTime;
+        if (time >= 1)
+        {
+            Animation();
+            time = 0;
+        }
+    }
 
 
     float MoveToNextTile()
@@ -135,7 +165,7 @@ public class EnemyController : MonoBehaviour
             nextTile = transform.position;
             return 100000000;
         }
-       
+
 
     }
     Vector3 CurrentTile()
