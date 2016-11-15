@@ -37,11 +37,26 @@ namespace Mechanics.Objects.Abilities
                     this.self.Wounds -= drain;
                 }
                 base.Execute(target, correctedFactor);
+                if (Time.frameCount % 30 == 0)
+                {
+                    this.ShowDamage();
+                }
             }
         }
 
         public override void End()
         {
+            this.ShowDamage();
+        }
+
+        private void ShowDamage()
+        {
+            int dmg = (int)this.damage;
+            if (dmg > 0)
+            {
+                CombatText.instance.Show(dmg.ToString(), Color.green);
+                this.damage = 0f;
+            }
         }
     }
 }

@@ -36,12 +36,27 @@ namespace Mechanics.Objects.Abilities
             if (target != null)
             {
                 base.Execute(target, factor);
+                if(Time.frameCount%30==0)
+                {
+                    this.ShowDamage();
+                }
             }
         }
 
         public override void End()
         {
             this.isRunning = false;
+            this.ShowDamage();
+        }
+
+        private void ShowDamage()
+        {
+            int dmg = (int)this.damage;
+            if (dmg > 0)
+            {
+                CombatText.instance.Show(dmg.ToString(), Color.green);
+                this.damage = 0f;
+            }
         }
     }
 }

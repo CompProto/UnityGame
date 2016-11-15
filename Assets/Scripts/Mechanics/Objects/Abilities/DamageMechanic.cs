@@ -10,6 +10,7 @@ namespace Mechanics.Objects.Abilities
     public abstract class DamageMechanic : AbilityBase
     {
         protected Interval damageInterval;
+        protected float damage;
 
         public DamageMechanic(Character self) : base(self)
         {
@@ -27,12 +28,11 @@ namespace Mechanics.Objects.Abilities
             }
 
             target.ApplyDamage(damage, this.self[Stats.KNOWLEDGE]);
-
+            this.damage += damage;
             if (this.self.Roll(this.self[Stats.RECOVERY]))
             {
                 this.self.ConsumedSpellPoints -= this.self.SpellPoints * MECHANICS.TABLES.SPECIALS.RECOVERY_PROC_VALUE * factor;
             }
-
         }
 
 
