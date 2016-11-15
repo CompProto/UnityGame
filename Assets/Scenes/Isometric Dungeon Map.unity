@@ -1274,8 +1274,14 @@ MonoBehaviour:
   ShadowMusic: {fileID: 8300000, guid: 54756e8c4cd901b4bbe911f4517da982, type: 3}
   DarkSmoke: {fileID: 921947832}
   WhiteSmoke: {fileID: 216378263}
-  gameObjects: []
-  materials: []
+  gameObjects:
+  - {fileID: 1500571346}
+  - {fileID: 631091595}
+  materials:
+  - {fileID: 2100000, guid: eb99d25704d517345b12e46894a23fac, type: 2}
+  - {fileID: 2100000, guid: 10b694eaf7c9f834482fd84052ef2233, type: 2}
+  - {fileID: 2100000, guid: d805d830c4023774cb6259aca09f431e, type: 2}
+  - {fileID: 2100000, guid: 665f42f67bf0459499b0f82afc84eba2, type: 2}
   Overlay: {fileID: 539137411}
   isDarkMode: 0
   duration: 2
@@ -4114,6 +4120,10 @@ Prefab:
     - target: {fileID: 152642, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426510, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}

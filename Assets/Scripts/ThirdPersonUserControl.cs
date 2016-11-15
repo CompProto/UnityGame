@@ -66,7 +66,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 
         if (!m_Jump)
         {
-            m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
+           // m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
         }
 
 
