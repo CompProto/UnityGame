@@ -33,6 +33,7 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.BARRIER_BLOCK_CHANCE, 25f, 0f),
                 new SingleValueStat(Stats.BARRIER_POTENCY, 1f, 0f),
                 new SingleValueStat(Stats.RECOVERY, 1f, 0f),
+                new SingleValueStat(Stats.POWER, 11f, 0f),
             };
             this.characterStats = MECHANICS.Convert(baseStats);
             this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));

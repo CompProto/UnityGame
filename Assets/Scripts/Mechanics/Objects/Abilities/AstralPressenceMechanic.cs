@@ -6,9 +6,12 @@ namespace Mechanics.Objects.Abilities
 {
     public class AstralPressenceMechanic : DamageMechanic
     {
+        private float healed;
+
         public AstralPressenceMechanic(Character self) : base(self)
         {
             this.damageInterval = DamageRange;
+            this.healed = 0f;
         }
         public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.VERY_HIGH; } }
         public static float Resource { get { return MECHANICS.TABLES.AOE.RESOURCECOST.MEDIUM; } }
@@ -35,6 +38,7 @@ namespace Mechanics.Objects.Abilities
                     correctedFactor *= 0.5f;
                     float drain = this.self.Roll(this.damageInterval) * this.self[Stats.POTENCY] * correctedFactor;
                     this.self.Wounds -= drain;
+                    this.healed += drain;
                 }
                 base.Execute(target, correctedFactor);
                 if (Time.frameCount % 30 == 0)
@@ -54,8 +58,15 @@ namespace Mechanics.Objects.Abilities
             int dmg = (int)this.damage;
             if (dmg > DamageRange.From)
             {
-                CombatText.instance.Show(dmg.ToString(), Color.green);
+                CombatText.instance.Show(dmg.ToString(), Color.yellow);
                 this.damage = 0f;
+            }
+
+            if (this.healed > DamageRange.From / 2f)
+            {
+                int heal = (int)this.healed;
+                CombatText.instance.Show(heal.ToString(), Color.green);
+                this.healed = 0f;
             }
         }
     }

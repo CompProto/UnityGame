@@ -54,7 +54,7 @@ namespace Mechanics.Objects.Abilities
             int dmg = (int)this.damage;
             if (dmg > DamageRange.From)
             {
-                CombatText.instance.Show(dmg.ToString(), Color.green);
+                CombatText.instance.Show(dmg.ToString(), Color.yellow);
                 this.damage = 0f;
             }
         }
