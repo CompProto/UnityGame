@@ -52,7 +52,7 @@ namespace Mechanics.Objects.Abilities
         private void ShowDamage()
         {
             int dmg = (int)this.damage;
-            if (dmg > 0)
+            if (dmg > DamageRange.From)
             {
                 CombatText.instance.Show(dmg.ToString(), Color.green);
                 this.damage = 0f;
