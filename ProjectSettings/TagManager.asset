@@ -13,6 +13,8 @@ TagManager:
   - BlackHole
   - MapGenerator
   - Enemy
+  - EvaluatedStat
+  - RawStat
   layers:
   - Default
   - TransparentFX
