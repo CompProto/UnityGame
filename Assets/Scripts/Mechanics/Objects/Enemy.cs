@@ -14,14 +14,28 @@ namespace Mechanics.Objects
         {
             this.characterStats = MECHANICS.Convert(this.Generate(type, levelRange));
             this.UpdateStats();
+            switch(type)
+            {
+                case EnemyType.LONGRANGE:
+                    this.abilities.Add(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, new EnemyRangedMechanic(this));
+                    break;
+                case EnemyType.CLOSERANGE:
+                    this.abilities.Add(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, new EnemyMeleeMechanic(this));
+                    break;
+                case EnemyType.BOSS:
+                    this.abilities.Add(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, new EnemyMeleeMechanic(this));
+                    this.abilities.Add(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, new EnemyRangedMechanic(this));
+                    break;
+            }
         }
 
         private StatBase[] Generate(EnemyType type, Interval levelRange)
         {
             float level = Utility.GetRandomFromInterval(levelRange);
+            this.level = (int)level;
             SingleValueStat[] baseStats = new SingleValueStat[]
             {
-                new SingleValueStat(Stats.ALL_PRIMARY_STATS, 5f, 0f)*level,
+                new SingleValueStat(Stats.ALL_PRIMARY_STATS, 1f, 0f)*level,
                 new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 10f, 0f),
                 new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
             };
@@ -29,22 +43,24 @@ namespace Mechanics.Objects
             SingleValueStat[] typeStats = null;
             switch (type)
             {
-                case EnemyType.TANK:
+                case EnemyType.BOSS:
                     typeStats = new SingleValueStat[]
                     {
-                        new SingleValueStat(Stats.LIFEFORCE, 10f, 0f)*level,
+                        new SingleValueStat(Stats.LIFEFORCE, 1f, 0f)*level,
+                        new SingleValueStat(Stats.KNOWLEDGE, 1f, 0f)*level,
+                        new SingleValueStat(Stats.POTENCY, 1f, 0f)*level,
                     };
                     break;
                 case EnemyType.LONGRANGE:
                     typeStats = new SingleValueStat[]
                     {
-                        new SingleValueStat(Stats.KNOWLEDGE, 10f, 0f)*level,
+                        new SingleValueStat(Stats.KNOWLEDGE, 1f, 0f)*level,
                     };
                     break;
                 case EnemyType.CLOSERANGE:
                     typeStats = new SingleValueStat[]
                     {
-                        new SingleValueStat(Stats.POTENCY, 10f, 0f)*level,
+                        new SingleValueStat(Stats.POTENCY, 1f, 0f)*level,
                     };
                     break;
             }

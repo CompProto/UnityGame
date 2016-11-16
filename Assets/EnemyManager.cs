@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
 
     void Start ()
     {
-        this.enemy = new Enemy(EnemyType.TANK, new Interval(1f,5f));
+        this.enemy = new Enemy(EnemyType.BOSS, new Interval(1f,5f));
     }
 	
 	// Update is called once per frame
@@ -18,6 +18,7 @@ public class EnemyManager : MonoBehaviour
     {
 	    if(this.enemy.IsDead)
         {
+            GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
             Destroy(gameObject);
         }
 	}

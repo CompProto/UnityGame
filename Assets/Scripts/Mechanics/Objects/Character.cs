@@ -10,6 +10,8 @@ namespace Mechanics.Objects
     {
         private float wounds;
         private float consumedSpellpoints;
+        protected int level;
+        protected int statSum;
         protected Dictionary<Stats, StatBase> characterStats;
         private Dictionary<Stats, StatBase> combinedStats;
         private List<Item> equippedItems;
@@ -44,6 +46,8 @@ namespace Mechanics.Objects
             get { return this.wounds; }
             set { this.wounds = value; if (this.wounds < 0f) this.wounds = 0f; }
         }
+        public int ExpValue {  get { return this.level *MECHANICS.TABLES.SPECIALS.BASE_EXP_PR_LEVEL + this.statSum * MECHANICS.TABLES.SPECIALS.BASE_EXP_PR_STAT; } }
+        public int Level { get { return this.level; } }
         public float Absorb { get; set; }
         public bool IsDead { get; private set; }
         // For getting translated values
@@ -170,6 +174,10 @@ namespace Mechanics.Objects
             }
 
             this.combinedStats = MECHANICS.Convert(total);
+            foreach (var stat in this.combinedStats.Values)
+            {
+                this.statSum += (int)stat.As<SingleValueStat>().Value;
+            }
         }
     }
 }

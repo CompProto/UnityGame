@@ -244,7 +244,7 @@ namespace Mechanics.Objects
             public readonly static float ALL_PRIMARY_STAT_CONTRIBUTION = 1f;
             public readonly static float PRIMARY_STAT_CONTRIBUTION = 3f;
             public readonly static float LIFEFORCE_HITPOINTS = 10f;
-            public readonly static float ENERGY_SPELLPOINTS = 10f;
+            public readonly static float ENERGY_SPELLPOINTS = 50f;
         }
         public static class TABLES
         {
@@ -354,8 +354,13 @@ namespace Mechanics.Objects
             public static class SPECIALS
             {
                 public static readonly float HEALTH_PR_SECOND = 0.01f;
-                public static readonly float SPELLPOINTS_PR_SECOND = 0.01f;
+                public static readonly float SPELLPOINTS_PR_SECOND = 0.05f;
                 public static readonly float RECOVERY_PROC_VALUE = 0.02f;
+                public static readonly int BASE_EXP_PR_LEVEL = 500;
+                public static readonly int BASE_EXP_PR_STAT = 10;
+                public static readonly float EXP_LEVEL_RATE = 2f;
+                public static readonly int BASE_EXP_LEVEL = 5000;
+                public static readonly int STATS_PR_LEVEL = 5;
             }
         }
         public enum ABILITIES
@@ -369,6 +374,8 @@ namespace Mechanics.Objects
             ENERGY_BARRIER,
             PSYCHO_KINESIS,
             ENERGY_BOMB,
+            ENEMY_RANGED_ATTACK,
+            ENEMY_MELEE_ATTACK
             // Enemy abilities
         }
     }
