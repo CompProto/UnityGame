@@ -33,7 +33,7 @@ public class FloatingText : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

@@ -48,7 +48,7 @@ public class ThirdPersonUserControl : MonoBehaviour
     {
         charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
         
-        if (Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftShift) || (charge && m_Character.charges > 0))
+        if (Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftShift) || (charge))
         {
             hit = new RaycastHit();
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -107,6 +107,10 @@ public class ThirdPersonUserControl : MonoBehaviour
         // walk speed multiplier
         if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 #endif
+        if (charge)
+        {
+            charge = GameManager.instance.playerCharacter.CanUse(Mechanics.Objects.MECHANICS.ABILITIES.CHARGE);
+        }
         // pass all parameters to the character control script
         m_Character.Move(m_Move, charge, m_Jump);
         m_Jump = false;

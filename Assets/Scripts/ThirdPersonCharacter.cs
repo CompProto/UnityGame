@@ -1,3 +1,4 @@
+using Mechanics.Objects;
 using UnityEngine;
 
 
@@ -43,7 +44,7 @@ public class ThirdPersonCharacter : MonoBehaviour
     CapsuleCollider m_Capsule;
     bool m_Crouching;
     float chargeTimer = 0, chargeCooldown = 0;
-    public int charges = 1;
+
     private bool isCharging = false;
 
 
@@ -72,24 +73,17 @@ public class ThirdPersonCharacter : MonoBehaviour
 
         if (charge)
         {
-            if (charges > 0)
-            {
-                move.Normalize();
-                m_MoveSpeedMultiplier = 1.7f;
-                m_AnimSpeedMultiplier = 2.5f;
-                charges--;
-                chargeCooldown = Time.time;
-                chargeTimer = 0;
-                isCharging = true;
-                SmokeTrail.Play();
-                source.PlayOneShot(Charge, 1.0f);
-            }
+            move.Normalize();
+            m_MoveSpeedMultiplier = 1.7f;
+            m_AnimSpeedMultiplier = 2.5f;
+            chargeCooldown = Time.time;
+            chargeTimer = 0;
+            isCharging = true;
+            SmokeTrail.Play();
+            source.PlayOneShot(Charge, 1.0f);
+            GameManager.instance.playerCharacter.UseAbility(Mechanics.Objects.MECHANICS.ABILITIES.CHARGE, null, 0.0f);
         }
         chargeTimer += Time.fixedDeltaTime;
-        if (charges < 1 && (Time.time - chargeCooldown) > 5.0f)
-        {
-            charges++;
-        }
         if (chargeTimer >= 0.4f)
         {
             m_MoveSpeedMultiplier = 1.0f;
@@ -104,6 +98,8 @@ public class ThirdPersonCharacter : MonoBehaviour
                 {
                     if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
                     {
+                        Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;
+                        GameManager.instance.playerCharacter.UseAbility(Mechanics.Objects.MECHANICS.ABILITIES.CHARGE, enemyMechanics, 1.0f);
                         Vector3 forceDirection = candidate.transform.position - transform.position;
                         candidate.gameObject.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * force, ForceMode.Impulse);
                         hit = true;
@@ -120,7 +116,7 @@ public class ThirdPersonCharacter : MonoBehaviour
             isCharging = false;
         }
 
-        
+
 
         //m_AnimSpeedMultiplier *= move.magnitude;
         move = transform.InverseTransformDirection(move);
