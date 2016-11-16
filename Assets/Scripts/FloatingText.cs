@@ -13,7 +13,7 @@ public class FloatingText : MonoBehaviour
     public void Run(string text, Color color, Vector3 position)
     {
         this.speed = 7f;
-        this.variability = 20f;
+        this.variability = 50f;
         this.end = Time.time + 3.0f;
         this.running = true;
         this.textbox = this.GetComponent<Text>();

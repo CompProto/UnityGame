@@ -11,6 +11,7 @@ namespace Mechanics.Objects.Abilities
     {
         protected Interval damageInterval;
         protected float damage;
+        protected float recovery;
 
         public DamageMechanic(Character self) : base(self)
         {
@@ -31,7 +32,9 @@ namespace Mechanics.Objects.Abilities
             this.damage += damage;
             if (this.self.Roll(this.self[Stats.RECOVERY]))
             {
-                this.self.ConsumedSpellPoints -= this.self.SpellPoints * MECHANICS.TABLES.SPECIALS.RECOVERY_PROC_VALUE * factor;
+                float recov = this.self.SpellPoints * MECHANICS.TABLES.SPECIALS.RECOVERY_PROC_VALUE * factor;
+                recovery += recov;
+                this.self.ConsumedSpellPoints -= recov;
             }
         }
 

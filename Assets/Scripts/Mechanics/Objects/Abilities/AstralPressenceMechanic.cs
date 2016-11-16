@@ -65,8 +65,15 @@ namespace Mechanics.Objects.Abilities
             if (this.healed > DamageRange.From / 2f)
             {
                 int heal = (int)this.healed;
-                CombatText.instance.Show(heal.ToString(), Color.green);
+                CombatText.instance.Show("+" + heal.ToString(), Color.green);
                 this.healed = 0f;
+            }
+
+            int recovery = (int)this.recovery;
+            if (recovery > 0f)
+            {
+                CombatText.instance.Show("+" + recovery.ToString(), new Color(0.68f, 0.85f, 0.9f));
+                this.recovery = 0f;
             }
         }
     }

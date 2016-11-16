@@ -29,7 +29,7 @@ namespace Mechanics.Objects
 
         public Player()
         {
-            this.level = 0;
+            this.level = 1;
             this.currentExp = 0;
             SingleValueStat[] baseStats = new SingleValueStat[]
             {
@@ -57,8 +57,8 @@ namespace Mechanics.Objects
         public int AvailableStatPoints { get; private set; }
 
         public void AwardExp(int exp)
-        {
-            Debug.Log(exp.ToString() + " AWARDET!");
+        {            
+            CombatText.instance.Show("+" + exp.ToString() + " exp", Color.white);
             this.currentExp += exp;
             int factor = this.currentExp / MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
             int projectedLevel = (int)Mathf.Pow(factor, 1/MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE);
@@ -67,7 +67,7 @@ namespace Mechanics.Objects
             {
                 this.AvailableStatPoints += MECHANICS.TABLES.SPECIALS.STATS_PR_LEVEL * diff;
                 this.level += diff;
-                Debug.Log(this.level.ToString() + " LEVEL!");
+                CombatText.instance.Show("+Level", Color.white);
             }
         }
 

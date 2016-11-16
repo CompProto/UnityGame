@@ -49,6 +49,12 @@ namespace Mechanics.Objects.Abilities
                 CombatText.instance.Show(dmg.ToString(), Color.yellow);
                 this.damage = 0f;
             }
+            int recovery = (int)this.recovery;
+            if (recovery > 0f)
+            {
+                CombatText.instance.Show("+" + recovery.ToString(), new Color(0.68f, 0.85f, 0.9f));
+                this.recovery = 0f;
+            }
         }
     }
 }
