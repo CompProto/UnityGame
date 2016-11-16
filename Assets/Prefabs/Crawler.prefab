@@ -686,11 +686,11 @@ GameObject:
   - 114: {fileID: 114000014161547916}
   m_Layer: 0
   m_Name: Crawler
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012840361992
 GameObject:
   m_ObjectHideFlags: 1

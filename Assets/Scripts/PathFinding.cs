@@ -19,6 +19,7 @@ public class PathFinding : MonoBehaviour
     private bool isInit = false;
     private float timer;
     private float startTime;
+    private List<GameObject> monsters;
 
 
 
@@ -35,73 +36,52 @@ public class PathFinding : MonoBehaviour
         height = mapGen.height;
         width = mapGen.width;
         movementPath = new int[width, height];
-
-
-
-
-
-
     }
 
     void Update()
     {
-        timer = Time.time - startTime;
+
+        timer = Time.time - startTime; // 
         playerPosition = GameObject.Find("ThirdPersonController").transform.position;
         playerTile = new Tile((int)playerPosition.x + 100, (int)playerPosition.z + 60, 0);
         if (!isInit || timer >= 3)
         {
-
-         
-
             initMap();
             FindPath();
-
-           
-
+            timer = 0;
             if (!isInit)
             {
-               //  WriteOutMap(); // Husk at indsætte sti til biblioteket. filen vil blive oprettet
+                //  WriteOutMap(); // Husk at indsætte sti til biblioteket. filen vil blive oprettet
                 isInit = true;
             }
-
-
-
         }
-
-
-
-
     }
 
     void FindPath()
     {
+
         queue.Enqueue(playerTile);
-
-
         Tile current;
         while (queue.Count > 0)
         {
             //System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\queue.txt", queue.Count + Environment.NewLine);
             current = queue.Dequeue();
-            if (current.count <= 50)
-            {
-                FindNeighbours(current);
-            }
+
+            FindNeighbours(current);
 
         }
+
 
     }
 
     void FindNeighbours(Tile current)
     {
-
         int x = (int)current.x;
         int y = (int)current.y;
         int count = (int)current.count;
 
         if (map == null || movementPath == null)
         {
-           
             return;
         }
 
@@ -109,9 +89,11 @@ public class PathFinding : MonoBehaviour
             if (map[x - 1, y] == 0 && movementPath[x - 1, y] == 999998)
             {
 
-                Tile up = new Tile(x - 1, y, count + 1);
-                queue.Enqueue(up);
-                movementPath[(int)up.x, (int)up.y] = (int)up.count;
+                EnqueueTile(x - 1, y, count + 1);
+            }
+            else if (map[x - 1, y] == 2)
+            {
+
             }
             else if (map[x - 1, y] == 1)
             {
@@ -121,9 +103,7 @@ public class PathFinding : MonoBehaviour
             if (map[x + 1, y] == 0 && movementPath[x + 1, y] == 999998)
             {
 
-                Tile down = new Tile(x + 1, y, count + 1);
-                queue.Enqueue(down);
-                movementPath[(int)down.x, (int)down.y] = (int)down.count;
+                EnqueueTile(x + 1, y, count + 1);
             }
             else if (map[x + 1, y] == 1)
             {
@@ -133,11 +113,9 @@ public class PathFinding : MonoBehaviour
             if (map[x, y - 1] == 0 && movementPath[x, y - 1] == 999998)
             {
 
-                Tile left = new Tile(x, y - 1, count + 1);
-                queue.Enqueue(left);
-                movementPath[(int)left.x, (int)left.y] = (int)left.count;
+                EnqueueTile(x, y - 1, count + 1);
             }
-            else if (map[x, y -1] == 1)
+            else if (map[x, y - 1] == 1)
             {
                 movementPath[x, y] = movementPath[x, y] + 200;
             }
@@ -145,20 +123,23 @@ public class PathFinding : MonoBehaviour
             if (map[x, y + 1] == 0 && movementPath[x, y + 1] == 999998)
             {
 
-                Tile right = new Tile(x, y + 1, count + 1);
-                queue.Enqueue(right);
-                movementPath[(int)right.x, (int)right.y] = (int)right.count;
+                EnqueueTile(x, y + 1, count + 1);
             }
-            else if (map[x , y +1] == 1)
+            else if (map[x, y + 1] == 1)
             {
                 movementPath[x, y] = movementPath[x, y] + 200;
             }
 
     }
+
+    void EnqueueTile(int x, int y, int count)
+    {
+        Tile tile = new Tile(x, y, count);
+        queue.Enqueue(tile);
+        movementPath[x, y] = count;
+    }
     void initMap()
     {
-
-
         for (int x = 0; x < height; x++)
         {
             for (int y = 0; y < width; y++)
@@ -172,8 +153,6 @@ public class PathFinding : MonoBehaviour
             }
         }
         movementPath[playerTile.x, playerTile.y] = playerTile.count;
-
-
     }
 
 
@@ -252,8 +231,6 @@ public class PathFinding : MonoBehaviour
 
     void WriteOutMap()
     {
-
-
         for (int y = 0; y < height; y++)
         {
 
@@ -275,12 +252,9 @@ public class PathFinding : MonoBehaviour
                     System.IO.File.AppendAllText(path, movementPath[x, y] + Environment.NewLine);
                 }
             }
-
-
         }
-       
     }
-    
+
     public class Tile
     {
         public int x;
@@ -294,9 +268,9 @@ public class PathFinding : MonoBehaviour
             this.count = count;
         }
 
-        public bool Equals(Tile otherTIle)
+        public bool Equals(Tile otherTile)
         {
-            if(this.x == otherTIle.x && this.y == otherTIle.y)
+            if (this.x == otherTile.x && this.y == otherTile.y)
             {
                 return true;
             }
