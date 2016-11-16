@@ -61,8 +61,8 @@ namespace Mechanics.Objects
             CombatText.instance.Show("+" + exp.ToString() + " exp", Color.white, 14);
             this.CurrentExp += exp;
             int factor = this.CurrentExp / MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
-            int projectedLevel = (int)Mathf.Pow(factor, 1/MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE);
-            int diff = projectedLevel - (this.level - 1);
+            int projectedLevel = (int)Mathf.Log(factor, MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE) + 2 ;
+            int diff = projectedLevel - this.level;
             if (diff > 0)
             {
                 this.AvailableStatPoints += MECHANICS.TABLES.SPECIALS.STATS_PR_LEVEL * diff;
@@ -73,7 +73,7 @@ namespace Mechanics.Objects
 
         public int ExpNextLevel(int levelMod)
         {
-            return (int) Mathf.Pow(MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE, this.level + levelMod) * MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
+            return (int) Mathf.Pow(MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE, this.level + levelMod - 2) * MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
         }
 
         public void AwardStat(Stats stat, float count)

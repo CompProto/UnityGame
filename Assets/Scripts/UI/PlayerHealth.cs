@@ -16,8 +16,8 @@ public class PlayerHealth : MonoBehaviour
     {
         EnergyBar.maxValue = GameManager.instance.playerCharacter.SpellPoints;
         HealthBar.maxValue = GameManager.instance.playerCharacter.Life;
-        ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
-        ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(-1);
+        ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(1);
+        ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
         level = GameManager.instance.playerCharacter.Level;
     }
 
@@ -30,8 +30,8 @@ public class PlayerHealth : MonoBehaviour
         HealthBar.value = GameManager.instance.playerCharacter.Life - GameManager.instance.playerCharacter.Wounds;
         if (level != GameManager.instance.playerCharacter.Level)
         {
-            ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
-            ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(-1);
+            ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(1);
+            ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
         }
         ExpBar.value = GameManager.instance.playerCharacter.CurrentExp;
     }
