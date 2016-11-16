@@ -38,6 +38,9 @@ public class BossMover : MonoBehaviour
     CapsuleCollider m_Capsule;
     bool m_Crouching;
 
+    private AudioSource source;
+    private bool isAwake;
+
     void Start()
     {
         m_Animator = GetComponent<Animator>();
@@ -48,11 +51,18 @@ public class BossMover : MonoBehaviour
 
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         m_OrigGroundCheckDistance = m_GroundCheckDistance;
+        source = GetComponent<AudioSource>();
+ 
     }
 
 
     public void Move(Vector3 move, bool charge, bool jump)
     {
+        if (!isAwake)
+        {
+            isAwake = true;
+            source.Play();
+        }
 
         charge = false;
         jump = false;
