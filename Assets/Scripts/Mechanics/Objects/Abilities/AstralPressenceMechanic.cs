@@ -72,7 +72,7 @@ namespace Mechanics.Objects.Abilities
             int recovery = (int)this.recovery;
             if (recovery > 0f)
             {
-                CombatText.instance.Show("+" + recovery.ToString(), new Color(0.68f, 0.85f, 0.9f));
+                CombatText.instance.Show("+" + recovery.ToString(), Color.cyan);
                 this.recovery = 0f;
             }
         }

@@ -20,10 +20,10 @@ public class CombatText : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void Show(string text, Color color)
+    public void Show(string text, Color color, int defaultFontSize = 24)
     {
         GameObject ftext = (GameObject)Instantiate(floatingText, gameObject.transform.parent, false);
-        ftext.GetComponent<FloatingText>().Run(text, color, new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+        ftext.GetComponent<FloatingText>().Run(text, color, new Vector3(Screen.width / 2f, Screen.height / 2f, 0f), defaultFontSize);
     }
 
 }

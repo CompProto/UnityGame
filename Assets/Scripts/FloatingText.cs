@@ -10,7 +10,7 @@ public class FloatingText : MonoBehaviour
     private bool running;
     private float variability;
 
-    public void Run(string text, Color color, Vector3 position)
+    public void Run(string text, Color color, Vector3 position, int defaultFontSize)
     {
         this.speed = 7f;
         this.variability = 50f;
@@ -19,6 +19,7 @@ public class FloatingText : MonoBehaviour
         this.textbox = this.GetComponent<Text>();
         this.textbox.text = text;
         this.textbox.color = color;
+        this.textbox.fontSize = defaultFontSize;
         float vari1 = (Mechanics.Objects.Utility.GetVariation((int)this.variability) - (this.variability / 200f));
         float vari2 = (Mechanics.Objects.Utility.GetVariation((int)this.variability) - (this.variability / 200f));
         this.textbox.transform.position = new Vector3(position.x * vari1, position.y * vari2, 0f);
