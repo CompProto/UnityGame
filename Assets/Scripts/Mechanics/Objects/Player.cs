@@ -11,12 +11,12 @@ namespace Mechanics.Objects
 {
     public class Player : Character
     {
-        private int currentExp;
+        public int CurrentExp { get; private set; }
 
         public Player(SingleValueStat[] stats) : base(stats)
         {
             this.level = 1;
-            this.currentExp = 0;
+            this.CurrentExp = 0;
             this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ENERGY_BARRIER, new BarrierMechanic(this));
             this.abilities.Add(MECHANICS.ABILITIES.ASTRAL_PRESENCE, new AstralPressenceMechanic(this));
@@ -30,7 +30,7 @@ namespace Mechanics.Objects
         public Player()
         {
             this.level = 1;
-            this.currentExp = 0;
+            this.CurrentExp = 0;
             SingleValueStat[] baseStats = new SingleValueStat[]
             {
                 new SingleValueStat(Stats.ALL_PRIMARY_STATS, 1f, 0f),
@@ -59,8 +59,8 @@ namespace Mechanics.Objects
         public void AwardExp(int exp)
         {            
             CombatText.instance.Show("+" + exp.ToString() + " exp", Color.white);
-            this.currentExp += exp;
-            int factor = this.currentExp / MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
+            this.CurrentExp += exp;
+            int factor = this.CurrentExp / MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
             int projectedLevel = (int)Mathf.Pow(factor, 1/MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE);
             int diff = projectedLevel - (this.level - 1);
             if (diff > 0)
@@ -69,6 +69,11 @@ namespace Mechanics.Objects
                 this.level += diff;
                 CombatText.instance.Show("+Level", Color.white);
             }
+        }
+
+        public int ExpNextLevel(int levelMod)
+        {
+            return (int) Mathf.Pow(MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE, this.level + levelMod) * MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
         }
 
         public void AwardStat(Stats stat, float count)
