@@ -33,13 +33,14 @@ namespace Mechanics.Objects
             this.currentExp = 0;
             SingleValueStat[] baseStats = new SingleValueStat[]
             {
-                new SingleValueStat(Stats.ALL_PRIMARY_STATS, 10f, 0f),
+                new SingleValueStat(Stats.ALL_PRIMARY_STATS, 1f, 0f),
                 new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 5f, 0f),
                 new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
                 new SingleValueStat(Stats.ALACRITY, 1f, 0f),
+                new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
                 new SingleValueStat(Stats.BARRIER_BLOCK_CHANCE, 25f, 0f),
-                new SingleValueStat(Stats.BARRIER_POTENCY, 1f, 0f),
-                new SingleValueStat(Stats.POTENCY, 10f, 0f),
+                new SingleValueStat(Stats.BARRIER_POTENCY, 0f, 0f),
+                new SingleValueStat(Stats.POTENCY, 60f, 0f),
                 new SingleValueStat(Stats.ENERGY, 20f, 0f),
                 new SingleValueStat(Stats.KNOWLEDGE, 20f, 0f),
             };

@@ -57,7 +57,17 @@ public class CharacterSheet : MonoBehaviour
             if (hasStat)
             {
                 Stats stat = (Stats)Enum.Parse(typeof(Stats), c.name);
-                c.text = c.tag == "RawStat" ? this.player.GetStat(stat).Value.ToString() : this.player[stat].ToString();
+                string value = string.Empty;
+                if (c.tag == "RawStat")
+                {
+                    value = this.player.GetStat(stat).Value.ToString();
+                }
+                else
+                {
+                    float val = this.player[stat];
+                    value = (stat != Stats.LIFEFORCE && stat != Stats.ENERGY) ? (val * 100f).ToString("0.#") + "%" : val.ToString();
+                }
+                c.text = value;
             }
         }
         this.level.text = this.player.Level.ToString();
@@ -65,7 +75,7 @@ public class CharacterSheet : MonoBehaviour
 
     private void UpdateButtons()
     {
-        bool show = this.player.AvailableStatPoints > 0;
+        bool show = this.player.AvailableStatPoints > 0 && this.visibility;
         this.incPower.SetActive(show);
         this.incEssence.SetActive(show);
         this.incPerception.SetActive(show);

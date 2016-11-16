@@ -3,6 +3,7 @@ using Mechanics.Objects.Abilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Mechanics.Objects
 {
@@ -37,16 +38,16 @@ namespace Mechanics.Objects
         public float ConsumedSpellPoints
         {
             get { return this.consumedSpellpoints; }
-            set { this.consumedSpellpoints = value; if(this.consumedSpellpoints < 0f) this.consumedSpellpoints = 0f; }
+            set { this.consumedSpellpoints = value; if (this.consumedSpellpoints < 0f) this.consumedSpellpoints = 0f; }
         }
-        public float SpellPointsLeft {  get { return this.SpellPoints - this.ConsumedSpellPoints; } }
+        public float SpellPointsLeft { get { return this.SpellPoints - this.ConsumedSpellPoints; } }
         public float Life { get { return this[Stats.LIFEFORCE]; } }
         public float Wounds
         {
             get { return this.wounds; }
             set { this.wounds = value; if (this.wounds < 0f) this.wounds = 0f; }
         }
-        public int ExpValue {  get { return this.level *MECHANICS.TABLES.SPECIALS.BASE_EXP_PR_LEVEL + this.statSum * MECHANICS.TABLES.SPECIALS.BASE_EXP_PR_STAT; } }
+        public int ExpValue { get { return this.level * MECHANICS.TABLES.SPECIALS.BASE_EXP_PR_LEVEL + this.statSum * MECHANICS.TABLES.SPECIALS.BASE_EXP_PR_STAT; } }
         public int Level { get { return this.level; } }
         public float Absorb { get; set; }
         public bool IsDead { get; private set; }
@@ -71,9 +72,9 @@ namespace Mechanics.Objects
         }
         public void ApplyDamage(float damage, float reduction)
         {
-            SingleValueStat parity = this.GetStat(Stats.PARITY).ConvertTo(Stats.PARITY, reduction);
+            SingleValueStat parity = this.GetStat(Stats.PARITY).ConvertTo(Stats.PARITY, 1f - reduction);
             float mitigation = MECHANICS.EvaluateStat(parity);
-            float incomingDamage = damage * mitigation;
+            float incomingDamage = damage * (1f - mitigation);
             if (this.Absorb > 0)
             {
                 if (this.Roll(this[Stats.BARRIER_BLOCK_CHANCE]))
