@@ -45,6 +45,11 @@ public class BossMover : MonoBehaviour
     private Vector3 nextTile;
     private float distToPlayer;
 
+    public GameObject RangedAttack;
+
+    private float timer;
+    private float cooldown = 5; // TODO add correct cooldown
+
     void Start()
     {
         m_Animator = GetComponent<Animator>();
@@ -58,6 +63,7 @@ public class BossMover : MonoBehaviour
         source = GetComponent<AudioSource>();
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        timer = -cooldown;
     }
 
     void Update()
@@ -65,6 +71,7 @@ public class BossMover : MonoBehaviour
         PathFinding.Tile tempTile = path.GetNextTile(transform.position);
         nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f); // TODO hardcodet offsets!
         distToPlayer = Vector3.Distance(transform.position, player.position);
+        timer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -76,14 +83,24 @@ public class BossMover : MonoBehaviour
         }
         else
         {
-            if(distToPlayer > 5) // TODO cast distance
+            if(distToPlayer > 10) // TODO cast distance
             {
                 Move(nextTile-transform.position, false, false);
             }
             else
             {
-                // TODO Ranged attack
-                Move(Vector3.zero, false, false);
+                Move(Vector3.zero, false, false);       
+                if(timer >= 0) 
+                {
+                    GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
+                    EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
+                    eController.ThrowBomb(player.position);
+                    timer = -cooldown;
+                }
+                else
+                {
+                    // TODO - move to player and melee attack
+                }
             }
         }
     }
