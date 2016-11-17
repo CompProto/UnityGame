@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
     float startTime;
     float attackTimer = 10;
 
-
+    private Transform playerTransform;
 
     void Awake()
     {
@@ -52,6 +52,8 @@ public class EnemyController : MonoBehaviour
 
         startTime = Time.time;
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerPosition = playerTransform.position;
     }
 
     /*
@@ -130,7 +132,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        playerPosition = playerTransform.position;
         nextTile = transform.position;
         distToPlayer = Vector3.Distance(transform.position, playerPosition);
 

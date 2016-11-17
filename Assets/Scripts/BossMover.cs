@@ -40,6 +40,10 @@ public class BossMover : MonoBehaviour
 
     private AudioSource source;
     private bool isAwake;
+    private PathFinding path;
+    private Transform player;
+    private Vector3 nextTile;
+    private float distToPlayer;
 
     void Start()
     {
@@ -52,13 +56,41 @@ public class BossMover : MonoBehaviour
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         m_OrigGroundCheckDistance = m_GroundCheckDistance;
         source = GetComponent<AudioSource>();
- 
+        path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    void Update()
+    {
+        PathFinding.Tile tempTile = path.GetNextTile(transform.position);
+        nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f); // TODO hardcodet offsets!
+        distToPlayer = Vector3.Distance(transform.position, player.position);
+    }
+
+    void FixedUpdate()
+    {
+        if(distToPlayer > 25) // TODO activation distance
+        {
+            // Dont activate
+            return;
+        }
+        else
+        {
+            if(distToPlayer > 5) // TODO cast distance
+            {
+                Move(nextTile-transform.position, false, false);
+            }
+            else
+            {
+                // TODO Ranged attack
+                Move(Vector3.zero, false, false);
+            }
+        }
+    }
 
     public void Move(Vector3 move, bool charge, bool jump)
-    {
-        if (!isAwake)
+    {       
+        if (!isAwake && move.magnitude != 0)
         {
             isAwake = true;
             source.Play();
