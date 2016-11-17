@@ -107,17 +107,18 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-    // Ones stuck is detected, this function is called.
+    // Once stuck is detected, this function is called.
     // It works that way, that it meassures the line between player and enemy
     // and figures the furthest tile to place the enemy with a linecast
     Vector3 GetOutOfStuck()
     {
+        // finds the direction to player
         Vector3 AB_normalized = (playerPosition - transform.position).normalized;
 
 
+        //Goes through the tiles on the line to player, if linecast is false the tile is empty and enemy is placed on temp, else it just goes to nextTile, meaning that no available tile is found.
         for (float i = 20; i > 0; i--)
         {
-
             Vector3 temp = playerPosition - AB_normalized * i;
             temp.y = -0.9f;
 
@@ -213,15 +214,5 @@ public class EnemyController : MonoBehaviour
 
 
     }
-    Vector3 CurrentTile()
-    {
-        Vector3 currentTile;
-
-        int x = (int)transform.position.x;
-        int y = (int)transform.position.z;
-
-        currentTile = new Vector3(x, 0.5f, y);
-        return currentTile;
-
-    }
+   
 }

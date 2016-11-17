@@ -66,7 +66,6 @@ public class PathFinding : MonoBehaviour
         {
             //System.IO.File.AppendAllText("C:\\Users\\KimdR\\Desktop\\queue.txt", queue.Count + Environment.NewLine);
             current = queue.Dequeue();
-
             FindNeighbours(current);
 
         }
