@@ -34,6 +34,11 @@ public class CharacterSheet : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             this.Show();
+            // Pause / Unpause the game
+            if (visibility)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1;
         }
     }
 
