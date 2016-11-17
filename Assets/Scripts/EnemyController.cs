@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
     private PathFinding path;
     Vector3 playerPosition;
     Vector3 nextTile;
+    int offsetX;
+    int offsetY;
 
     //Movement
     private Rigidbody rb;
@@ -46,12 +48,15 @@ public class EnemyController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         anim.enabled = true;
         rb = GetComponent<Rigidbody>();
         stuckTiles = new PathFinding.Tile[10];
 
         startTime = Time.time;
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
+        offsetX = path.offsetX;
+        offsetY = path.offsetY;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerPosition = playerTransform.position;
     }
@@ -138,7 +143,6 @@ public class EnemyController : MonoBehaviour
         distToPlayer = Vector3.Distance(transform.position, playerPosition);
 
 
-
         if (isStuck)
         {
             transform.position = GetOutOfStuck();
@@ -202,7 +206,7 @@ public class EnemyController : MonoBehaviour
         try
         {
             PathFinding.Tile tempTile = path.GetNextTile(transform.position);
-            nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f);
+            nextTile = new Vector3(tempTile.x - offsetX + 0.5f, -0.9f, tempTile.y - offsetY + 0.5f);
 
             return tempTile.count;
         }
@@ -212,7 +216,7 @@ public class EnemyController : MonoBehaviour
             return 100000000;
         }
 
-
+ 
     }
    
 }

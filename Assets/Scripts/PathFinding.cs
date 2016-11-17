@@ -20,6 +20,9 @@ public class PathFinding : MonoBehaviour
     private float timer;
     private float startTime;
     private List<GameObject> monsters;
+    private Transform playerTransform;
+    public int offsetX;
+    public int offsetY;
 
 
 
@@ -33,8 +36,11 @@ public class PathFinding : MonoBehaviour
         map = mapGen.map;
         // dimensionerne hentes fra MapGenerator, så der kan laves et nyt 2d array med værdier i, der skal repræsentere hvordan npcen skal //
         // flytte sig
+        playerTransform = GameObject.Find("ThirdPersonController").transform;
         height = mapGen.height;
         width = mapGen.width;
+        offsetX = width / 2;
+        offsetY = height / 2;
         movementPath = new int[width, height];
     }
 
@@ -42,8 +48,8 @@ public class PathFinding : MonoBehaviour
     {
 
         timer = Time.time - startTime; // 
-        playerPosition = GameObject.Find("ThirdPersonController").transform.position;
-        playerTile = new Tile((int)playerPosition.x + 100, (int)playerPosition.z + 60, 0);
+        playerPosition = playerTransform.position;
+        playerTile = new Tile((int)playerPosition.x + offsetX, (int)playerPosition.z + offsetY, 0);
         if (!isInit || timer >= 3)
         {
             initMap();
@@ -157,7 +163,7 @@ public class PathFinding : MonoBehaviour
 
     public Tile GetNextTile(Vector3 enemyPosition)
     {
-        Tile enemy = new Tile((int)Mathf.Floor(enemyPosition.x) + 100, (int)Mathf.Floor(enemyPosition.z) + 60, 0);
+        Tile enemy = new Tile((int)Mathf.Floor(enemyPosition.x) + offsetX, (int)Mathf.Floor(enemyPosition.z) + offsetY, 0);
 
         try
         {
@@ -235,7 +241,7 @@ public class PathFinding : MonoBehaviour
 
             String path = "";
             // String path = "C:\\Users\\KimdR\\Desktop\\map.txt"; // Path til biblioteket hvor txt skal ligge.
-            System.IO.File.AppendAllText(path, y - 60 + "|| ");
+            System.IO.File.AppendAllText(path, y - offsetY + "|| ");
             for (int x = 0; x < width; x++)
             {
                 if (movementPath[x, y] == 1000000)
