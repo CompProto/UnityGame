@@ -49,9 +49,6 @@ public class BossMover : MonoBehaviour
 
     public GameObject RangedAttack;
 
-    private float timer;
-    private float cooldown = 5; // TODO add correct cooldown
-
     void Awake()
     {
         m_Animator = GetComponent<Animator>();
@@ -65,7 +62,6 @@ public class BossMover : MonoBehaviour
         source = GetComponent<AudioSource>();
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        timer = -cooldown;
         this.enemyManager = GetComponent<EnemyManager>();
         this.enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(5, 8));
     }
@@ -75,7 +71,6 @@ public class BossMover : MonoBehaviour
         PathFinding.Tile tempTile = path.GetNextTile(transform.position);
         nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f); // TODO hardcodet offsets!
         distToPlayer = Vector3.Distance(transform.position, player.position);
-        timer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -98,8 +93,7 @@ public class BossMover : MonoBehaviour
                 {
                     GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
                     EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
-                    eController.ThrowBomb(player.position, this.enemyManager);
-                    timer = -cooldown;                    
+                    eController.ThrowBomb(player.position, this.enemyManager);               
                 }
                 else
                 {

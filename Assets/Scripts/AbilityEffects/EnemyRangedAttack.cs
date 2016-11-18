@@ -29,12 +29,12 @@ public class EnemyRangedAttack : MonoBehaviour
           //  source.Play();
             GameObject _impact = (GameObject)Instantiate(Impact, tar + new Vector3(0, 0.5f, 0), transform.rotation * Quaternion.Euler(90, 0, 0));
 
-            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 2);
+            Collider[] hits = Physics.OverlapSphere(gameObject.transform.position, 0.75f);
             foreach (Collider candidate in hits)
             {
                 if (candidate.gameObject.tag == "Player")
                 {
-                    enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, GameManager.instance.playerCharacter, 1f); // DU SKAL KALDE DENNE HER
+                    enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, GameManager.instance.playerCharacter, 1f); // TODO DU SKAL KALDE DENNE HER
                 }
             }
             Destroy(gameObject, 2.5f);
@@ -51,7 +51,7 @@ public class EnemyRangedAttack : MonoBehaviour
         float airtime = (12.5f / 100.0f) * dist; // Projectile travel time
         Vector3 ThrowSpeed = calculateBestThrowSpeed(transform.position, target, airtime);
         gameObject.GetComponent<Rigidbody>().AddForce(ThrowSpeed, ForceMode.VelocityChange);        
-        enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, GameManager.instance.playerCharacter, 1f);
+        enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, null, 0);
     }
 
     private Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)
