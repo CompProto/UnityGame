@@ -1,4 +1,5 @@
 ﻿using Mechanics.Objects;
+using RPG.Assets.Scripts.Mechanics.Enumerations;
 using UnityEngine;
 
 
@@ -44,13 +45,14 @@ public class BossMover : MonoBehaviour
     private Transform player;
     private Vector3 nextTile;
     private float distToPlayer;
+    private EnemyManager enemyManager;
 
     public GameObject RangedAttack;
 
     private float timer;
     private float cooldown = 5; // TODO add correct cooldown
 
-    void Start()
+    void Awake()
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -64,6 +66,8 @@ public class BossMover : MonoBehaviour
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         timer = -cooldown;
+        this.enemyManager = GetComponent<EnemyManager>();
+        this.enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(5, 8));
     }
 
     void Update()
@@ -90,12 +94,12 @@ public class BossMover : MonoBehaviour
             else
             {
                 Move(Vector3.zero, false, false);       
-                if(timer >= 0) 
+                if(this.enemyManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK))
                 {
                     GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
                     EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
-                    eController.ThrowBomb(player.position);
-                    timer = -cooldown;
+                    eController.ThrowBomb(player.position, this.enemyManager);
+                    timer = -cooldown;                    
                 }
                 else
                 {

@@ -38,6 +38,7 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.ALL_PRIMARY_STATS, 1f, 0f)*level,
                 new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 10f, 0f),
                 new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
+                new SingleValueStat(Stats.ALACRITY, 1f, 0f),
             };
 
             SingleValueStat[] typeStats = null;

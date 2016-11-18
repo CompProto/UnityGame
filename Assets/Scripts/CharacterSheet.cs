@@ -16,6 +16,7 @@ public class CharacterSheet : MonoBehaviour
     public GameObject incPerception;
     public GameObject incLuck;
     public Text level;
+    public Text statsLeft;
     private Player player;
 
 
@@ -76,6 +77,7 @@ public class CharacterSheet : MonoBehaviour
             }
         }
         this.level.text = this.player.Level.ToString();
+        this.statsLeft.text = this.player.AvailableStatPoints.ToString();
     }
 
     private void UpdateButtons()

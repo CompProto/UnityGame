@@ -7,6 +7,7 @@ namespace Mechanics.Objects.Abilities
     public class EnemyRangedMechanic : DamageMechanic
     {
         private float lastUsage;
+        
 
         public EnemyRangedMechanic(Character self) : base(self)
         {
@@ -15,7 +16,7 @@ namespace Mechanics.Objects.Abilities
         }
 
         public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.LOW; } }
-        public static float Cooldown { get { return MECHANICS.TABLES.SINGLE_TARGET.COOLDOWN.VERY_LOW; } }
+        public static float Cooldown { get { return MECHANICS.TABLES.SINGLE_TARGET.COOLDOWN.HIGH; } }
         public static Interval DamageRange { get { return MECHANICS.TABLES.SINGLE_TARGET.DAMAGE.LOW; } }
 
         public override bool CanApply()
@@ -25,19 +26,21 @@ namespace Mechanics.Objects.Abilities
 
         public override void Execute(Character target, float factor)
         {
+            this.lastUsage = Time.time;
+
             if (target != null)
             {
                 base.Execute(target, factor);
-                this.ShowDamage();
-            }
-            else
-            {
-                this.lastUsage = Time.time;
+                if (Time.frameCount % 30 == 0)
+                {
+                    this.ShowDamage();
+                }
             }
         }
 
         public override void End()
         {
+            this.ShowDamage();
         }
 
 

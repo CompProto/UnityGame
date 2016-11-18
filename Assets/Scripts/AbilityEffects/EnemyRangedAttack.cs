@@ -11,12 +11,12 @@ public class EnemyRangedAttack : MonoBehaviour
     private ParticleSystem particles;
     private AudioSource source;
     private bool ImpactSpawned = false;
-
+    private EnemyManager enemyManager;
     // Use this for initialization
     void Start()
     {
         source = gameObject.GetComponent<AudioSource>();
-    //    source.clip = ImpactSound;
+        //    source.clip = ImpactSound;
     }
 
     // Update is called once per frame
@@ -34,25 +34,24 @@ public class EnemyRangedAttack : MonoBehaviour
             {
                 if (candidate.gameObject.tag == "Player")
                 {
-                    // TODO damage the player
-                //    Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;              
-                //    GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BOMB, enemyMechanics, damageScale);
+                    enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, GameManager.instance.playerCharacter, 1f); // DU SKAL KALDE DENNE HER
                 }
             }
             Destroy(gameObject, 2.5f);
         }
     }
 
-    public void ThrowBomb(Vector3 target)
+    public void ThrowBomb(Vector3 target, EnemyManager enemyManager)
     {
+        this.enemyManager = enemyManager;
         tar = target;
         particles = gameObject.GetComponent<ParticleSystem>();
         particles.Play();
         float dist = (target - transform.position).magnitude;
         float airtime = (12.5f / 100.0f) * dist; // Projectile travel time
         Vector3 ThrowSpeed = calculateBestThrowSpeed(transform.position, target, airtime);
-        gameObject.GetComponent<Rigidbody>().AddForce(ThrowSpeed, ForceMode.VelocityChange);
-        GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ENERGY_BOMB, null, 0f);
+        gameObject.GetComponent<Rigidbody>().AddForce(ThrowSpeed, ForceMode.VelocityChange);        
+        enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK, GameManager.instance.playerCharacter, 1f);
     }
 
     private Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)
