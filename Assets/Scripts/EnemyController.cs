@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using Mechanics.Objects;
+using RPG.Assets.Scripts.Mechanics.Enumerations;
 
 public class EnemyController : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class EnemyController : MonoBehaviour
 
     //Movement
     private Rigidbody rb;
+
+    //atttack
+    public bool isRanged = false;
+    public float range = 2;
+    private EnemyManager eManager;
+    private GameObject RangedAttack;
+    public float cooldown = 5;
+
+
 
 
     //StuckCalculation
@@ -44,6 +54,7 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>();
 
 
+
     }
     // Use this for initialization
     void Start()
@@ -52,13 +63,15 @@ public class EnemyController : MonoBehaviour
         anim.enabled = true;
         rb = GetComponent<Rigidbody>();
         stuckTiles = new PathFinding.Tile[10];
-
+        eManager = GetComponent<EnemyManager>();
+        eManager.enemy = new Enemy(EnemyType.CLOSERANGE, new Interval(1f, 5f));
         startTime = Time.time;
         path = (PathFinding)GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<PathFinding>();
         offsetX = path.offsetX;
         offsetY = path.offsetY;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerPosition = playerTransform.position;
+
     }
 
     /*
@@ -127,7 +140,7 @@ public class EnemyController : MonoBehaviour
             Vector3 temp = playerPosition - AB_normalized * i;
             temp.y = -0.9f;
 
-            if (!Physics.Linecast(playerPosition, temp))
+            if (Physics.Linecast(playerPosition, temp) == false)
             {
                 return temp;
             }
@@ -138,6 +151,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time = time + Time.deltaTime;
         playerPosition = playerTransform.position;
         nextTile = transform.position;
         distToPlayer = Vector3.Distance(transform.position, playerPosition);
@@ -151,10 +165,18 @@ public class EnemyController : MonoBehaviour
 
     }
 
-   
+
 
     void Animation()
     {
+
+        if (attacking)
+        {
+            //anim.SetTrigger("Attack");
+
+
+        }
+
         anim.SetBool("IsCrawling", walking);
 
 
@@ -163,25 +185,52 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (distToPlayer < 35 && distToPlayer >= 2)
+        if (distToPlayer < 35 && distToPlayer >= range)
         {
-            if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position))
+
+
+            if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == true)
             {
                 Move(nextTile, distToPlayer);
+
             }
-            else if (MoveToNextTile() <= 50 && !Physics.Linecast(playerPosition, transform.position))
+            else if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == false)
             {
                 Move(playerPosition, distToPlayer);
+
             }
         }
-        else if (distToPlayer <= 3)
-        {
-            walking = false;
-            Animation();
-        }
-    
 
-}
+        else if (distToPlayer < range && Physics.Linecast(playerPosition, transform.position) == false)
+        {
+
+            walking = false;
+
+            if (isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK))
+            {
+                GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
+                EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
+                eController.ThrowBomb(playerPosition);
+            }
+            else if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK))
+            {
+                if (time >= 0)
+                {
+                var player = GameManager.instance.playerCharacter;
+                eManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, player, 0.1f);
+                attacking = true;
+                anim.SetTrigger("Attack");
+                time = -cooldown;
+
+                }
+                else attacking = false;
+
+
+            }
+
+        }
+        Animation();
+    }
 
     void Move(Vector3 destination, float distance)
     {
@@ -198,6 +247,7 @@ public class EnemyController : MonoBehaviour
         velocity.y = 0;
         rb.velocity = velocity;
         walking = true;
+        attacking = false;
         Animation();
     }
 
@@ -216,7 +266,7 @@ public class EnemyController : MonoBehaviour
             return 100000000;
         }
 
- 
+
     }
-   
+
 }
