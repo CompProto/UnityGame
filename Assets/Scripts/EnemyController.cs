@@ -71,7 +71,7 @@ public class EnemyController : MonoBehaviour
         offsetY = path.offsetY;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerPosition = playerTransform.position;
-
+        time = -cooldown;
     }
 
     /*
@@ -172,9 +172,8 @@ public class EnemyController : MonoBehaviour
 
         if (attacking)
         {
-            //anim.SetTrigger("Attack");
-
-
+            anim.SetTrigger("Attack");
+            time = -cooldown;
         }
 
         anim.SetBool("IsCrawling", walking);
@@ -184,6 +183,7 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
+       
 
         if (distToPlayer < 35 && distToPlayer >= range)
         {
@@ -200,36 +200,28 @@ public class EnemyController : MonoBehaviour
 
             }
         }
-
-        else if (distToPlayer < range && Physics.Linecast(playerPosition, transform.position) == false)
+        // !Physics.Linecast(playerPosition, transform.position) &&(eManager.enemy.CanUse//(Mechanics.Objects.MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) || eManager.enemy.CanUse(Mechanics.Objects.MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK
+        else if (distToPlayer <= range && Physics.Linecast(playerPosition, transform.position) == false)
         {
-
-            walking = false;
-
+            
             if (isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK))
             {
-                GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
-                EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
-                eController.ThrowBomb(playerPosition);
+                //GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
+                //EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
+                //eController.ThrowBomb(playerPosition);
             }
-            else if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK))
+            else if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) && time >= 0)
             {
-                if (time >= 0)
-                {
-                var player = GameManager.instance.playerCharacter;
-                eManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, player, 0.1f);
                 attacking = true;
-                anim.SetTrigger("Attack");
+                walking = false;
+                Character player = GameManager.instance.playerCharacter;
+                eManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, player, 0.01f);
                 time = -cooldown;
-
-                }
-                else attacking = false;
-
-
+                Animation();
             }
 
         }
-        Animation();
+        
     }
 
     void Move(Vector3 destination, float distance)

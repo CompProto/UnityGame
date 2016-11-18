@@ -1726,6 +1726,7 @@ MonoBehaviour:
   speed: 3
   isRanged: 0
   range: 2
+  cooldown: 5
 --- !u!135 &135000012016232636
 SphereCollider:
   m_ObjectHideFlags: 1
