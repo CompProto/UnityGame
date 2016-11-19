@@ -15,6 +15,8 @@ public class CharacterSheet : MonoBehaviour
     public GameObject incEssence;
     public GameObject incPerception;
     public GameObject incLuck;
+
+    public GameObject PowerTooltip, EssenceTooltip, PerceptionTooltip, LuckTooltip;
     public Text level;
     public Text statsLeft;
     private Player player;
@@ -51,6 +53,10 @@ public class CharacterSheet : MonoBehaviour
         this.player = GameManager.instance.playerCharacter;
         this.UpdateButtons();
         this.UpdateStats();
+        PowerTooltip.SetActive(false);
+        EssenceTooltip.SetActive(false);
+        PerceptionTooltip.SetActive(false);
+        LuckTooltip.SetActive(false);
     }
 
     private void UpdateStats()
