@@ -101,6 +101,8 @@ public class ThirdPersonCharacter : MonoBehaviour
                         Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;
                         GameManager.instance.playerCharacter.UseAbility(Mechanics.Objects.MECHANICS.ABILITIES.CHARGE, enemyMechanics, 1.0f);
                         Vector3 forceDirection = candidate.transform.position - transform.position;
+                        if (GameManager.instance.isDarkMode)
+                            force *= -1; // Pull in monsters in Dark mode
                         candidate.gameObject.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * force, ForceMode.Impulse);
                         hit = true;
                     }

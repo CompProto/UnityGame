@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public Slider HealthBar;
     public Slider EnergyBar;
     public Slider ExpBar;
+    public Text ExpText, LifeText, EnergyText;
 
     private int level;
 
@@ -30,10 +31,16 @@ public class PlayerHealth : MonoBehaviour
         HealthBar.value = GameManager.instance.playerCharacter.Life - GameManager.instance.playerCharacter.Wounds;
         if (level != GameManager.instance.playerCharacter.Level)
         {
+            // TODO - play leveling animation & sound
             ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(1);
             ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
         }
         ExpBar.value = GameManager.instance.playerCharacter.CurrentExp;
+
+        // Update texts
+        ExpText.text = (GameManager.instance.playerCharacter.CurrentExp - ExpBar.minValue) + " / " + (ExpBar.maxValue - ExpBar.minValue);
+        LifeText.text = (int) HealthBar.value + " / " + (int) HealthBar.maxValue;
+        EnergyText.text = (int) EnergyBar.value + " / " + (int) EnergyBar.maxValue;
     }
 
 }
