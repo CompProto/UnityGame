@@ -10,7 +10,10 @@ public class PlayerHealth : MonoBehaviour
     public Slider ExpBar;
     public Text ExpText, LifeText, EnergyText;
 
+    public GameObject LevelUpEffects;
+
     private int level;
+    private LevelUpController levelController;
 
     // Use this for initialization
     void Start()
@@ -20,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
         ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(1);
         ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
         level = GameManager.instance.playerCharacter.Level;
+        levelController = LevelUpEffects.GetComponent<LevelUpController>();
     }
 
     // Update is called once per frame
@@ -31,7 +35,9 @@ public class PlayerHealth : MonoBehaviour
         HealthBar.value = GameManager.instance.playerCharacter.Life - GameManager.instance.playerCharacter.Wounds;
         if (level != GameManager.instance.playerCharacter.Level)
         {
+            level = GameManager.instance.playerCharacter.Level;
             // TODO - play leveling animation & sound
+            levelController.PlayLevelUpEffects();
             ExpBar.maxValue = GameManager.instance.playerCharacter.ExpNextLevel(1);
             ExpBar.minValue = GameManager.instance.playerCharacter.ExpNextLevel(0);
         }

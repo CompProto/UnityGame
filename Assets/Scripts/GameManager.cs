@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public bool isDarkMode { get; set; }
     public bool isDead { get { return this.playerCharacter.IsDead; } }
 
-    public string EnemyTag = "PowerUp"; // TODO - change to correct tag
+    public string EnemyTag = "Enemy"; // TODO - change to correct tag
+
 
     void Awake()
     {
