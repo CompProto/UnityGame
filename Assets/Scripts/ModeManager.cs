@@ -24,6 +24,9 @@ public class ModeManager : MonoBehaviour
     private bool soundChanged;
     private Color OverlayColor;
 
+    private float CurrentMusicTime;
+    private float PrevMusicTime;
+
     // Use this for initialization
     void Start()
     {
@@ -66,6 +69,8 @@ public class ModeManager : MonoBehaviour
     {
         _DarkSmoke.Stop();
         _WhiteSmoke.Play();
+        CurrentMusicTime = PrevMusicTime;
+        PrevMusicTime = source.time;
         Play(DayMusic);
     }
 
@@ -73,6 +78,8 @@ public class ModeManager : MonoBehaviour
     {
         _WhiteSmoke.Stop();
         _DarkSmoke.Play();
+        CurrentMusicTime = PrevMusicTime;
+        PrevMusicTime = source.time;
         Play(ShadowMusic);
     }
 
@@ -85,6 +92,7 @@ public class ModeManager : MonoBehaviour
             source.Stop();
         }
         source.clip = sound;
+        source.time = CurrentMusicTime;
         source.Play();
     }
 
