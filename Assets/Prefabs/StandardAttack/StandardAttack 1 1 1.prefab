@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 156044e8875d1524294c742a99b38571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImpactSound: {fileID: 8300000, guid: c7d7c9a5151ea0b43a0dda31196d44e2, type: 3}
+  ImpactSound: {fileID: 8300000, guid: dbde9fa4641920d40aeb32f69ee6ad9b, type: 3}
 --- !u!198 &198000010268988034
 ParticleSystem:
   m_ObjectHideFlags: 1
