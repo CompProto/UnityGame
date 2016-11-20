@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public string EnemyTag = "Enemy";
 
     public GameObject DeadOverlay;
+    public GameObject PauseScreen;
 
 
     void Awake()
@@ -53,11 +54,33 @@ public class GameManager : MonoBehaviour
         }
         if (isDead)
         {
+            Time.timeScale = 0.25f;
             if (Input.GetKeyDown(KeyCode.R))
             {
-                // TODO - reload scene correctly
+                // TODO - reload scene correctly ?
+                Time.timeScale = 1;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
             }
+        }
+
+        if(!isDead && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
+        {
+            // Pause/unpause game
+            if (PauseScreen.activeSelf)
+            {
+                Time.timeScale = 1;
+                PauseScreen.SetActive(false);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                PauseScreen.SetActive(true);
+            }
+        }
+        if (PauseScreen.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+                Application.Quit(); // EXIT game
         }
         
     }
