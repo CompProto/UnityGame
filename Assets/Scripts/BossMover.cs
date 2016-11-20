@@ -47,6 +47,9 @@ public class BossMover : MonoBehaviour
     private float distToPlayer;
     private EnemyManager enemyManager;
 
+    private float timer = 0;
+    private float meleeCooldown = 2.5f; // TODO use proper melee cooldown
+
     public GameObject RangedAttack;
 
     void Awake()
@@ -64,17 +67,19 @@ public class BossMover : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         this.enemyManager = GetComponent<EnemyManager>();
         this.enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(5, 8));
+        distToPlayer = float.MaxValue;
     }
 
     void Update()
     {
         PathFinding.Tile tempTile = path.GetNextTile(transform.position);
-        nextTile = new Vector3(tempTile.x - 100 + 0.5f, -0.9f, tempTile.y - 60 + 0.5f); // TODO hardcodet offsets!
+        nextTile = new Vector3(tempTile.x - path.offsetX + 0.5f, -0.9f, tempTile.y - path.offsetY + 0.5f); 
         distToPlayer = Vector3.Distance(transform.position, player.position);
     }
 
     void FixedUpdate()
     {
+        timer += Time.fixedDeltaTime;
         if(distToPlayer > 25) // TODO activation distance
         {
             // Dont activate
@@ -97,7 +102,16 @@ public class BossMover : MonoBehaviour
                 }
                 else
                 {
-                    // TODO - move to player and melee attack
+                    
+                    if(distToPlayer <= 1 && enemyManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) && timer >= meleeCooldown) // melee attack
+                    {
+                        enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, GameManager.instance.playerCharacter, 1.0f); 
+                        timer = 0;
+                    }
+                    else // Move towards the player
+                    {
+                        Move(nextTile - transform.position, false, false);
+                    }
                 }
             }
         }

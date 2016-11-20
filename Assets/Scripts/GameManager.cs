@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Mechanics.Objects;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class GameManager : MonoBehaviour
     public bool isDarkMode { get; set; }
     public bool isDead { get { return this.playerCharacter.IsDead; } }
 
-    public string EnemyTag = "Enemy"; // TODO - change to correct tag
+    public string EnemyTag = "Enemy";
+
+    public GameObject DeadOverlay;
 
 
     void Awake()
@@ -22,7 +25,7 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
+      //  DontDestroyOnLoad(gameObject);
     }
 
     // Use this for initialization
@@ -40,6 +43,23 @@ public class GameManager : MonoBehaviour
             this.timer = 0f;
             this.playerCharacter.Update();
         }
+    }
+
+    void Update()
+    {
+        if (isDead && !DeadOverlay.activeSelf)
+        {
+            DeadOverlay.SetActive(true);
+        }
+        if (isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                // TODO - reload scene correctly
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+            }
+        }
+        
     }
 
 }

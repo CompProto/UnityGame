@@ -31,6 +31,6 @@ public class LevelUpController : MonoBehaviour {
     {
         source.Play();
         particles.Play();
-        timer = -2.0f;
+        timer = -3.0f;
     }
 }
