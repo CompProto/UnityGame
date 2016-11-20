@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool isDarkMode { get; set; }
     public bool isDead { get { return this.playerCharacter.IsDead; } }
 
+    public bool isPaused { get { return PauseScreen.activeSelf; } }
+
     public string EnemyTag = "Enemy";
 
     public GameObject DeadOverlay;

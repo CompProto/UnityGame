@@ -68,12 +68,6 @@ public class ThirdPersonUserControl : MonoBehaviour
         {
            // m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
         }
-
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            LevelUp.Play();
-        }
     }
 
     // Fixed update is called in sync with physics
@@ -105,7 +99,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 
 #if !MOBILE_INPUT
         // walk speed multiplier
-        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+      //  if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 #endif
         if (charge)
         {

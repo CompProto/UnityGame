@@ -11,9 +11,12 @@ public class PlayerHealth : MonoBehaviour
     public Text ExpText, LifeText, EnergyText;
 
     public GameObject LevelUpEffects;
+    public GameObject GodModeText;
 
     private int level;
     private LevelUpController levelController;
+
+    private bool GodModeEnabled;
 
     // Use this for initialization
     void Start()
@@ -47,6 +50,22 @@ public class PlayerHealth : MonoBehaviour
         ExpText.text = (GameManager.instance.playerCharacter.CurrentExp - ExpBar.minValue) + " / " + (ExpBar.maxValue - ExpBar.minValue);
         LifeText.text = (int) HealthBar.value + " / " + (int) HealthBar.maxValue;
         EnergyText.text = (int) EnergyBar.value + " / " + (int) EnergyBar.maxValue;
+
+        Cheater();
+    }
+
+    private void Cheater()
+    {
+        if (Input.GetKey(KeyCode.H) && Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.T)) // Enables GODMODE. CHEATER!
+            GodModeEnabled = true;
+        if (Input.GetKeyDown(KeyCode.Escape))
+            GodModeEnabled = false;
+        GodModeText.SetActive(GodModeEnabled);
+        if (GodModeEnabled)
+        {
+            GameManager.instance.playerCharacter.ConsumedSpellPoints = 0;
+            GameManager.instance.playerCharacter.Wounds = 0;
+        }
     }
 
 }
