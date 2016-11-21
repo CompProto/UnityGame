@@ -10,10 +10,14 @@ namespace Mechanics.Objects
 {
     public class Enemy : Character
     {
+
+        public EnemyType Type { get; private set; }
         public Enemy(EnemyType type, Interval levelRange)
         {
             this.characterStats = MECHANICS.Convert(this.Generate(type, levelRange));
             this.UpdateStats();
+            this.Type = type;
+
             switch(type)
             {
                 case EnemyType.LONGRANGE:

@@ -37,8 +37,9 @@ public class ModeManager : MonoBehaviour
         source = GetComponent<AudioSource>();
         _DarkSmoke = DarkSmoke.GetComponent<ParticleSystem>();
         _WhiteSmoke = WhiteSmoke.GetComponent<ParticleSystem>();
-        Play(DayMusic);
-        _WhiteSmoke.Play();
+        PlayDayMusic();
+      //  Play(DayMusic);
+      //  _WhiteSmoke.Play();
     }
 
     void FixedUpdate()
@@ -144,5 +145,7 @@ public class ModeManager : MonoBehaviour
         {
             source.volume += Time.deltaTime;
         }
+        if (source.volume > MusicVolume)
+            source.volume = MusicVolume;
     }
 }

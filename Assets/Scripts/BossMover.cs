@@ -79,6 +79,12 @@ public class BossMover : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (this.enemyManager.enemy.IsDead)
+        {
+            Move(Vector3.zero, false, false);
+            return;
+        }
+
         timer += Time.fixedDeltaTime;
         if(distToPlayer > 25) // TODO activation distance
         {
@@ -93,9 +99,9 @@ public class BossMover : MonoBehaviour
             }
             else
             {
-                Move(Vector3.zero, false, false);       
                 if(this.enemyManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK))
                 {
+                    Move(Vector3.zero, false, false);       
                     GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
                     EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
                     eController.ThrowBomb(player.position, this.enemyManager);               
