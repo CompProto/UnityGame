@@ -17,7 +17,7 @@ public class MapGenerator : MonoBehaviour {
      public int[,] map { get; set; }
 
     // These values are fetched from ObjectSpawner.cs
-    private GameObject Player, Enemy;
+    private GameObject Player, Enemy, RangedEnemy, Boss;
     private int EnemiesNumber;
     private float MinDistance; // Minimum distance between enemies
     private ObjectSpawner objSpawn;
@@ -41,6 +41,8 @@ public class MapGenerator : MonoBehaviour {
         objSpawn = GetComponent<ObjectSpawner>();
         Player = objSpawn.Player;
         Enemy = objSpawn.Enemy;
+        RangedEnemy = objSpawn.RangedEnemy;
+        Boss = objSpawn.Boss;
         EnemiesNumber = objSpawn.EnemiesNumber;
         MinDistance = objSpawn.MinimumDistance;
         PlacePlayer();
@@ -75,7 +77,7 @@ public class MapGenerator : MonoBehaviour {
                 if (map[x, y] == 0 && map[x,y+1] == 0 && map[x,y-1] == 0 && map[x-1,y]==0 && map[x+1,y]==0)
                 {
                     bool mark = false;
-                    Vector3 pos = new Vector3(x - width / 2 + 1, -1, y - height / 2 + 1);
+                    Vector3 pos = new Vector3(x - width / 2 + 1, 0, y - height / 2 + 1);
                     foreach(Vector3 ePos in enemyPositions)
                     {
                         if(Mathf.Abs((ePos-pos).magnitude) < MinDistance + RandomMinDistance)
@@ -86,12 +88,33 @@ public class MapGenerator : MonoBehaviour {
                     }
                     if (mark == false)
                     {
-                        Instantiate(Enemy, pos, transform.rotation);
+                        if(enemyPositions.Count % 2 == 0)
+                            Instantiate(Enemy, pos, transform.rotation);
+                        else
+                            Instantiate(RangedEnemy, pos, transform.rotation);
                         enemyPositions.Add(pos);
                         RandomMinDistance = GetRandomMinDistance();
                     }
                     if (enemyPositions.Count >= EnemiesNumber + 1)
                         return;
+                }
+            }
+        }
+        PlaceBoss();
+    }
+
+    private void PlaceBoss()
+    {
+        for (int x = width / 2; x < width - 1; x++)
+        {
+            for (int y = height / 2; y < height - 1; y++)
+            {
+                if (map[x, y] == 0 && map[x, y + 1] == 0 && map[x, y - 1] == 0 && map[x - 1, y] == 0 && map[x + 1, y] == 0)
+                {             
+                    Vector3 pos = new Vector3(x - width / 2 + 1, -1, y - height / 2 + 1);
+                    Instantiate(Boss, pos, transform.rotation);
+                    Debug.Log("Boss Spawned: " + pos);
+                    return;
                 }
             }
         }

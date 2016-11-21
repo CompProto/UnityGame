@@ -9,6 +9,9 @@ public class ObjectSpawner : MonoBehaviour {
      */
     public GameObject Player;
     public GameObject Enemy;
+    public GameObject RangedEnemy;
+    public GameObject Boss;
+
     public int EnemiesNumber = 10;
     [Range(1.0f, 50.0f)]
     public float MinimumDistance = 10.0f; // Minimum distance between enemies

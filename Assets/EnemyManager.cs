@@ -11,13 +11,18 @@ public class EnemyManager : MonoBehaviour
     public AudioClip BossDeathSound;
 
     private AudioSource source;
+    private ParticleSystem LongRangeEnemyEffects;
     private float timer;
+    private bool MarkedForDestroy;
 
     void Start()
     {
         if (enemy.Type == EnemyType.BOSS)
         {
             source = GetComponent<AudioSource>();
+        } else if(enemy.Type == EnemyType.LONGRANGE)
+        {
+            LongRangeEnemyEffects = GetComponent<ParticleSystem>();
         }
         timer = -2.5f;
     }
@@ -29,12 +34,17 @@ public class EnemyManager : MonoBehaviour
         {         
             if(enemy.Type == EnemyType.BOSS)
             {
-                if (!BossDeathEffect.isPlaying)
+                if (!MarkedForDestroy)
                     BossDeath();
                 else
                     timer += Time.deltaTime;
                 if (timer >= 0)
                     BossDeathEffect.Stop();
+            }
+            else if (enemy.Type == EnemyType.LONGRANGE)
+            {
+                if (!MarkedForDestroy)
+                    RangeDeath();
             }
             else
             {
@@ -46,7 +56,7 @@ public class EnemyManager : MonoBehaviour
 
     void BossDeath()
     {
-        if(source == null)
+        if (source == null)
         {
             source = GetComponent<AudioSource>();
         }
@@ -55,6 +65,15 @@ public class EnemyManager : MonoBehaviour
         source.Play();
         BossDeathEffect.Play();
         Destroy(gameObject, 4.0f);
+        MarkedForDestroy = true;
         GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
+    }
+
+    void RangeDeath()
+    {
+        GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
+        LongRangeEnemyEffects.Stop();
+        Destroy(gameObject, 1.5f);
+        MarkedForDestroy = true;
     }
 }
