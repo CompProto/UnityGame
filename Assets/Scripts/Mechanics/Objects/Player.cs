@@ -70,7 +70,7 @@ namespace Mechanics.Objects
             {
                 this.AvailableStatPoints += MECHANICS.TABLES.SPECIALS.STATS_PR_LEVEL * diff;
                 this.level += diff;
-                CombatText.instance.Show("+Level", Color.white, 14);
+                CombatText.instance.Show("+Level", Color.yellow, 50);
             }
         }
 

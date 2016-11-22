@@ -354,13 +354,13 @@ namespace Mechanics.Objects
             }
             public static class SPECIALS
             {
-                public static readonly float HEALTH_PR_SECOND = 0.01f;
-                public static readonly float SPELLPOINTS_PR_SECOND = 0.01f;
-                public static readonly float RECOVERY_PROC_VALUE = 0.02f;
-                public static readonly int BASE_EXP_PR_LEVEL = 500;
-                public static readonly int BASE_EXP_PR_STAT = 10;
+                public static readonly float HEALTH_PR_SECOND = 0.02f;
+                public static readonly float SPELLPOINTS_PR_SECOND = 0.05f;
+                public static readonly float RECOVERY_PROC_VALUE = 0.1f;
+                public static readonly int BASE_EXP_PR_LEVEL = 50;
+                public static readonly int BASE_EXP_PR_STAT = 20;
                 public static readonly float EXP_LEVEL_RATE = 2f;
-                public static readonly int BASE_EXP_LEVEL = 5000;
+                public static readonly int BASE_EXP_LEVEL = 15000;
                 public static readonly int STATS_PR_LEVEL = 5;
             }
         }

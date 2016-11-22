@@ -13,9 +13,9 @@ namespace Mechanics.Objects.Abilities
             this.damageInterval = DamageRange;
             this.healed = 0f;
         }
-        public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.VERY_HIGH; } }
+        public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.MEDIUM; } }
         public static float Resource { get { return MECHANICS.TABLES.AOE.RESOURCECOST.MEDIUM; } }
-        public static Interval DamageRange { get { return MECHANICS.TABLES.AOE.DAMAGE.LOW; } }
+        public static Interval DamageRange { get { return MECHANICS.TABLES.AOE.DAMAGE.MEDIUM; } }
 
         public override bool CanApply()
         {

@@ -188,7 +188,7 @@ public class EnemyController : MonoBehaviour
         float wounds = eManager.enemy.Wounds;
         eManager.enemy = new Enemy(EnemyType.CLOSERANGE, new Interval(min, GameManager.instance.playerCharacter.Level + 2));
         eManager.enemy.Wounds = wounds;
-        Debug.Log(eManager.enemy.Life);
+        //Debug.Log(eManager.enemy.Life);
         hasReset = true;
     }
 
