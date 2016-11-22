@@ -43,7 +43,7 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.ENERGY, 100f, 0f),
                 new SingleValueStat(Stats.KNOWLEDGE, 20f, 0f),
                 new SingleValueStat(Stats.LIFEFORCE, 15f, 0f),
-                
+
 
 
             };
@@ -60,23 +60,24 @@ namespace Mechanics.Objects
         public int AvailableStatPoints { get; private set; }
 
         public void AwardExp(int exp)
-        {            
+        {
             CombatText.instance.Show("+" + exp.ToString() + " exp", Color.white, 14);
             this.CurrentExp += exp;
-            int factor = this.CurrentExp / MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
-            int projectedLevel = (int)Mathf.Log(factor, MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE) + 2 ;
-            int diff = projectedLevel - this.level;
-            if (diff > 0)
+            float factor = (float)this.CurrentExp / (float)MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
+            int projectedLevel = this.CurrentExp < MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL ? 1 : (int)Math.Log(factor, MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE) + 2;
+            if (projectedLevel > this.level)
             {
-                this.AvailableStatPoints += MECHANICS.TABLES.SPECIALS.STATS_PR_LEVEL * diff;
-                this.level += diff;
-                CombatText.instance.Show("+Level", Color.yellow, 50);
+                this.AvailableStatPoints += MECHANICS.TABLES.SPECIALS.STATS_PR_LEVEL * (projectedLevel - this.level);
+                this.level = projectedLevel;
+                CombatText.instance.Show("+Level", Color.yellow, 80);
             }
         }
 
         public int ExpNextLevel(int levelMod)
         {
-            return (int) Mathf.Pow(MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE, this.level + levelMod - 2) * MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
+            int l = level + levelMod - 2;
+            float exp = l < 0 ? 0 : (float)Math.Pow(MECHANICS.TABLES.SPECIALS.EXP_LEVEL_RATE, l) * MECHANICS.TABLES.SPECIALS.BASE_EXP_LEVEL;
+            return (int)exp;
         }
 
         public void AwardStat(Stats stat, float count)
