@@ -181,13 +181,25 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    private bool hasReset;
+    void ResetEnemyLevel()
+    {
+        int min = Mathf.Max(GameManager.instance.playerCharacter.Level - 1, 1);
+        float wounds = eManager.enemy.Wounds;
+        eManager.enemy = new Enemy(EnemyType.CLOSERANGE, new Interval(min, GameManager.instance.playerCharacter.Level + 2));
+        eManager.enemy.Wounds = wounds;
+        Debug.Log(eManager.enemy.Life);
+        hasReset = true;
+    }
+
     void FixedUpdate()
     {
        
 
-        if (distToPlayer < 35 && distToPlayer >= range)
+        if (distToPlayer < 10 && distToPlayer >= range || this.eManager.enemy.Wounds > 0) // ACTIVATION DISTANCE
         {
-
+            if (!hasReset)
+                ResetEnemyLevel();
 
             if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == true)
             {
@@ -210,12 +222,12 @@ public class EnemyController : MonoBehaviour
                 //EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
                 //eController.ThrowBomb(playerPosition);
             }
-            else if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) && time >= 0)
+            else if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) )
             {
                 attacking = true;
                 walking = false;
                 Character player = GameManager.instance.playerCharacter;
-                eManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, player, 0.01f);
+                eManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, player, 1);
                 time = -cooldown;
                 Animation();
             }
@@ -234,7 +246,7 @@ public class EnemyController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(lookPos, Vector3.up);
         rotation *= Quaternion.Euler(0, 90, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10f * Time.deltaTime);
-        transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+   //     transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
         Vector3 velocity = lookPos * speed;
         velocity.y = 0;
         rb.velocity = velocity;

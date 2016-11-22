@@ -77,6 +77,17 @@ public class BossMover : MonoBehaviour
         distToPlayer = Vector3.Distance(transform.position, player.position);
     }
 
+    private bool hasReset;
+
+    void ResetEnemyLevel()
+    {
+        float wounds = enemyManager.enemy.Wounds;
+        enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(GameManager.instance.playerCharacter.Level + 1, GameManager.instance.playerCharacter.Level + 3));
+        enemyManager.enemy.Wounds = wounds;
+        Debug.Log(enemyManager.enemy.Life);
+        hasReset = true;
+    }
+
     void FixedUpdate()
     {
         if (this.enemyManager.enemy.IsDead)
@@ -86,14 +97,16 @@ public class BossMover : MonoBehaviour
         }
 
         timer += Time.fixedDeltaTime;
-        if(distToPlayer > 25) // TODO activation distance
+        if(distToPlayer > 13) // TODO activation distance
         {
             // Dont activate
             return;
         }
         else
         {
-            if(distToPlayer > 10) // TODO cast distance
+            if (!hasReset)
+                ResetEnemyLevel();
+            if (distToPlayer > 8) // TODO cast distance
             {
                 Move(nextTile-transform.position, false, false);
             }

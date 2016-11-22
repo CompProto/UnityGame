@@ -210,7 +210,7 @@ namespace Mechanics.Objects
         {
             public readonly static float MIN_POTENCY = 1f;
             public readonly static float MAX_POTENCY = 10f;
-            public readonly static float MIN_RECOVERY = 0f;
+            public readonly static float MIN_RECOVERY = 0.2f;
             public readonly static float MAX_RECOVERY = 1f;
             public readonly static float MIN_PARITY = 0f;
             public readonly static float MAX_PARITY = 1f;
@@ -229,21 +229,21 @@ namespace Mechanics.Objects
         }
         private static class CEILINGS
         {
-            public readonly static float POTENCY = 100f;
-            public readonly static float RECOVERY = 100f;
-            public readonly static float PARITY = 100f;
-            public readonly static float KNOWLEDGE = 100f;
-            public readonly static float INTUITION = 100f;
-            public readonly static float FORTUITY = 100f;
-            public readonly static float BARRIER_BLOCK_CHANCE = 100f;
-            public readonly static float BARRIER_POTENCY = 100f;
-            public readonly static float ALACRITY = 100f;
+            public readonly static float POTENCY = 1000f;
+            public readonly static float RECOVERY = 1000f;
+            public readonly static float PARITY = 1000f;
+            public readonly static float KNOWLEDGE = 1000f;
+            public readonly static float INTUITION = 1000f;
+            public readonly static float FORTUITY = 1000f;
+            public readonly static float BARRIER_BLOCK_CHANCE = 1000f;
+            public readonly static float BARRIER_POTENCY = 1000f;
+            public readonly static float ALACRITY = 1000f;
         }
         private static class SCALINGS
         {
             public readonly static float ALL_PRIMARY_STAT_CONTRIBUTION = 1f;
             public readonly static float PRIMARY_STAT_CONTRIBUTION = 3f;
-            public readonly static float LIFEFORCE_HITPOINTS = 10f;
+            public readonly static float LIFEFORCE_HITPOINTS = 100f;
             public readonly static float ENERGY_SPELLPOINTS = 50f;
         }
         public static class TABLES
@@ -253,9 +253,9 @@ namespace Mechanics.Objects
                 public static class DAMAGE
                 {
                     public static readonly Interval NONE = new Interval(0f, 0f);
-                    public static readonly Interval LOW = new Interval(10f, 25f);
-                    public static readonly Interval MEDIUM = new Interval(20f, 45f);
-                    public static readonly Interval HIGH = new Interval(40f, 65f);
+                    public static readonly Interval LOW = new Interval(20f, 55f);
+                    public static readonly Interval MEDIUM = new Interval(50f, 110f);
+                    public static readonly Interval HIGH = new Interval(100f, 150f);
                 }
                 public static class COOLDOWN
                 {

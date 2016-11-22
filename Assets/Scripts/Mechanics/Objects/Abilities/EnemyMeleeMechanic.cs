@@ -15,11 +15,12 @@ namespace Mechanics.Objects.Abilities
         }
 
         public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.LOW; } }
-        public static float Cooldown { get { return MECHANICS.TABLES.SINGLE_TARGET.COOLDOWN.VERY_LOW; } }
+        public static float Cooldown { get { return MECHANICS.TABLES.SINGLE_TARGET.COOLDOWN.MEDIUM; } }
         public static Interval DamageRange { get { return MECHANICS.TABLES.SINGLE_TARGET.DAMAGE.LOW; } }
 
         public override bool CanApply()
         {
+           // Debug.Log("Cooldown " + (Cooldown * this.self[Stats.ALACRITY]));
             return (Cooldown * this.self[Stats.ALACRITY]) < Time.time - this.lastUsage;
         }
 
@@ -29,11 +30,9 @@ namespace Mechanics.Objects.Abilities
             {
                 base.Execute(target, factor);
                 this.ShowDamage();
-            }
-            else
-            {
                 this.lastUsage = Time.time;
             }
+
         }
 
         public override void End()

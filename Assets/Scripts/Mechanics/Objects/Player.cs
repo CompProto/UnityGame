@@ -37,12 +37,15 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 5f, 0f),
                 new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
                 new SingleValueStat(Stats.ALACRITY, 1f, 0f),
-                new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
-                new SingleValueStat(Stats.BARRIER_BLOCK_CHANCE, 25f, 0f),
-                new SingleValueStat(Stats.BARRIER_POTENCY, 0f, 0f),
-                new SingleValueStat(Stats.POTENCY, 60f, 0f),
+                new SingleValueStat(Stats.BARRIER_BLOCK_CHANCE, 250f, 0f),
+                new SingleValueStat(Stats.BARRIER_POTENCY, 150f, 0f),
+                new SingleValueStat(Stats.POTENCY, 160f, 0f),
                 new SingleValueStat(Stats.ENERGY, 20f, 0f),
                 new SingleValueStat(Stats.KNOWLEDGE, 20f, 0f),
+                new SingleValueStat(Stats.LIFEFORCE, 5.5f, 0f),
+                
+
+
             };
             this.characterStats = MECHANICS.Convert(baseStats);
             this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));

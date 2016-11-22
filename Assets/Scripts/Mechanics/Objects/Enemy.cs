@@ -40,9 +40,13 @@ namespace Mechanics.Objects
             SingleValueStat[] baseStats = new SingleValueStat[]
             {
                 new SingleValueStat(Stats.ALL_PRIMARY_STATS, 1f, 0f)*level,
-                new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 10f, 0f),
+                new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 2f, 0f) * level,
                 new SingleValueStat(Stats.CRITICAL_HIT_DAMAGE, 0f, 0f),
-                new SingleValueStat(Stats.ALACRITY, 1f, 0f),
+                new SingleValueStat(Stats.ALACRITY, 1f, 0f) * level,
+                new SingleValueStat(Stats.PARITY, 10f, 0f) * level,
+                new SingleValueStat(Stats.KNOWLEDGE, 10f, 0f) * level,
+                new SingleValueStat(Stats.POTENCY, 5f, 0f)*level,
+
             };
 
             SingleValueStat[] typeStats = null;
@@ -54,6 +58,7 @@ namespace Mechanics.Objects
                         new SingleValueStat(Stats.LIFEFORCE, 1f, 0f)*level,
                         new SingleValueStat(Stats.KNOWLEDGE, 1f, 0f)*level,
                         new SingleValueStat(Stats.POTENCY, 1f, 0f)*level,
+                        new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 2f, 0f) * level,
                     };
                     break;
                 case EnemyType.LONGRANGE:

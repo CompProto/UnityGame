@@ -31,10 +31,7 @@ namespace Mechanics.Objects.Abilities
             if (target != null)
             {
                 base.Execute(target, factor);
-                if (Time.frameCount % 30 == 0)
-                {
-                    this.ShowDamage();
-                }
+                this.ShowDamage();
             }
         }
 
