@@ -1,4 +1,5 @@
 using Mechanics.Objects;
+using Mechanics.Objects.Abilities;
 using UnityEngine;
 
 
@@ -71,7 +72,7 @@ public class ThirdPersonCharacter : MonoBehaviour
         if (move.magnitude > 1f)
             move.Normalize();
 
-        if (charge)
+        if (charge && !isCharging)
         {
             move.Normalize();
             m_MoveSpeedMultiplier = 1.7f;
@@ -91,7 +92,7 @@ public class ThirdPersonCharacter : MonoBehaviour
 
             if (isCharging)
             {
-                Collider[] candidates = Physics.OverlapSphere(transform.position, 5.0f);
+                Collider[] candidates = Physics.OverlapSphere(transform.position, ChargeMechanic.HitRange);
                 float force = 30.0f;
                 bool hit = false;
                 foreach (Collider candidate in candidates)

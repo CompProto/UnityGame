@@ -13,7 +13,7 @@ namespace Mechanics.Objects.Abilities
 
         public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.MEDIUM; } }
         public static float Resource { get { return MECHANICS.TABLES.AOE.RESOURCECOST.MEDIUM; } }
-        public static Interval DamageRange { get { return MECHANICS.TABLES.AOE.DAMAGE.MEDIUM; } }
+        public static Interval DamageRange { get { return MECHANICS.TABLES.AOE.DAMAGE.VERY_LOW; } }
 
         public override bool CanApply()
         {

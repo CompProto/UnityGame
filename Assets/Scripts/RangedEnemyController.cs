@@ -71,7 +71,7 @@ public class RangedEnemyController : MonoBehaviour {
         float wounds = enemyManager.enemy.Wounds;
         enemyManager.enemy = new Enemy(EnemyType.LONGRANGE, new Interval(min, GameManager.instance.playerCharacter.Level + 2));
         enemyManager.enemy.Wounds = wounds;
-        Debug.Log(enemyManager.enemy.Life);
+        //Debug.Log(enemyManager.enemy.Life);
         hasReset = true;
     }
 

@@ -84,7 +84,7 @@ public class BossMover : MonoBehaviour
         float wounds = enemyManager.enemy.Wounds;
         enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(GameManager.instance.playerCharacter.Level + 1, GameManager.instance.playerCharacter.Level + 3));
         enemyManager.enemy.Wounds = wounds;
-        Debug.Log(enemyManager.enemy.Life);
+   //     Debug.Log(enemyManager.enemy.Life);
         hasReset = true;
     }
 

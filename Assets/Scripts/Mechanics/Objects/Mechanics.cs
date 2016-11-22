@@ -243,8 +243,8 @@ namespace Mechanics.Objects
         {
             public readonly static float ALL_PRIMARY_STAT_CONTRIBUTION = 1f;
             public readonly static float PRIMARY_STAT_CONTRIBUTION = 3f;
-            public readonly static float LIFEFORCE_HITPOINTS = 100f;
-            public readonly static float ENERGY_SPELLPOINTS = 50f;
+            public readonly static float LIFEFORCE_HITPOINTS = 30f;
+            public readonly static float ENERGY_SPELLPOINTS = 10f;
         }
         public static class TABLES
         {
@@ -253,6 +253,7 @@ namespace Mechanics.Objects
                 public static class DAMAGE
                 {
                     public static readonly Interval NONE = new Interval(0f, 0f);
+                    public static readonly Interval VERY_LOW = new Interval(10f, 25f);
                     public static readonly Interval LOW = new Interval(20f, 55f);
                     public static readonly Interval MEDIUM = new Interval(50f, 110f);
                     public static readonly Interval HIGH = new Interval(100f, 150f);

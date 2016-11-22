@@ -46,6 +46,7 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.PARITY, 10f, 0f) * level,
                 new SingleValueStat(Stats.KNOWLEDGE, 10f, 0f) * level,
                 new SingleValueStat(Stats.POTENCY, 5f, 0f)*level,
+                new SingleValueStat(Stats.LIFEFORCE, 4f, 0f)*level,
 
             };
 
@@ -55,7 +56,7 @@ namespace Mechanics.Objects
                 case EnemyType.BOSS:
                     typeStats = new SingleValueStat[]
                     {
-                        new SingleValueStat(Stats.LIFEFORCE, 1f, 0f)*level,
+                        new SingleValueStat(Stats.LIFEFORCE, 5f, 0f)*level,
                         new SingleValueStat(Stats.KNOWLEDGE, 1f, 0f)*level,
                         new SingleValueStat(Stats.POTENCY, 1f, 0f)*level,
                         new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 2f, 0f) * level,

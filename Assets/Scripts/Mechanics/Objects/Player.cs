@@ -40,9 +40,9 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.BARRIER_BLOCK_CHANCE, 250f, 0f),
                 new SingleValueStat(Stats.BARRIER_POTENCY, 150f, 0f),
                 new SingleValueStat(Stats.POTENCY, 160f, 0f),
-                new SingleValueStat(Stats.ENERGY, 20f, 0f),
+                new SingleValueStat(Stats.ENERGY, 100f, 0f),
                 new SingleValueStat(Stats.KNOWLEDGE, 20f, 0f),
-                new SingleValueStat(Stats.LIFEFORCE, 5.5f, 0f),
+                new SingleValueStat(Stats.LIFEFORCE, 15f, 0f),
                 
 
 
