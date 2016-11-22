@@ -211,7 +211,7 @@ public class EnemyController : MonoBehaviour
             else if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == false)
             {
                 Move(playerPosition, distToPlayer);
-                print("moveMode");
+             //   print("moveMode");
             }
         }
        
@@ -221,7 +221,7 @@ public class EnemyController : MonoBehaviour
             walking = false;
             if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) )
             {
-                print("attckMode");
+             //   print("attckMode");
                 attacking = true;
                 Vector3 lookPos = playerPosition - rb.position;
                 lookPos.Normalize();
