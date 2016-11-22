@@ -196,10 +196,10 @@ public class EnemyController : MonoBehaviour
     {
        
 
-        if (distToPlayer < 10 && distToPlayer > range /*|| this.eManager.enemy.Wounds > 0*/) // ACTIVATION DISTANCE
+        if ((distToPlayer < 10 && distToPlayer > range) || (this.eManager.enemy.Wounds > 0 && distToPlayer >= range)) // ACTIVATION DISTANCE
         {
-            //if (!hasReset)
-            //    ResetEnemyLevel();
+            if (!hasReset)
+                ResetEnemyLevel();
 
             if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == true)
             {
