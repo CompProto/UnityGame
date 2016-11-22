@@ -196,44 +196,48 @@ public class EnemyController : MonoBehaviour
     {
        
 
-        if (distToPlayer < 10 && distToPlayer >= range || this.eManager.enemy.Wounds > 0) // ACTIVATION DISTANCE
+        if (distToPlayer < 10 && distToPlayer > range /*|| this.eManager.enemy.Wounds > 0*/) // ACTIVATION DISTANCE
         {
-            if (!hasReset)
-                ResetEnemyLevel();
+            //if (!hasReset)
+            //    ResetEnemyLevel();
 
             if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == true)
             {
+                
                 Move(nextTile, distToPlayer);
+               
 
             }
             else if (MoveToNextTile() <= 50 && Physics.Linecast(playerPosition, transform.position) == false)
             {
                 Move(playerPosition, distToPlayer);
-
+                print("moveMode");
             }
         }
-        // !Physics.Linecast(playerPosition, transform.position) &&(eManager.enemy.CanUse//(Mechanics.Objects.MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) || eManager.enemy.CanUse(Mechanics.Objects.MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK
-        else if (distToPlayer <= range && Physics.Linecast(playerPosition, transform.position) == false)
+       
+        else if (distToPlayer <= range  && Physics.Linecast(playerPosition, transform.position) == false)
         {
-            
-            if (isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_RANGED_ATTACK))
+
+            walking = false;
+            if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) )
             {
-                //GameObject bomb = (GameObject)Instantiate(RangedAttack, transform.position, transform.rotation);
-                //EnemyRangedAttack eController = bomb.GetComponent<EnemyRangedAttack>();
-                //eController.ThrowBomb(playerPosition);
-            }
-            else if (!isRanged && eManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) )
-            {
+                print("attckMode");
                 attacking = true;
-                walking = false;
+                Vector3 lookPos = playerPosition - rb.position;
+                lookPos.Normalize();
+                lookPos.y = 0;
+                Quaternion rotation = Quaternion.LookRotation(lookPos, Vector3.up);
+                rotation *= Quaternion.Euler(0, 90, 0);
+               transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10f * Time.deltaTime);
+
                 Character player = GameManager.instance.playerCharacter;
                 eManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, player, 1);
                 time = -cooldown;
-                Animation();
+            
             }
 
         }
-        
+        Animation();
     }
 
     void Move(Vector3 destination, float distance)
@@ -246,13 +250,13 @@ public class EnemyController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(lookPos, Vector3.up);
         rotation *= Quaternion.Euler(0, 90, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10f * Time.deltaTime);
-   //     transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+   
         Vector3 velocity = lookPos * speed;
         velocity.y = 0;
         rb.velocity = velocity;
         walking = true;
         attacking = false;
-        Animation();
+    
     }
 
     float MoveToNextTile()
