@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
 
     public ParticleSystem BossDeathEffect;
     public AudioClip BossDeathSound;
+    public int ModeAmount = 5;
 
     private AudioSource source;
     private ParticleSystem LongRangeEnemyEffects;
@@ -49,6 +50,7 @@ public class EnemyManager : MonoBehaviour
             else
             {
                 GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
+                GameManager.instance.AddBalanceAmount(ModeAmount * Random.Range(0.5f, 1.5f));
                 Destroy(gameObject);
             }
         }
@@ -67,11 +69,13 @@ public class EnemyManager : MonoBehaviour
         Destroy(gameObject, 4.0f);
         MarkedForDestroy = true;
         GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
+        GameManager.instance.AddBalanceAmount(ModeAmount * 3);
     }
 
     void RangeDeath()
     {
         GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
+        GameManager.instance.AddBalanceAmount(ModeAmount * Random.Range(0.5f, 1.5f));
         LongRangeEnemyEffects.Stop();
         Destroy(gameObject, 1.5f);
         MarkedForDestroy = true;

@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject DeadOverlay;
     public GameObject PauseScreen;
+    public GameObject ShadowManager;
+
+    private ModeManager _modeManager;
 
 
     void Awake()
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
+        _modeManager = ShadowManager.GetComponent<ModeManager>();
       //  DontDestroyOnLoad(gameObject);
     }
 
@@ -85,6 +89,11 @@ public class GameManager : MonoBehaviour
                 Application.Quit(); // EXIT game
         }
         
+    }
+
+    public void AddBalanceAmount(float amount)
+    {
+        _modeManager.AddBalanceAmount(amount);
     }
 
 }

@@ -58,7 +58,7 @@ namespace Mechanics.Objects
                     {
                         new SingleValueStat(Stats.LIFEFORCE, 5f, 0f)*level,
                         new SingleValueStat(Stats.KNOWLEDGE, 1f, 0f)*level,
-                        new SingleValueStat(Stats.POTENCY, 1f, 0f)*level,
+                        new SingleValueStat(Stats.POTENCY, 10f, 0f)*level,
                         new SingleValueStat(Stats.CRITICAL_HIT_CHANCE, 2f, 0f) * level,
                     };
                     break;

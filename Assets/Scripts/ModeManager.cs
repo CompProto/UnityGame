@@ -15,7 +15,7 @@ public class ModeManager : MonoBehaviour
     public bool isDarkMode = false;
     public float duration = 2.0f; // How long to swap between the materials
     public Slider ModeSlider;
-    public float ModeUnitSpeed = 5; // ModeUnits pr. second
+    public float ModeUnitSpeed = 0; // ModeUnits pr. second
     public float OverlayOffset = 25;
 
     private AudioSource source;
@@ -44,11 +44,11 @@ public class ModeManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        float value = Time.fixedDeltaTime * ModeUnitSpeed;
-        if (isDarkMode)
-            ModeSlider.value -= value;
-        else
-            ModeSlider.value += value;
+        //float value = Time.fixedDeltaTime * ModeUnitSpeed;
+        //if (isDarkMode)
+        //    ModeSlider.value -= value;
+        //else
+        //    ModeSlider.value += value;
 
         if(ModeSlider.value >= 25) // Light
         {
@@ -64,6 +64,14 @@ public class ModeManager : MonoBehaviour
             else
                 Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
         }
+    }
+
+    public void AddBalanceAmount(float value)
+    {
+        if (isDarkMode)
+            ModeSlider.value -= value;
+        else
+            ModeSlider.value += value;
     }
 
     public void PlayDayMusic()
