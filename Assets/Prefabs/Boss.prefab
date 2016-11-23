@@ -3381,7 +3381,7 @@ Transform:
   m_GameObject: {fileID: 1000011998536980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011454757226}
@@ -3639,8 +3639,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02d59249b15e6d4cbbe456fe21e4988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovingTurnSpeed: 720
-  m_StationaryTurnSpeed: 360
+  m_MovingTurnSpeed: 1440
+  m_StationaryTurnSpeed: 1440
   m_JumpPower: 0
   m_GravityMultiplier: 4
   m_RunCycleLegOffset: 0.2
@@ -3701,6 +3701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BossDeathEffect: {fileID: 198000013426355258}
   BossDeathSound: {fileID: 8300000, guid: f6d847fdf720fac48813d170c9539aea, type: 3}
+  ModeAmount: 5
 --- !u!136 &136000012742404150
 CapsuleCollider:
   m_ObjectHideFlags: 1

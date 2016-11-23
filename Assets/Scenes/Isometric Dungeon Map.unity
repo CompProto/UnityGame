@@ -569,6 +569,7 @@ MonoBehaviour:
   EnemyTag: Enemy
   DeadOverlay: {fileID: 1138931252}
   PauseScreen: {fileID: 453890283}
+  ShadowManager: {fileID: 516274160}
 --- !u!4 &40231662
 Transform:
   m_ObjectHideFlags: 0
@@ -3800,7 +3801,7 @@ MonoBehaviour:
   isDarkMode: 0
   duration: 2
   ModeSlider: {fileID: 1546757583}
-  ModeUnitSpeed: 2
+  ModeUnitSpeed: 0
   OverlayOffset: 25
 --- !u!4 &516274162
 Transform:
@@ -7879,7 +7880,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: 1464538437
+  randomSeed: 1468274277
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -16350,7 +16351,7 @@ ParticleSystem:
   moveWithTransform: 0
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -1383864044
+  randomSeed: -187036339
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -16704,7 +16705,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 7
-    radius: 0.75
+    radius: 0.74
     angle: 5
     length: 5
     boxX: 1
