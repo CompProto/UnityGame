@@ -43,9 +43,7 @@ namespace Mechanics.Objects
                 new SingleValueStat(Stats.ENERGY, 100f, 0f),
                 new SingleValueStat(Stats.KNOWLEDGE, 20f, 0f),
                 new SingleValueStat(Stats.LIFEFORCE, 15f, 0f),
-
-
-
+                new SingleValueStat(Stats.FORTUITY, 10f, 0f),
             };
             this.characterStats = MECHANICS.Convert(baseStats);
             this.abilities.Add(MECHANICS.ABILITIES.BLACKHOLE, new BlackHoleMechanic(this));

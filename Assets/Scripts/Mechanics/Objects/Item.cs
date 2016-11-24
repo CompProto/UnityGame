@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Mechanics.Objects
 {
     public class Item
     {
+
+
         public Item(RuneTypes type, string name, int itemLevel, Quality quality, params StatBase[] stats)
         {
             this.ItemType = type;
@@ -15,6 +18,7 @@ namespace Mechanics.Objects
             this.ItemLevel = itemLevel;
             this.Quality = quality;
             this.Stats = new List<StatBase>(stats);
+            this.Duration = MECHANICS.TABLES.SPECIALS.RUNE_DURATION;
         }
 
         public string Name { get; private set; }
@@ -27,7 +31,12 @@ namespace Mechanics.Objects
 
         public Quality Quality { get; private set; }
 
+        public float Duration { get; private set; }
 
+        public void Update()
+        {
+            this.Duration -= Time.fixedDeltaTime;
+        }
 
     }
 }

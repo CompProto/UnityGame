@@ -17,6 +17,7 @@ namespace Mechanics.Objects
         private Dictionary<Stats, StatBase> combinedStats;
         private List<Item> equippedItems;
         protected Dictionary<MECHANICS.ABILITIES, AbilityBase> abilities;
+        private float timer;
 
         public Character(SingleValueStat[] baseStats = null)
         {
@@ -25,13 +26,8 @@ namespace Mechanics.Objects
             this.combinedStats = new Dictionary<Stats, StatBase>();
             this.abilities = new Dictionary<MECHANICS.ABILITIES, AbilityBase>();
             this.UpdateStats();
+            this.timer = 0;
         }
-
-        // Equipped rune.
-        public Item Slot1 { get { return this.equippedItems.Count > 0 ? this.equippedItems[0] : null; } }
-        public Item Slot2 { get { return this.equippedItems.Count > 1 ? this.equippedItems[1] : null; } }
-        public Item Slot3 { get { return this.equippedItems.Count > 2 ? this.equippedItems[2] : null; } }
-        public Item Slot4 { get { return this.equippedItems.Count > 3 ? this.equippedItems[3] : null; } }
 
         // Stats
         public float SpellPoints { get { return this[Stats.ENERGY]; } }
@@ -61,15 +57,18 @@ namespace Mechanics.Objects
         }
 
         // Not working properly yet
-        public void EquipRune(int slot, Item item)
+        public void EquipRune(Item item)
         {
-            if (slot >= 0 && slot <= 4)
-            {
-                //this.equippedItems[slot] = item;
-                this.equippedItems.Add(item);
-                this.UpdateStats();
-            }
+            this.equippedItems.Add(item);
+            this.UpdateStats();
         }
+
+        public void UnEquipRune(Item item)
+        {
+            this.equippedItems.Remove(item);
+            this.UpdateStats();
+        }
+
         public void ApplyDamage(float damage, float reduction)
         {
             SingleValueStat parity = this.GetStat(Stats.PARITY).ConvertTo(Stats.PARITY, 1f - reduction);
@@ -94,8 +93,17 @@ namespace Mechanics.Objects
 
         public void Update()
         {
-            this.Wounds -= this.Life * MECHANICS.TABLES.SPECIALS.HEALTH_PR_SECOND;
-            this.ConsumedSpellPoints -= this.SpellPoints * MECHANICS.TABLES.SPECIALS.SPELLPOINTS_PR_SECOND;
+            this.timer += Time.fixedDeltaTime;
+            if (this.timer >= 1.0f)
+            {
+                this.timer = 0f;
+                this.Wounds -= this.Life * MECHANICS.TABLES.SPECIALS.HEALTH_PR_SECOND;
+                this.ConsumedSpellPoints -= this.SpellPoints * MECHANICS.TABLES.SPECIALS.SPELLPOINTS_PR_SECOND;
+            }
+            List<Item> remove = new List<Item>();
+            this.equippedItems.ForEach(x => { x.Update(); if (x.Duration < 0f) remove.Add(x); });
+            remove.ForEach(x => this.equippedItems.Remove(x));
+            this.UpdateStats();
         }
 
         public bool CanUse(MECHANICS.ABILITIES ability)

@@ -3702,6 +3702,7 @@ MonoBehaviour:
   BossDeathEffect: {fileID: 198000013426355258}
   BossDeathSound: {fileID: 8300000, guid: f6d847fdf720fac48813d170c9539aea, type: 3}
   ModeAmount: 5
+  Drop: {fileID: 1000012820414396, guid: 3eec72d29c557564a9d972ed061cc544, type: 2}
 --- !u!136 &136000012742404150
 CapsuleCollider:
   m_ObjectHideFlags: 1

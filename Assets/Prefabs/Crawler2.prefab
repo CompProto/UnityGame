@@ -1715,6 +1715,7 @@ MonoBehaviour:
   BossDeathEffect: {fileID: 0}
   BossDeathSound: {fileID: 0}
   ModeAmount: 5
+  Drop: {fileID: 1000012820414396, guid: 3eec72d29c557564a9d972ed061cc544, type: 2}
 --- !u!114 &114000010932484258
 MonoBehaviour:
   m_ObjectHideFlags: 1

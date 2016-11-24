@@ -79,12 +79,12 @@ public class CharacterSheet : MonoBehaviour
                 string value = string.Empty;
                 if (c.tag == "RawStat")
                 {
-                    value = this.player.GetStat(stat).Value.ToString();
+                    value = this.player.GetStat(stat).Value.ToString("0.#");
                 }
                 else
                 {
                     float val = this.player[stat];
-                    value = (stat != Stats.LIFEFORCE && stat != Stats.ENERGY) ? (val * 100f).ToString("0.#") + "%" : val.ToString();
+                    value = (stat != Stats.LIFEFORCE && stat != Stats.ENERGY) ? (val * 100f).ToString("0.#") + "%" : val.ToString("0.#");
                 }
                 c.text = value;
             }

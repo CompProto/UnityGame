@@ -362,6 +362,9 @@ namespace Mechanics.Objects
                 public static readonly float EXP_LEVEL_RATE = 2f;
                 public static readonly int BASE_EXP_LEVEL = 15000;
                 public static readonly int STATS_PR_LEVEL = 5;
+                public static readonly float RUNE_DURATION = 5f;
+                public static readonly float DROP_CHANCE = 0.15f;
+
             }
         }
         public enum ABILITIES

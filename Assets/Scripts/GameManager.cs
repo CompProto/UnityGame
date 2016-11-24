@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public Player playerCharacter;
-    private float timer;
 
     public bool isDarkMode { get; set; }
     public bool isDead { get { return this.playerCharacter.IsDead; } }
@@ -22,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     private ModeManager _modeManager;
 
+    public ItemGenerator itemGen { get; private set; }
+
 
     void Awake()
     {
@@ -32,24 +33,20 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         _modeManager = ShadowManager.GetComponent<ModeManager>();
-      //  DontDestroyOnLoad(gameObject);
+        //  DontDestroyOnLoad(gameObject);
+        itemGen = new ItemGenerator();
+        itemGen.Initialize();
     }
 
     // Use this for initialization
     void Start()
     {
         this.playerCharacter = new Player();
-        this.timer = 0f;
     }
 
     void FixedUpdate()
     {
-        this.timer += Time.fixedDeltaTime;
-        if (this.timer >= 1.0f)
-        {
-            this.timer = 0f;
-            this.playerCharacter.Update();
-        }
+        this.playerCharacter.Update();
     }
 
     void Update()

@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     public ParticleSystem BossDeathEffect;
     public AudioClip BossDeathSound;
     public int ModeAmount = 5;
+    public GameObject Drop;
 
     private AudioSource source;
     private ParticleSystem LongRangeEnemyEffects;
@@ -21,19 +22,20 @@ public class EnemyManager : MonoBehaviour
         if (enemy.Type == EnemyType.BOSS)
         {
             source = GetComponent<AudioSource>();
-        } else if(enemy.Type == EnemyType.LONGRANGE)
+        }
+        else if (enemy.Type == EnemyType.LONGRANGE)
         {
             LongRangeEnemyEffects = GetComponent<ParticleSystem>();
         }
         timer = -2.5f;
     }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update()
     {
-	    if(this.enemy.IsDead)
-        {         
-            if(enemy.Type == EnemyType.BOSS)
+        if (this.enemy.IsDead)
+        {
+            if (enemy.Type == EnemyType.BOSS)
             {
                 if (!MarkedForDestroy)
                     BossDeath();
@@ -51,10 +53,11 @@ public class EnemyManager : MonoBehaviour
             {
                 GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
                 GameManager.instance.AddBalanceAmount(ModeAmount * Random.Range(0.5f, 1.5f));
+                SpawnDrop();
                 Destroy(gameObject);
             }
         }
-	}
+    }
 
     void BossDeath()
     {
@@ -70,6 +73,8 @@ public class EnemyManager : MonoBehaviour
         MarkedForDestroy = true;
         GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
         GameManager.instance.AddBalanceAmount(ModeAmount * 3);
+        SpawnDrop();
+
     }
 
     void RangeDeath()
@@ -79,5 +84,15 @@ public class EnemyManager : MonoBehaviour
         LongRangeEnemyEffects.Stop();
         Destroy(gameObject, 1.5f);
         MarkedForDestroy = true;
+        SpawnDrop();
+    }
+
+    void SpawnDrop()
+    {
+        if (Random.value <= MECHANICS.TABLES.SPECIALS.DROP_CHANCE)
+        {
+            DropController dCon = ((GameObject)Instantiate(Drop, transform.position, transform.rotation)).GetComponentInChildren<DropController>();
+            dCon.Initialize(enemy.Level);
+        }
     }
 }
