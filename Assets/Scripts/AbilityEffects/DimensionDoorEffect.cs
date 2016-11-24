@@ -16,7 +16,7 @@ public class DimensionDoorEffect : MonoBehaviour {
     public float TeleportRadius;
     public float flashSpeed = 5f;
 
-    private bool hasDoor; // true if a door has been placed
+    public bool hasDoor; // true if a door has been placed
     private ParticleSystem doorParticles; // Looping particlesystem that illustrates the door position
     private GameObject _door; // The instantiated prefab
     private GameObject _implosion;

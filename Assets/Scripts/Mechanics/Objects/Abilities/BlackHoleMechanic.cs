@@ -16,8 +16,8 @@ namespace Mechanics.Objects.Abilities
             this.damageInterval = DamageRange;
         }
 
-        public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.MEDIUM; } }
-        public static float Cooldown { get { return MECHANICS.TABLES.AOE.COOLDOWN.MEDIUM; } }
+        public static float HitRange { get { return MECHANICS.TABLES.AOE.HITRANGE.HIGH; } }
+        public static float Cooldown { get { return MECHANICS.TABLES.AOE.COOLDOWN.HIGH; } }
         public static float Duration { get { return MECHANICS.TABLES.AOE.DURATION.MEDIUM; } }
         public static Interval DamageRange { get { return MECHANICS.TABLES.AOE.DAMAGE.MEDIUM; } }
 

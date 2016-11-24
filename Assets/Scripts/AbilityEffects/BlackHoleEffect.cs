@@ -41,7 +41,9 @@ public class BlackHoleEffect : MonoBehaviour
                 if (candidate.gameObject.tag == GameManager.instance.EnemyTag)
                 {
                     Vector3 forceDirection = candidate.transform.position - gameObject.transform.position;
-                    candidate.gameObject.GetComponent<Rigidbody>().AddForce(-forceDirection.normalized * force, ForceMode.Force);
+                    Vector3 distance = forceDirection.normalized * (BlackHoleMechanic.HitRange - forceDirection.magnitude);
+                    candidate.gameObject.GetComponent<Rigidbody>().position = GameManager.instance.isDarkMode ? Vector3.Lerp(candidate.transform.position, candidate.transform.position + distance, Time.fixedDeltaTime) : candidate.gameObject.GetComponent<Rigidbody>().position = Vector3.Lerp(candidate.transform.position, gameObject.transform.position, Time.fixedDeltaTime);
+
                     Enemy enemyMechanics = candidate.gameObject.GetComponent<EnemyManager>().enemy;
                     GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.BLACKHOLE, enemyMechanics, this.damageFactor);
                 }

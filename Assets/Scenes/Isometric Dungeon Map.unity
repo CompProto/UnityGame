@@ -1407,6 +1407,13 @@ MonoBehaviour:
   DimensionDoor: {fileID: 285696049}
   Barrier: {fileID: 1611232680}
   AstralPressence: {fileID: 1769858860}
+  BlackHoleUI: {fileID: 116605627}
+  EnergyBombUI: {fileID: 1292646555}
+  StandardAttackUI: {fileID: 700766415}
+  DimensionDoorUI: {fileID: 234678815}
+  BarrierUI: {fileID: 1682785677}
+  AstralPressenceUI: {fileID: 1987793}
+  ChargeUI: {fileID: 1781483494}
   BlackHoleSound: {fileID: 8300000, guid: 6a59b9c092fef2e4cb458e6e398364be, type: 3}
 --- !u!4 &129156920
 Transform:
@@ -2720,6 +2727,7 @@ MonoBehaviour:
   TimeToTeleport: 0.5
   TeleportRadius: 5
   flashSpeed: 5
+  hasDoor: 0
 --- !u!4 &285696051
 Transform:
   m_ObjectHideFlags: 0
@@ -15611,11 +15619,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5426510, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_Interpolate
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5426510, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_CollisionDetection
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}

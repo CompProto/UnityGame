@@ -10,6 +10,8 @@ public class OrbitManager : MonoBehaviour
     private ParticleSystem p;
     private float timer;
 
+    public bool isEnabled;
+
     // Use this for initialization
     void Start()
     {
@@ -67,12 +69,14 @@ public class OrbitManager : MonoBehaviour
             timer = 0;
             p.Play();
             GameManager.instance.playerCharacter.UseAbility(MECHANICS.ABILITIES.ASTRAL_PRESENCE, null, 0f);
+            isEnabled = true;
         }
         else
         {
             timer = 0;
             p.Stop();
             GameManager.instance.playerCharacter.EndAbility(MECHANICS.ABILITIES.ASTRAL_PRESENCE);
+            isEnabled = false;
         }
     }
 }
