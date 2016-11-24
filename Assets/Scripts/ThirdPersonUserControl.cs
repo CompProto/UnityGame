@@ -47,26 +47,26 @@ public class ThirdPersonUserControl : MonoBehaviour
     private void Update()
     {
         charge = Input.GetMouseButtonDown(1); // Right mouseclick to charge
-        
+
         if (Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftShift) || (charge))
         {
             hit = new RaycastHit();
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, 200))
+            if (Physics.Raycast(ray, out hit, 200) && hit.collider.gameObject.tag != "Enemy")
             {
-                if (mapGenerator.map[(int)hit.point.x+(mapGenerator.width/2), (int)hit.point.z+(mapGenerator.height/2)] == 0)
+                if (mapGenerator.map[(int)hit.point.x + (mapGenerator.width / 2), (int)hit.point.z + (mapGenerator.height / 2)] == 0)
                 {
-                output = hit.point - gameObject.transform.position;
-                output.Normalize();
-                go = true;
+                    output = hit.point - gameObject.transform.position;
+                    output.Normalize();
+                    go = true;
                 }
             }
         }
 
         if (!m_Jump)
         {
-           // m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
+            // m_Jump = CrossPlatformInputManager.GetButtonDown("Jump"); // Should we be able to jump?
         }
     }
 
@@ -75,7 +75,7 @@ public class ThirdPersonUserControl : MonoBehaviour
     {
         if (GameManager.instance.isDead)
         {
-            m_Character.Move(new Vector3(0,0,0), false, false);
+            m_Character.Move(new Vector3(0, 0, 0), false, false);
             return;
         }
 
@@ -99,7 +99,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 
 #if !MOBILE_INPUT
         // walk speed multiplier
-      //  if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+        //  if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 #endif
         if (charge)
         {

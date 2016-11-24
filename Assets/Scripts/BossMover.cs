@@ -47,9 +47,6 @@ public class BossMover : MonoBehaviour
     private float distToPlayer;
     private EnemyManager enemyManager;
 
-    private float timer = 0;
-    private float meleeCooldown = 2.5f; // TODO use proper melee cooldown
-
     public GameObject RangedAttack;
 
     void Awake()
@@ -82,9 +79,9 @@ public class BossMover : MonoBehaviour
     void ResetEnemyLevel()
     {
         float wounds = enemyManager.enemy.Wounds;
-        enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(GameManager.instance.playerCharacter.Level + 1, GameManager.instance.playerCharacter.Level + 3));
+        enemyManager.enemy = new Enemy(EnemyType.BOSS, new Interval(GameManager.instance.playerCharacter.Level + 6, GameManager.instance.playerCharacter.Level + 8));
         enemyManager.enemy.Wounds = wounds;
-   //     Debug.Log(enemyManager.enemy.Life);
+        Debug.Log("Boss life: " + enemyManager.enemy.Life + ", level: " + enemyManager.enemy.Level);
         hasReset = true;
     }
 
@@ -96,7 +93,6 @@ public class BossMover : MonoBehaviour
             return;
         }
 
-        timer += Time.fixedDeltaTime;
         if(distToPlayer > 13) // TODO activation distance
         {
             // Dont activate
@@ -120,16 +116,19 @@ public class BossMover : MonoBehaviour
                     eController.ThrowBomb(player.position, this.enemyManager);               
                 }
                 else
-                {
-                    
-                    if(distToPlayer <= 1 && enemyManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK) && timer >= meleeCooldown) // melee attack
+                {                  
+                    if(distToPlayer <= 2 && enemyManager.enemy.CanUse(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK)) // melee attack
                     {
+                        enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, null, 1.0f);
                         enemyManager.enemy.UseAbility(MECHANICS.ABILITIES.ENEMY_MELEE_ATTACK, GameManager.instance.playerCharacter, 1.0f); 
-                        timer = 0;
                     }
-                    else // Move towards the player
-                    {
+                    else if(distToPlayer > 1.5f) // Move towards the player
+                    {   
                         Move(nextTile - transform.position, false, false);
+                    }
+                    else
+                    { // We're close enough, just wait here till we can attack again
+                        Move(Vector3.zero, false, false);
                     }
                 }
             }

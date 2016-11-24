@@ -26,7 +26,7 @@ public class BarrierEffect : MonoBehaviour
             this.barrierParticles.Stop();
             if (this.source.volume > 0)
             {
-                this.source.volume -= Time.fixedDeltaTime;
+                this.source.volume -= Time.fixedDeltaTime * 5;
             }
             else if (this.source.isPlaying)
             {
