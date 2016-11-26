@@ -121,7 +121,7 @@ public class ModeManager : MonoBehaviour
     {
         if (timer < 0.0f)
         {
-            float lerp = Mathf.PingPong(Time.time, 2.0f) / 2.0f;
+           // float lerp = Mathf.PingPong(Time.time, 2.0f) / 2.0f;
             for (int i = 0; i < gameObjects.Length; i++)
             {
                 if (isDarkMode)

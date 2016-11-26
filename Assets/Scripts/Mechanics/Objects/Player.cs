@@ -68,6 +68,8 @@ namespace Mechanics.Objects
                 this.AvailableStatPoints += MECHANICS.TABLES.SPECIALS.STATS_PR_LEVEL * (projectedLevel - this.level);
                 this.level = projectedLevel;
                 CombatText.instance.Show("+Level", Color.yellow, 80);
+                this.Wounds = 0;
+                this.ConsumedSpellPoints = 0;
             }
         }
 

@@ -10458,6 +10458,7 @@ MonoBehaviour:
   ExpText: {fileID: 593278853}
   LifeText: {fileID: 1198317094}
   EnergyText: {fileID: 629169512}
+  CharButton: {fileID: 2094444753}
   LevelUpEffects: {fileID: 1058716786}
   GodModeText: {fileID: 26502779}
 --- !u!1 &1158214877
