@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
     private Image charButtonImage;
 
     private float timer;
+    
 
     // Use this for initialization
     void Start()

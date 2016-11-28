@@ -37,12 +37,19 @@ public class EnemyManager : MonoBehaviour
         {
             if (enemy.Type == EnemyType.BOSS)
             {
+                
                 if (!MarkedForDestroy)
                     BossDeath();
                 else
+                {
                     timer += Time.deltaTime;
+                }
                 if (timer >= 0)
+                {
                     BossDeathEffect.Stop();
+                    
+                }
+
             }
             else if (enemy.Type == EnemyType.LONGRANGE)
             {
@@ -74,7 +81,10 @@ public class EnemyManager : MonoBehaviour
         GameManager.instance.playerCharacter.AwardExp(this.enemy.ExpValue);
         GameManager.instance.AddBalanceAmount(ModeAmount * 3);
         SpawnDrop();
-
+        if (GameManager.instance.level >= 2)
+        {
+            GameManager.instance.loadNewScene();
+        }
     }
 
     void RangeDeath()

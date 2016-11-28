@@ -11,6 +11,7 @@ public class CombatText : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            //this.transform.parent = null;
         }
         else if (instance != this)
         {

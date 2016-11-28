@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -18,15 +19,19 @@ public class MapGenerator : MonoBehaviour {
 
     // These values are fetched from ObjectSpawner.cs
     private GameObject Player, Enemy, RangedEnemy, Boss;
+    private GameObject Exit;
     private int EnemiesNumber;
     private float MinDistance; // Minimum distance between enemies
     private ObjectSpawner objSpawn;
+    private bool doPlaceBoss = false;
 
     void Start() {
+
+        SetupScene(GameManager.instance.level);
         GameObject ground = GameObject.FindGameObjectWithTag("Ground");
-        ground.transform.localScale = new Vector3(width/10, 1, height/10);
-        Debug.Log(ground.transform.localScale);
-		GenerateMap();
+        ground.transform.localScale = new Vector3(width / 10, 1, height / 10);
+        //Debug.Log(ground.transform.localScale);
+        GenerateMap();
 
         /*for (int i = 0; i < height; i++)
         {
@@ -45,9 +50,40 @@ public class MapGenerator : MonoBehaviour {
         Boss = objSpawn.Boss;
         EnemiesNumber = objSpawn.EnemiesNumber;
         MinDistance = objSpawn.MinimumDistance;
+        Exit = objSpawn.Exit;
         PlacePlayer();
+        PlaceExit();
         PlaceEnemies();
+        if (doPlaceBoss)
+        {
+            PlaceBoss();
+        }
     }
+
+    public void SetupScene(int level)
+    {
+        if (level == 1)
+        {
+            width = 100;
+            height = 35;
+            seed = "3";
+            useRandomSeed = false;
+            randomFillPercent = 45;
+            doPlaceBoss = false;
+        }
+        if (level == 2)
+        {
+            width = 150;
+            height = 90;
+            randomFillPercent = 48;
+            doPlaceBoss = true;
+        }
+        if (level == 3)
+        {
+            doPlaceBoss = true;
+        }
+    }
+
 
     private float GetRandomMinDistance()
     {
@@ -100,7 +136,7 @@ public class MapGenerator : MonoBehaviour {
                 }
             }
         }
-        PlaceBoss();
+        
     }
 
     private void PlaceBoss()
@@ -139,6 +175,30 @@ public class MapGenerator : MonoBehaviour {
                 if (map[x, y] == 0)
                 {
                     Player.transform.position = new Vector3(x - width / 2 + 1, 5, y - height / 2 + 1);
+                    //Exit.transform.position = new Vector3((x - width / 2 - 1) + 15, 0, (y - height / 2 + 1));
+                    return;
+                }
+            }
+        }
+    }
+
+    public void PlaceExit()
+    {
+        if (Exit == null)
+            return;
+        for (int x = width - 1; x > 0; x--)
+        {
+            for (int y = height - 1; y > 0; y--)
+            {
+                if (map[x, y] == 0)
+                {
+                    Vector3 exit = new Vector3(x - width / 2 - 1, 0, y - height / 2 + 1);
+                    Exit.transform.position = exit;
+                    if (GameManager.instance.level == 1)
+                    {
+                        Instantiate(Boss, exit, transform.rotation);
+                        
+                    }
                     return;
                 }
             }
@@ -146,7 +206,7 @@ public class MapGenerator : MonoBehaviour {
     }
 
     void GenerateMap() {
-		map = new int[width,height];
+        map = new int[width,height];
 		RandomFillMap();
 
 		for (int i = 0; i < 5; i ++) {
@@ -527,4 +587,5 @@ public class MapGenerator : MonoBehaviour {
 		}
 	}
 
+    
 }

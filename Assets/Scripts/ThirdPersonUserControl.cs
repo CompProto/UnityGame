@@ -109,5 +109,20 @@ public class ThirdPersonUserControl : MonoBehaviour
         m_Character.Move(m_Move, charge, m_Jump);
         m_Jump = false;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == ("Exit"))
+        {
+            m_Move = 0 * Vector3.one;
+            output = 0 * Vector3.one;
+            Invoke("newScene", 1f);
+        }
+    }
+
+    private void newScene()
+    {
+        GameManager.instance.loadNewScene();
+    }
 }
 

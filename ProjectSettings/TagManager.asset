@@ -15,6 +15,9 @@ TagManager:
   - Enemy
   - EvaluatedStat
   - RawStat
+  - Exit
+  - HUDOverlay
+  - NarrativeBox
   layers:
   - Default
   - TransparentFX

@@ -11,6 +11,7 @@ namespace Mechanics.Objects
 {
     public class Player : Character
     {
+        
         public int CurrentExp { get; private set; }
 
         public Player(SingleValueStat[] stats) : base(stats)

@@ -11,6 +11,7 @@ public class ObjectSpawner : MonoBehaviour {
     public GameObject Enemy;
     public GameObject RangedEnemy;
     public GameObject Boss;
+    public GameObject Exit;
 
     public int EnemiesNumber = 10;
     [Range(1.0f, 50.0f)]
