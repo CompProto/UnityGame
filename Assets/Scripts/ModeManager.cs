@@ -38,8 +38,9 @@ public class ModeManager : MonoBehaviour
         _DarkSmoke = DarkSmoke.GetComponent<ParticleSystem>();
         _WhiteSmoke = WhiteSmoke.GetComponent<ParticleSystem>();
         PlayDayMusic();
-      //  Play(DayMusic);
-      //  _WhiteSmoke.Play();
+        //  Play(DayMusic);
+        //  _WhiteSmoke.Play();
+       // DontDestroyOnLoad(gameObject);
     }
 
     void FixedUpdate()
@@ -68,6 +69,10 @@ public class ModeManager : MonoBehaviour
 
     public void AddBalanceAmount(float value)
     {
+        //Debug.Log("Level: " + GameManager.instance.level);
+        if (GameManager.instance.level == 1)
+            return;
+
         if (isDarkMode)
         {
             ModeSlider.value -= value;

@@ -26,6 +26,7 @@ public class SpellManager : MonoBehaviour
     public GameObject BarrierUI;
     public GameObject AstralPressenceUI;
     public GameObject ChargeUI;
+    public GameObject ModeChangerUI;
 
     public AudioClip BlackHoleSound;
 
@@ -45,6 +46,7 @@ public class SpellManager : MonoBehaviour
     private Image BarrierImage;
     private Image AstralPressenceImage;
     private Image ChargeImage;
+    private Image ModeChangerImage;
 
     private Color canUseColor, canNotUseColor, activeColor;
 
@@ -67,11 +69,23 @@ public class SpellManager : MonoBehaviour
         BarrierImage = BarrierUI.GetComponent<Image>();
         AstralPressenceImage = AstralPressenceUI.GetComponent<Image>();
         ChargeImage = ChargeUI.GetComponent<Image>();
+        ModeChangerImage = ModeChangerUI.GetComponent<Image>();
         canUseColor = BlackHoleImage.color;
         canNotUseColor = canUseColor;
         canNotUseColor.a = 0.3f;
         activeColor = Color.green;
         activeColor.a = 0.7f;
+        BlackHoleImage.color = canNotUseColor;
+        EnergyBombImage.color = canNotUseColor;
+        StandardAttackImage.color = canNotUseColor;
+        DimensionDoorImage.color = canNotUseColor;
+        BarrierImage.color = canNotUseColor;
+        AstralPressenceImage.color = canNotUseColor;
+        ChargeImage.color = canNotUseColor;
+        if (GameManager.instance.level == 1)
+            ModeChangerImage.color = canNotUseColor;
+        else
+            ModeChangerImage.color = canUseColor;
     }
 
     // Update is called once per frame
@@ -80,42 +94,35 @@ public class SpellManager : MonoBehaviour
         if (GameManager.instance.isDead)
             return;
 
+        // ACTION BAR KEYPRESS TAB - SHADOW WALK
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.instance.level != 1)
+            modeChanger.ChangeMode();
+
         // Update UI Images
-        BlackHoleImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.BLACKHOLE) ? canUseColor : canNotUseColor;
-        EnergyBombImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BOMB) ? canUseColor : canNotUseColor;
-        StandardAttackImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.PSYCHO_KINESIS) ? canUseColor : canNotUseColor;
         ChargeImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.CHARGE) ? canUseColor : canNotUseColor;
 
-        if (GameManager.instance.playerCharacter.Absorb > 0)
-            BarrierImage.color = activeColor;
-        else
-            BarrierImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BARRIER) ? canUseColor : canNotUseColor;
-        if (doorManager.hasDoor)
-            DimensionDoorImage.color = activeColor;
-        else
-            DimensionDoorImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.DIMENSION_DOOR) ? canUseColor : canNotUseColor;
-        if (_OrbitManager.isEnabled)
-            AstralPressenceImage.color = activeColor;
-        else
-            AstralPressenceImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ASTRAL_PRESENCE) ? canUseColor : canNotUseColor;
-
-        // ACTION BAR KEYPRESS 1 - ASTRAL PRESENCE
-        if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ASTRAL_PRESENCE))
+        // ACTION BAR KEYPRESS SHIFT + LEFTMOUSE CLICK - STANDARD ATTACK
+        if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.PSYCHO_KINESIS))
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) // Check for whether ability can be used has to be in OrbitManager script as this is a channeled ability
+            if (Input.GetMouseButtonDown(0))
             {
-                _OrbitManager.ToggleAstralPresence();
+                Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit vHit = new RaycastHit();
+                if (Physics.Raycast(ray, out vHit, 200) && (vHit.collider.gameObject.tag == "Enemy" || Input.GetKey(KeyCode.LeftShift)))
+                {
+                    // Debug.Log(vHit.collider.gameObject.tag);       
+                    Vector3 spawnPos = PlayerPosition.position;
+                    spawnPos.y += 1.25f;
+                    GameObject atk = (GameObject)Instantiate(StandardAttack, spawnPos, transform.rotation);
+                    PsychokinesisEffect eController = atk.GetComponent<PsychokinesisEffect>();
+                    eController.ThrowBomb(vHit.point);
+                }
             }
         }
+        StandardAttackImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.PSYCHO_KINESIS) ? canUseColor : canNotUseColor;
 
-        // ACTION BAR KEYPRESS 2 - DIMENSION DOOR
-        if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.DIMENSION_DOOR))
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                doorManager.CastDimensionDoor();
-            }
-        }
+        if (GameManager.instance.playerCharacter.Level < 2)
+            return;
 
         // ACTION BAR KEYPRESS 3 - ENERGY BARRIER
         if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BARRIER))
@@ -125,6 +132,10 @@ public class SpellManager : MonoBehaviour
                 barrierManager.ActivateBarrier();
             }
         }
+        if (GameManager.instance.playerCharacter.Absorb > 0)
+            BarrierImage.color = activeColor;
+        else
+            BarrierImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BARRIER) ? canUseColor : canNotUseColor;
 
         // ACTION BAR KEYPRESS 4 - BLACK HOLE
         if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.BLACKHOLE))
@@ -144,6 +155,39 @@ public class SpellManager : MonoBehaviour
                 }
             }
         }
+        BlackHoleImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.BLACKHOLE) ? canUseColor : canNotUseColor;
+
+        if (GameManager.instance.playerCharacter.Level < 3)
+            return;
+
+        // ACTION BAR KEYPRESS 1 - ASTRAL PRESENCE
+        if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ASTRAL_PRESENCE))
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) // Check for whether ability can be used has to be in OrbitManager script as this is a channeled ability
+            {
+                _OrbitManager.ToggleAstralPresence();
+            }
+        }
+        if (_OrbitManager.isEnabled)
+            AstralPressenceImage.color = activeColor;
+        else
+            AstralPressenceImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ASTRAL_PRESENCE) ? canUseColor : canNotUseColor;
+
+        // ACTION BAR KEYPRESS 2 - DIMENSION DOOR
+        if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.DIMENSION_DOOR))
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                doorManager.CastDimensionDoor();
+            }
+        }
+        if (doorManager.hasDoor)
+            DimensionDoorImage.color = activeColor;
+        else
+            DimensionDoorImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.DIMENSION_DOOR) ? canUseColor : canNotUseColor;
+
+        if (GameManager.instance.playerCharacter.Level < 4)
+            return;
 
         // ACTION BAR KEYPRESS 5 - ENERGY BOMB
         if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BOMB))
@@ -162,31 +206,12 @@ public class SpellManager : MonoBehaviour
                 }
             }
         }
+        EnergyBombImage.color = GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.ENERGY_BOMB) ? canUseColor : canNotUseColor;
 
-        // ACTION BAR KEYPRESS TAB - SHADOW WALK
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            modeChanger.ChangeMode();
-        }
 
-        // ACTION BAR KEYPRESS SHIFT + LEFTMOUSE CLICK - STANDARD ATTACK
-        if (GameManager.instance.playerCharacter.CanUse(MECHANICS.ABILITIES.PSYCHO_KINESIS))
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = DungeonCam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit vHit = new RaycastHit();
-                if (Physics.Raycast(ray, out vHit, 200) && (vHit.collider.gameObject.tag == "Enemy" || Input.GetKey(KeyCode.LeftShift)))
-                {
-                   // Debug.Log(vHit.collider.gameObject.tag);       
-                    Vector3 spawnPos = PlayerPosition.position;
-                    spawnPos.y += 1.25f;
-                    GameObject atk = (GameObject)Instantiate(StandardAttack, spawnPos, transform.rotation);
-                    PsychokinesisEffect eController = atk.GetComponent<PsychokinesisEffect>();
-                    eController.ThrowBomb(vHit.point);
-                }
-            }
-        }
+
+
+
 
     }
 }

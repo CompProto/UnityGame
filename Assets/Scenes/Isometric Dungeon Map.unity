@@ -1416,6 +1416,7 @@ MonoBehaviour:
   BarrierUI: {fileID: 1682785677}
   AstralPressenceUI: {fileID: 1987793}
   ChargeUI: {fileID: 1781483494}
+  ModeChangerUI: {fileID: 169742016}
   BlackHoleSound: {fileID: 8300000, guid: 6a59b9c092fef2e4cb458e6e398364be, type: 3}
 --- !u!4 &129156920
 Transform:

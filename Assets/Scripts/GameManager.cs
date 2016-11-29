@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Pause object: " + transform.Find("PauseMenu").name);
         DontDestroyOnLoad(instance);
         DontDestroyOnLoad(narrativeBox);
+        //DontDestroyOnLoad(_modeManager);
         //DontDestroyOnLoad(hudOverlay);
         //DontDestroyOnLoad(PauseScreen);
         itemGen = new ItemGenerator();
