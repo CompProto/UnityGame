@@ -7,6 +7,7 @@ public class NarrativeBox : MonoBehaviour {
 
     private bool visibility = false;
     public GameObject narrativeBox;
+    public GameObject prologueBox;
 
     public static NarrativeBox instance = null;
 
@@ -29,6 +30,12 @@ public class NarrativeBox : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
+            if (prologueBox.activeSelf)
+            {
+                prologueBox.SetActive(false);
+                return;
+            }
+
             this.ShowNarrative();
             // Pause / Unpause the game
             if (endLevel)
@@ -64,6 +71,10 @@ public class NarrativeBox : MonoBehaviour {
     public void setText(int level)
     {
         Debug.Log("setText LEVEL: "+level);
+        if(level == 0)
+        {
+            prologueBox.SetActive(true);
+        }
         if (level==1)
         {
             narrativeBox.GetComponentInChildren<Text>().text = level1();

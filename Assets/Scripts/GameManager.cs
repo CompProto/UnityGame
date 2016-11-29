@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         //DontDestroyOnLoad(PauseScreen);
         itemGen = new ItemGenerator();
         itemGen.Initialize();
+        
     }
 
     void OnEnable()
@@ -112,6 +113,8 @@ public class GameManager : MonoBehaviour
 
     void OnLevelChanged(Scene scene, LoadSceneMode mode)
     {
+        if (level == 0)
+            narrativeBox.setText(level);
         //Add one to our level number.
         level++;
         narrativeBox.setText(level);
