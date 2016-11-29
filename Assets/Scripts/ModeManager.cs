@@ -50,28 +50,45 @@ public class ModeManager : MonoBehaviour
         //else
         //    ModeSlider.value += value;
 
-        if(ModeSlider.value >= 25) // Light
-        {
-            if (isDarkMode)  
-                Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
-            else
-                Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod light
-        }
-        else if(ModeSlider.value <= -25)
-        {
-            if (isDarkMode)
-                Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod dark
-            else
-                Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
-        }
+        //if(ModeSlider.value >= 25) // Light
+        //{
+        //    if (isDarkMode)  
+        //        Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
+        //    else
+        //        Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod light
+        //}
+        //else if(ModeSlider.value <= -25)
+        //{
+        //    if (isDarkMode)
+        //        Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod dark
+        //    else
+        //        Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
+        //}
     }
 
     public void AddBalanceAmount(float value)
     {
         if (isDarkMode)
+        {
             ModeSlider.value -= value;
+            if (ModeSlider.value + value > 25)
+                ModeSlider.value = 25;
+        }
         else
+        {
             ModeSlider.value += value;
+            if (ModeSlider.value - value < -25)
+                ModeSlider.value = -25;
+        }
+        if (ModeSlider.value > 50)
+            ModeSlider.value = 50;
+        if (ModeSlider.value < -50)
+            ModeSlider.value = -50;
+
+        if (ModeSlider.value >= 25) // Light
+            Overlay.color = new Color(1, 1, 1, (ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset)); // Bevæg mod clear
+        else if (ModeSlider.value <= -25)
+            Overlay.color = new Color(0, 0, 0, (-ModeSlider.value - OverlayOffset) / 100.0f * (100.0f / OverlayOffset));// bevæg mod dark
     }
 
     public void PlayDayMusic()
