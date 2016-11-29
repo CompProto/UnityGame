@@ -24,6 +24,7 @@ public class MapGenerator : MonoBehaviour {
     private float MinDistance; // Minimum distance between enemies
     private ObjectSpawner objSpawn;
     private bool doPlaceBoss = false;
+    private bool doPlaceExit = false;
 
     void Start() {
 
@@ -52,11 +53,15 @@ public class MapGenerator : MonoBehaviour {
         MinDistance = objSpawn.MinimumDistance;
         Exit = objSpawn.Exit;
         PlacePlayer();
-        PlaceExit();
+        //PlaceExit();
         PlaceEnemies();
         if (doPlaceBoss)
         {
             PlaceBoss();
+        }
+        if (doPlaceExit)
+        {
+            PlaceExit();
         }
     }
 
@@ -70,6 +75,7 @@ public class MapGenerator : MonoBehaviour {
             useRandomSeed = false;
             randomFillPercent = 45;
             doPlaceBoss = false;
+            doPlaceExit = true;
         }
         if (level == 2)
         {
@@ -77,10 +83,12 @@ public class MapGenerator : MonoBehaviour {
             height = 90;
             randomFillPercent = 48;
             doPlaceBoss = true;
+            doPlaceExit = false;
         }
         if (level == 3)
         {
             doPlaceBoss = true;
+            doPlaceExit = false;
         }
     }
 
@@ -193,7 +201,8 @@ public class MapGenerator : MonoBehaviour {
                 if (map[x, y] == 0)
                 {
                     Vector3 exit = new Vector3(x - width / 2 - 1, 0, y - height / 2 + 1);
-                    Exit.transform.position = exit;
+                    //Exit.transform.position = exit;
+                    Instantiate(Exit, exit, transform.rotation);
                     if (GameManager.instance.level == 1)
                     {
                         Instantiate(Boss, exit, transform.rotation);

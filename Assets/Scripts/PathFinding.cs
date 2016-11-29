@@ -231,7 +231,7 @@ public class PathFinding : MonoBehaviour
 
         }
 
-        return null;
+        return enemyTile;
     }
 
     void WriteOutMap()
