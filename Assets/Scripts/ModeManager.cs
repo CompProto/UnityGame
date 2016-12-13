@@ -69,6 +69,7 @@ public class ModeManager : MonoBehaviour
 
     public void AddBalanceAmount(float value)
     {
+        return; // DISABLED VISUAL RESTRICTION ;-(
         //Debug.Log("Level: " + GameManager.instance.level);
         if (GameManager.instance.level == 1)
             return;
