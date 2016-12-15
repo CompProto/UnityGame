@@ -70,7 +70,7 @@ public class MapGenerator : MonoBehaviour {
         if (level == 1)
         {
             width = 100;
-            height = 35;
+            height = 40;
             seed = "3";
             useRandomSeed = false;
             randomFillPercent = 45;
